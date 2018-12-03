@@ -7,7 +7,9 @@ package mytunes.GUI.Controller;
 
 
 
+import com.sun.deploy.net.URLEncoder;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -83,7 +85,6 @@ public class MyTunesViewController implements Initializable
     private Slider slider;
     
     final JFXPanel fxPanel = new JFXPanel();
-    private String filePath;
     private MediaPlayer mediaPlayer;
     private ListView<Song> listSearch;
     @FXML
@@ -105,7 +106,7 @@ public class MyTunesViewController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        //listSongs.setItems(mtm.getSongs());
+        listSongs.setItems(mtm.getSongs());
     }    
 
     @FXML
@@ -212,12 +213,17 @@ public class MyTunesViewController implements Initializable
     @FXML
     private void playMusic(ActionEvent event)
     {
-        mtm.playMusic();
-        if(filePath != null)
+        
+        Song song = listSongs.getSelectionModel().getSelectedItem();
+        String filePath = song.getFilepath();
+        String trueFilePath = "file:/" + filePath;
+        String trueTrueFilePath = trueFilePath.replace(" ", "%20");
+        System.out.println(trueTrueFilePath);
+        if(trueTrueFilePath != null)
         {
-            Media media = new Media(filePath);
+            Media media = new Media(trueTrueFilePath);
             mediaPlayer = new MediaPlayer(media);
-    
+            mediaPlayer.play();
             slider.setValue(mediaPlayer.getVolume() * 100);
             slider.valueProperty().addListener(new InvalidationListener() 
             {

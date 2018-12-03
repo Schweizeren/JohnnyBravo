@@ -21,7 +21,7 @@ public class TesterClass
 {
     public static void main(String[] args) throws IOException, TagException
     {
-        String filepath = "D:/Dokumenter/GitHub/myTunesBetter/MyTunes/data/music/bitch lasagna.mp3";
+        String filepath = "D:/Dokumenter/GitHub/myTunes/MyTunes/data/music/bitch lasagna.mp3";
         SongMetaData smd = new SongMetaData();
         System.out.println(smd.getAuthor(filepath));
         System.out.println(smd.getGenre(filepath));

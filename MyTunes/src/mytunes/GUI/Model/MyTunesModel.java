@@ -49,6 +49,7 @@ public class MyTunesModel
             File file = fileChooser.showOpenDialog(null);
             if (file != null) {
                 filePath = file.toURI().toString();
+                System.out.print(trueTrueFilePath);
                 String trueFilePath = filePath.replaceFirst("file:/", "");
                 trueTrueFilePath = trueFilePath.replace("%20", " ");
                 
