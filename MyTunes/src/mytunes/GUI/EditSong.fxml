@@ -19,12 +19,10 @@
       <TextField fx:id="txtTitleInput" layoutX="81.0" layoutY="71.0" />
       <TextField fx:id="txtArtistInput" layoutX="81.0" layoutY="107.0" />
       <TextField fx:id="txtDuration" layoutX="81.0" layoutY="178.0" />
-      <ComboBox fx:id="comboEditSong" layoutX="81.0" layoutY="141.0" onAction="#handleComboES" prefHeight="25.0" prefWidth="104.0" />
+      <ComboBox fx:id="comboEditSong" layoutX="81.0" layoutY="141.0" onAction="#handleComboES" prefHeight="25.0" prefWidth="117.0" />
       <TextField fx:id="txtFile" layoutX="81.0" layoutY="216.0" />
-      <Button layoutX="191.0" layoutY="141.0" mnemonicParsing="false" text="More.." />
-      <Button layoutX="236.0" layoutY="216.0" mnemonicParsing="false" onAction="#handleChooseBtn" text="Choose" />
       <Button layoutX="210.0" layoutY="266.0" mnemonicParsing="false" onAction="#handleCancelBtn" text="Cancel" />
       <Button layoutX="272.0" layoutY="266.0" mnemonicParsing="false" onAction="#handleSaveBtn" text="Save" />
-      <ComboBox fx:id="extraComboBox" layoutX="191.0" layoutY="141.0" onAction="#handleExtraComboBox" prefHeight="25.0" prefWidth="104.0" />
+      <TextField fx:id="txtOtherCategory" layoutX="210.0" layoutY="141.0" prefHeight="25.0" prefWidth="117.0" />
    </children>
 </AnchorPane>
