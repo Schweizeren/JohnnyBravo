@@ -86,7 +86,6 @@ public class MyTunesViewController implements Initializable
     
     final JFXPanel fxPanel = new JFXPanel();
     private MediaPlayer mediaPlayer;
-    private Media media;
     private ListView<Song> listSearch;
     @FXML
     private TextField writeSearch;
@@ -181,7 +180,8 @@ public class MyTunesViewController implements Initializable
     @FXML
     private void deleteSong(ActionEvent event)
     {
-        
+        Song song = listSongs.getSelectionModel().getSelectedItem();
+        mtm.deleteSong(song);
     }
 
     @FXML
@@ -214,7 +214,6 @@ public class MyTunesViewController implements Initializable
     @FXML
     private void playMusic(ActionEvent event)
     {
-        
         Song song = listSongs.getSelectionModel().getSelectedItem();
         String filePath = song.getFilepath();
         String trueFilePath = "file:/" + filePath;
@@ -222,7 +221,7 @@ public class MyTunesViewController implements Initializable
         System.out.println(trueTrueFilePath);
         if(trueTrueFilePath != null)
         {
-            media = new Media(trueTrueFilePath);
+            Media media = new Media(trueTrueFilePath);
             mediaPlayer = new MediaPlayer(media);
             mediaPlayer.play();
             slider.setValue(mediaPlayer.getVolume() * 100);

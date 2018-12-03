@@ -86,7 +86,13 @@ public class SongDAO
         }
     }
     
-    public void deleteSong(int id) {
-        
+    public void deleteSong(Song song) {
+        try(Connection con = cb.getConnection()) {
+            Statement statement = con.createStatement();
+            String sql = "DELETE FROM Song WHERE id = " + song.getId() + ";";
+            statement.execute(sql);
+        }catch(SQLException ex) {
+            throw new UnsupportedOperationException();
+        }
     }
 }

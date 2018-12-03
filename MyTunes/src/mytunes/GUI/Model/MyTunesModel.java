@@ -64,9 +64,10 @@ public class MyTunesModel
         System.exit(0);
     }
     
-    public void deleteSong()
+    public void deleteSong(Song song)
     {
-        
+        mtm.deleteSong(song);
+        songList.remove(song);
     }
     
     public void searchSong()
@@ -122,9 +123,4 @@ public class MyTunesModel
         return songList;
     }
     
-//    public void searchWrite()
-//    {
-//        listSearch.getItems().clear();
-//        listSearch.getItems().addAll(ss.searchSongs(writeSearch.getText().toLowerCase()));
-//    }
 }
