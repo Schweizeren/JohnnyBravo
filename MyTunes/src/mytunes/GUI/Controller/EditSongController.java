@@ -36,6 +36,8 @@ public class EditSongController implements Initializable
     private ComboBox<String> comboEditSong;
     @FXML
     private TextField txtFile;
+    @FXML
+    private TextField txtOtherCategory;
 
     /**
      * Initializes the controller class.
@@ -44,8 +46,9 @@ public class EditSongController implements Initializable
     public void initialize(URL url, ResourceBundle rb)
     {
         comboEditSong.setItems(FXCollections.observableArrayList("Blues","Hip Hop","Pop","Rap",
-                "Rock","Techno"));
+                "Rock","Techno","Other"));
         comboEditSong.setVisibleRowCount(6);
+        txtOtherCategory.setVisible(false);
     }    
 
     @FXML
@@ -75,16 +78,14 @@ public class EditSongController implements Initializable
             case 5:
                 category = "techno";
                 break;
+            case 6: 
+                txtOtherCategory.setVisible(true);
             default: 
                 throw new UnsupportedOperationException("Category not chosen");
         }
         return category;
     }
 
-    @FXML
-    private void handleChooseBtn(ActionEvent event)
-    {
-    }
 
     @FXML
     private void handleCancelBtn(ActionEvent event)
@@ -97,5 +98,4 @@ public class EditSongController implements Initializable
     private void handleSaveBtn(ActionEvent event)
     {
     }
-    
 }

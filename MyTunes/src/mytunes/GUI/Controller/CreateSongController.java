@@ -17,6 +17,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -44,6 +45,8 @@ public class CreateSongController implements Initializable
     private TextField txtDuration;
     @FXML
     private TextField txtFile;
+    @FXML
+    private TextField txtOtherCategory;
     
     
     /**
@@ -65,17 +68,10 @@ public class CreateSongController implements Initializable
         txtDuration.setDisable(true);
         txtFile.setDisable(true);
         comboCategoryBox.setItems(FXCollections.observableArrayList("Blues","Hip Hop","Pop","Rap",
-                "Rock","Techno"));
+                "Rock","Techno","Other"));
         comboCategoryBox.setVisibleRowCount(6);
-        
-        
-        
+        txtOtherCategory.setVisible(false);
     }    
-
-    @FXML
-    private void handleMoreBtn(ActionEvent event)
-    {
-    }
 
     @FXML
     private void handleChooseBtn(ActionEvent event)
@@ -132,13 +128,11 @@ public class CreateSongController implements Initializable
             case 5:
                 category = "techno";
                 break;
+            case 6:
+                txtOtherCategory.setVisible(true);
             default: 
                 throw new UnsupportedOperationException("Category not chosen");
         }
         return category;
     }
-    
-    
-    
-    
 }
