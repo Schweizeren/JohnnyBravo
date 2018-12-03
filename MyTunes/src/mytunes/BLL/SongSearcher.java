@@ -17,7 +17,7 @@ import mytunes.be.Song;
  */
 public class SongSearcher
 {
-    public List<Song> searchSongs(String query) {
+    public List<Song> searchSongs(List<Song> searchBase ,String query) {
         SongDAO songdao = new SongDAO();
         List<Song> searchList = new ArrayList<>();
         try {
@@ -26,7 +26,7 @@ public class SongSearcher
                 searchList = songdao.getAllSongs();
             } else {
             for (Song song : songList) {
-                if (song.getTitle().toLowerCase().contains(query)) {
+                if (song.getTitle().toLowerCase().contains(query) || song.getArtist().toLowerCase().contains(query)) {
                     searchList.add(song);
                 }
             }

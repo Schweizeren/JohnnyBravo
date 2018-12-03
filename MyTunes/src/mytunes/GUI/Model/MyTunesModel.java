@@ -7,6 +7,7 @@ package mytunes.GUI.Model;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
@@ -121,6 +122,12 @@ public class MyTunesModel
     
     public ObservableList<Song> getSongs() {
         return songList;
+    }
+    
+    public ObservableList<Song> searchSongs(List<Song> searchBase, String query) {
+        ObservableList<Song> searchedSongList = FXCollections.observableArrayList();
+        searchedSongList.addAll(ss.searchSongs(searchBase, query));
+        return searchedSongList;
     }
     
 }

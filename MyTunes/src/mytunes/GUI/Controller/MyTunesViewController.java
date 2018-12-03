@@ -16,6 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
+import javafx.collections.ObservableList;
 import javafx.embed.swing.JFXPanel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -205,7 +206,7 @@ public class MyTunesViewController implements Initializable
     @FXML
     private void searchSong(ActionEvent event)
     {
-        
+        listSongs.setItems(mtm.searchSongs(mtm.getSongs(), writeSearch.getText()));
     }
 
     @FXML
