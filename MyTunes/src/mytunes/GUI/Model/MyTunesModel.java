@@ -125,5 +125,8 @@ public class MyTunesModel
         mtm.updateSong(song);
     }
     
+    public Song getSong(int id) {
+        return mtm.getSong(id);
+    }
     
 }

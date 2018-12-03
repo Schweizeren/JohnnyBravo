@@ -5,8 +5,11 @@
  */
 package mytunes.GUI.Controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,6 +18,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import mytunes.GUI.Model.MyTunesModel;
 import mytunes.be.Song;
 
 /**
@@ -38,10 +42,14 @@ public class EditSongController implements Initializable
     private TextField txtFile;
     @FXML
     private TextField txtOtherCategory;
-
+    
     /**
      * Initializes the controller class.
      */
+    
+    public EditSongController() {
+        
+    }
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {

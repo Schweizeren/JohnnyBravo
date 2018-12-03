@@ -109,5 +109,9 @@ public class MyTunesManager
     public void updateSong(Song song) {
         sdao.updateSong(song);
     }
+    
+    public Song getSong(int id) {
+        return sdao.getSong(id);
+    }
 }
 
