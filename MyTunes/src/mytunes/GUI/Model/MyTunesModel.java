@@ -26,7 +26,6 @@ public class MyTunesModel
 {
 //    final JFXPanel fxPanel = new JFXPanel();
     private ObservableList<Song> songList;
-    private MediaPlayer mediaPlayer;
     private final SongSearcher ss;
     private MyTunesManager mtm;
     private String trueTrueFilePath;
@@ -71,9 +70,10 @@ public class MyTunesModel
         songList.remove(song);
     }
     
-    public void searchSong()
-    {
-        
+    public ObservableList<Song> searchSongs(List<Song> searchBase, String query) {
+        ObservableList<Song> searchedSongList = FXCollections.observableArrayList();
+        searchedSongList.addAll(ss.searchSongs(searchBase, query));
+        return searchedSongList;
     }
     
     public String getSongTitle() {
@@ -124,10 +124,9 @@ public class MyTunesModel
         return songList;
     }
     
-    public ObservableList<Song> searchSongs(List<Song> searchBase, String query) {
-        ObservableList<Song> searchedSongList = FXCollections.observableArrayList();
-        searchedSongList.addAll(ss.searchSongs(searchBase, query));
-        return searchedSongList;
+    public void updateSong(Song song) {
+        mtm.updateSong(song);
     }
+    
     
 }

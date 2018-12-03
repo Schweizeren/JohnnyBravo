@@ -110,4 +110,8 @@ public class SongDAO
             throw new UnsupportedOperationException();
         }
     }
+    
+    public Song getSong(int id) {
+        throw new UnsupportedOperationException();
+    }
 }
