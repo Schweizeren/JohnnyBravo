@@ -7,9 +7,8 @@ package mytunes.GUI.Controller;
 
 
 
-import com.sun.deploy.net.URLEncoder;
+
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -18,7 +17,6 @@ import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
 import javafx.embed.swing.JFXPanel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -116,6 +114,7 @@ public class MyTunesViewController implements Initializable
     public void initialize(URL url, ResourceBundle rb)
     {
         listSongs.setItems(mtm.getSongs());
+        
     }    
 
     @FXML
@@ -177,6 +176,10 @@ public class MyTunesViewController implements Initializable
     @FXML
     private void editSong(ActionEvent event) throws IOException
     {
+        Song song = listSongs.getSelectionModel().getSelectedItem();
+        if (song == null) {
+            testlbl.setText("Please select a song first");
+        } else {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/EditSong.fxml"));
         Parent root = (Parent)loader.load();
         
@@ -184,6 +187,7 @@ public class MyTunesViewController implements Initializable
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
         stage.show();
+        }
     }
 
     @FXML

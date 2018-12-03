@@ -105,5 +105,9 @@ public class MyTunesManager
     public void deleteSong(Song song) {
         sdao.deleteSong(song);
     }
+    
+    public void updateSong(Song song) {
+        sdao.updateSong(song);
+    }
 }
 

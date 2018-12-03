@@ -15,6 +15,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import mytunes.be.Song;
 
 /**
  * FXML Controller class
@@ -22,8 +23,7 @@ import javafx.stage.Stage;
  * @author Kristian Urup laptop
  */
 public class EditSongController implements Initializable
-{
-
+{  
     @FXML
     private AnchorPane rootPane;
     @FXML
@@ -98,4 +98,6 @@ public class EditSongController implements Initializable
     private void handleSaveBtn(ActionEvent event)
     {
     }
+    
+    
 }
