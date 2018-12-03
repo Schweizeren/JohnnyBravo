@@ -89,6 +89,8 @@ public class MyTunesViewController implements Initializable
     private ListView<Song> listSearch;
     @FXML
     private TextField writeSearch;
+    @FXML
+    private Label testlbl;
     
     public MyTunesViewController() {
         try
@@ -181,7 +183,12 @@ public class MyTunesViewController implements Initializable
     private void deleteSong(ActionEvent event)
     {
         Song song = listSongs.getSelectionModel().getSelectedItem();
+        if (song == null) {
+            testlbl.setText("Please choose a song you want to delete first");
+        }else {
         mtm.deleteSong(song);
+        testlbl.setText("");
+        }
     }
 
     @FXML

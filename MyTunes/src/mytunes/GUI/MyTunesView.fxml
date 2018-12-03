@@ -41,5 +41,6 @@
       <Button layoutX="611.0" layoutY="706.0" mnemonicParsing="false" onAction="#pauseMusic" prefHeight="31.0" prefWidth="33.0" text="| |" />
       <Button layoutX="525.0" layoutY="706.0" mnemonicParsing="false" onAction="#stopMusic" prefHeight="31.0" prefWidth="33.0" text="⬛" />
       <Slider fx:id="slider" layoutX="512.0" layoutY="678.0" />
+      <Label fx:id="testlbl" layoutX="519.0" layoutY="214.0" prefHeight="21.0" prefWidth="117.0" />
    </children>
 </AnchorPane>

@@ -22,10 +22,14 @@ public class SongSearcher
         List<Song> searchList = new ArrayList<>();
         try {
             List<Song> songList = songdao.getAllSongs();
+            if (query.isEmpty()) {
+                searchList = songdao.getAllSongs();
+            } else {
             for (Song song : songList) {
                 if (song.getTitle().toLowerCase().contains(query)) {
                     searchList.add(song);
                 }
+            }
             }
         } catch (IOException ex) {
             throw new IllegalArgumentException("Could not finde song");
