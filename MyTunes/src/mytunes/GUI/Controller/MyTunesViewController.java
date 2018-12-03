@@ -15,6 +15,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.JFXPanel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,10 +30,12 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import mytunes.GUI.Model.MyTunesModel;
 import mytunes.BLL.SongSearcher;
 import mytunes.be.Song;
@@ -80,8 +84,6 @@ public class MyTunesViewController implements Initializable
     private Label lblMusicPlaying;
     @FXML
     private AnchorPane rootPane;
-    @FXML
-    private Slider slider;
     
     final JFXPanel fxPanel = new JFXPanel();
     private MediaPlayer mediaPlayer;
@@ -90,6 +92,10 @@ public class MyTunesViewController implements Initializable
     private TextField writeSearch;
     @FXML
     private Label testlbl;
+    @FXML
+    private Slider sliderDuration;
+    @FXML
+    private Slider sliderVolume;
     
     public MyTunesViewController() {
         try
@@ -236,15 +242,23 @@ public class MyTunesViewController implements Initializable
             Media media = new Media(trueTrueFilePath);
             mediaPlayer = new MediaPlayer(media);
             mediaPlayer.play();
-            slider.setValue(mediaPlayer.getVolume() * 100);
-            slider.valueProperty().addListener(new InvalidationListener() 
+            sliderVolume.setValue(mediaPlayer.getVolume() * 100);
+            sliderVolume.valueProperty().addListener(new InvalidationListener() 
             {
                 @Override
                 public void invalidated(Observable observable)
                 {
-                    mediaPlayer.setVolume(slider.getValue()/100);
+                    mediaPlayer.setVolume(sliderVolume.getValue()/100);
                 }
             });
+            
+            mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>()
+                    {
+                         @Override
+                         public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) {
+                             sliderDuration.setValue(newValue.toSeconds());
+                         }
+                    });
         }
     }
 
@@ -264,5 +278,11 @@ public class MyTunesViewController implements Initializable
     private void writeSearch(KeyEvent event)
     {
         
+    }
+
+    @FXML
+    private void sliderClick(MouseEvent event)
+    {
+        mediaPlayer.seek(Duration.seconds(sliderDuration.getValue()));
     }
 }
