@@ -59,21 +59,6 @@ public class MyTunesModel
             }
     }
     
-    public void playMusic()
-    {
-        mediaPlayer.play();
-    }
-    
-    public void stopMusic()
-    {
-        mediaPlayer.stop();
-    }
-    
-    public void pauseMusic()
-    {
-        mediaPlayer.pause();
-    }
-    
     public void endApplication()
     {
         System.exit(0);

@@ -86,6 +86,7 @@ public class MyTunesViewController implements Initializable
     
     final JFXPanel fxPanel = new JFXPanel();
     private MediaPlayer mediaPlayer;
+    private Media media;
     private ListView<Song> listSearch;
     @FXML
     private TextField writeSearch;
@@ -221,7 +222,7 @@ public class MyTunesViewController implements Initializable
         System.out.println(trueTrueFilePath);
         if(trueTrueFilePath != null)
         {
-            Media media = new Media(trueTrueFilePath);
+            media = new Media(trueTrueFilePath);
             mediaPlayer = new MediaPlayer(media);
             mediaPlayer.play();
             slider.setValue(mediaPlayer.getVolume() * 100);
@@ -239,13 +240,13 @@ public class MyTunesViewController implements Initializable
     @FXML
     private void pauseMusic(ActionEvent event)
     {
-        mtm.pauseMusic();
+        mediaPlayer.pause();
     }
 
     @FXML
     private void stopMusic(ActionEvent event)
     {
-        mtm.stopMusic();
+        mediaPlayer.stop();
     }
 
     @FXML

@@ -85,4 +85,8 @@ public class SongDAO
             return song;
         }
     }
+    
+    public void deleteSong(int id) {
+        
+    }
 }
