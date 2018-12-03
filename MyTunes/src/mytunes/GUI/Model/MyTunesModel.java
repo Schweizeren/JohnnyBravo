@@ -24,14 +24,11 @@ import mytunes.be.Song;
  */
 public class MyTunesModel
 {
-//    final JFXPanel fxPanel = new JFXPanel();
     private ObservableList<Song> songList;
     private MediaPlayer mediaPlayer;
     private final SongSearcher ss;
     private MyTunesManager mtm;
     private String trueTrueFilePath;
-//    Media media = new Media(new File(filePath).toURI().toString());
-//    MediaPlayer mediaPlayer = new MediaPlayer(media);
     
     public MyTunesModel() throws IOException {
         songList = FXCollections.observableArrayList();

@@ -237,7 +237,6 @@ public class MyTunesViewController implements Initializable
         {
             Media media = new Media(trueTrueFilePath);
             mediaPlayer = new MediaPlayer(media);
-            mediaPlayer.play();
             sliderVolume.setValue(mediaPlayer.getVolume() * 100);
             sliderVolume.valueProperty().addListener(new InvalidationListener() 
             {
@@ -256,6 +255,8 @@ public class MyTunesViewController implements Initializable
                          }
                     });
         }
+        
+        mediaPlayer.play();
     }
 
     @FXML
@@ -277,9 +278,15 @@ public class MyTunesViewController implements Initializable
     }
 
     @FXML
-    private void sliderClick(MouseEvent event)
+    private void sliderDrag(MouseEvent event)
     {
         mediaPlayer.seek(Duration.seconds(sliderDuration.getValue()));
+    }
+
+    @FXML
+    private void songPressed(MouseEvent event)
+    {
+        
     }
     
 }
