@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" fx:id="rootPane" prefHeight="762.0" prefWidth="1118.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.GUI.Controller.MyTunesViewController">
+   <children>
+      <ListView fx:id="listPlaylists" layoutX="28.0" layoutY="104.0" prefHeight="539.0" prefWidth="236.0" />
+      <ListView fx:id="listSongs" layoutX="684.0" layoutY="104.0" prefHeight="539.0" prefWidth="403.0" />
+      <ListView fx:id="listSongsOnPlaylist" layoutX="281.0" layoutY="104.0" prefHeight="539.0" prefWidth="191.0" />
+      <Button fx:id="btnNewPlaylist" layoutX="28.0" layoutY="659.0" mnemonicParsing="false" onAction="#createPlaylist" prefHeight="31.0" prefWidth="65.0" text="New..." />
+      <Button fx:id="btnEditPlaylist" layoutX="103.0" layoutY="659.0" mnemonicParsing="false" onAction="#editPlaylist" prefHeight="31.0" prefWidth="63.0" text="Edit..." />
+      <Button fx:id="btnDeletePlaylist" layoutX="201.0" layoutY="659.0" mnemonicParsing="false" onAction="#deletePlaylist" text="Delete" />
+      <Button fx:id="btnMoveSongUp" layoutX="281.0" layoutY="659.0" mnemonicParsing="false" onAction="#moveUp" prefHeight="31.0" prefWidth="36.0" text="▲" />
+      <Button fx:id="btnMoveSongDown" layoutX="322.0" layoutY="659.0" mnemonicParsing="false" onAction="#moveDown" prefHeight="31.0" prefWidth="36.0" text="▼" />
+      <Button fx:id="btnDeleteSongsOnPlaylist" layoutX="407.0" layoutY="659.0" mnemonicParsing="false" onAction="#deleteSongOnPlaylist" text="Delete" />
+      <Button fx:id="btnNewSong" layoutX="681.0" layoutY="659.0" mnemonicParsing="false" onAction="#newSong" prefHeight="31.0" prefWidth="65.0" text="New..." />
+      <Button fx:id="btnEditSong" layoutX="762.0" layoutY="659.0" mnemonicParsing="false" onAction="#editSong" prefHeight="31.0" prefWidth="65.0" text="Edit..." />
+      <Button fx:id="btnDeleteSong" layoutX="842.0" layoutY="659.0" mnemonicParsing="false" onAction="#deleteSong" text="Delete" />
+      <Button fx:id="btnClose" layoutX="1031.0" layoutY="659.0" mnemonicParsing="false" onAction="#endApplication" text="Close" />
+      <Button fx:id="btnMoveSongLeft" layoutX="552.0" layoutY="104.0" mnemonicParsing="false" onAction="#moveSong" text="&lt;---" />
+      <Button fx:id="btnSearch" layoutX="1016.0" layoutY="24.0" mnemonicParsing="false" onAction="#searchSong" text="Search" />
+      <Label layoutX="28.0" layoutY="83.0" text="Playlists" />
+      <Label layoutX="281.0" layoutY="83.0" text="Songs on playlist " />
+      <Label layoutX="684.0" layoutY="83.0" text="Songs" />
+      <Label fx:id="lblMusicPlaying" layoutX="81.0" layoutY="10.0" prefHeight="60.0" prefWidth="684.0" text="Music currently playing">
+         <font>
+            <Font size="33.0" />
+         </font>
+      </Label>
+      <Label layoutX="776.0" layoutY="29.0" text="Filter:" />
+      <TextField fx:id="writeSearch" layoutX="820.0" layoutY="24.0" onKeyPressed="#writeSearch" />
+      <Button layoutX="473.0" layoutY="706.0" mnemonicParsing="false" onAction="#previousSong" prefHeight="31.0" prefWidth="52.0" text="&lt;&lt;" />
+      <Button layoutX="643.0" layoutY="706.0" mnemonicParsing="false" onAction="#nextSong" prefHeight="31.0" prefWidth="52.0" text="&gt;&gt;" />
+      <Button layoutX="558.0" layoutY="706.0" mnemonicParsing="false" onAction="#playMusic" prefHeight="31.0" prefWidth="52.0" text="⯈" />
+      <Button layoutX="611.0" layoutY="706.0" mnemonicParsing="false" onAction="#pauseMusic" prefHeight="31.0" prefWidth="33.0" text="| |" />
+      <Button layoutX="525.0" layoutY="706.0" mnemonicParsing="false" onAction="#stopMusic" prefHeight="31.0" prefWidth="33.0" text="⬛" />
+      <Slider fx:id="slider" layoutX="512.0" layoutY="678.0" />
+   </children>
+</AnchorPane>
