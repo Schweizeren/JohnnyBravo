@@ -17,6 +17,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -44,6 +45,10 @@ public class CreateSongController implements Initializable
     private TextField txtDuration;
     @FXML
     private TextField txtFile;
+    @FXML
+    private ComboBox<String> comboBoxExtra;
+    @FXML
+    private Button moreBtn;
     
     
     /**
@@ -67,14 +72,16 @@ public class CreateSongController implements Initializable
         comboCategoryBox.setItems(FXCollections.observableArrayList("Blues","Hip Hop","Pop","Rap",
                 "Rock","Techno"));
         comboCategoryBox.setVisibleRowCount(6);
-        
-        
-        
+        comboBoxExtra.setItems(FXCollections.observableArrayList("Blues","Hip Hop","Pop","Rap","Rock","Techno"));
+        comboBoxExtra.setVisibleRowCount(3);
+        comboBoxExtra.setVisible(false);
     }    
 
     @FXML
     private void handleMoreBtn(ActionEvent event)
     {
+        comboBoxExtra.setVisible(true);
+        moreBtn.setVisible(false);
     }
 
     @FXML
@@ -136,6 +143,39 @@ public class CreateSongController implements Initializable
                 throw new UnsupportedOperationException("Category not chosen");
         }
         return category;
+    }
+
+    @FXML
+    private String handleComboBoxExtra(ActionEvent event)
+    {
+                String category2;
+        
+        int selectedIndex = comboCategoryBox.getSelectionModel().getSelectedIndex();
+        
+        switch(selectedIndex)
+        {
+            case 0:
+                category2 = "blues";
+                break;
+            case 1:
+                category2 = "hipHop";
+                break;
+            case 2:
+                category2 = "pop";
+                break;
+            case 3:
+                category2 = "rap";
+                break;
+            case 4:
+                category2 = "rock";
+                break;
+            case 5:
+                category2 = "techno";
+                break;
+            default: 
+                throw new UnsupportedOperationException("Category not chosen");
+        }
+        return category2;
     }
     
     
