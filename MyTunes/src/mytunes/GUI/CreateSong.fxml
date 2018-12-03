@@ -16,10 +16,17 @@
             <Font size="14.0" />
          </font>
       </Label>
+
       <Label layoutX="50.0" layoutY="70.0" text="Title:" />
       <Label layoutX="47.0" layoutY="107.0" text="Artist:" />
       <Label layoutX="29.0" layoutY="144.0" text="Category:" />
       <Label layoutX="30.0" layoutY="185.0" prefHeight="17.0" prefWidth="51.0" text="Duration:" />
+
+      <Label layoutX="101.0" layoutY="71.0" text="Title:" />
+      <Label layoutX="99.0" layoutY="107.0" text="Artist:" />
+      <Label layoutX="79.0" layoutY="144.0" text="Category:" />
+      <Label layoutX="72.0" layoutY="186.0" prefHeight="21.0" prefWidth="64.0" text="Duration:" />
+
       <Separator layoutY="34.0" prefHeight="17.0" prefWidth="393.0" />
       <TextField fx:id="txtArtistInput" layoutX="93.0" layoutY="103.0" />
       <ComboBox fx:id="comboCategoryBox" layoutX="93.0" layoutY="141.0" onAction="#handleComboCategory" prefHeight="25.0" prefWidth="105.0" />
