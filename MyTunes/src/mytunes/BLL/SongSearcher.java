@@ -32,7 +32,7 @@ public class SongSearcher
             }
             }
         } catch (IOException ex) {
-            throw new IllegalArgumentException("Could not finde song");
+            throw new IllegalArgumentException("Could not find song");
         }
         return searchList;
     }

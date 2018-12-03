@@ -90,8 +90,23 @@ public class SongDAO
         try(Connection con = cb.getConnection()) {
             Statement statement = con.createStatement();
             String sql = "DELETE FROM Song WHERE id = " + song.getId() + ";";
-            statement.execute(sql);
+            statement.executeUpdate(sql);
         }catch(SQLException ex) {
+            throw new UnsupportedOperationException();
+        }
+    }
+    
+    public void updateSong(Song song) {
+        try (Connection con = cb.getConnection()) {
+            Statement statement = con.createStatement();
+            String sql = "UPDATE Song SET "
+                    + "title = " + song.getTitle() + ","
+                    + "author = " + song.getArtist() + ","
+                    + "genre = " + song.getGenre() + ","
+                    + "filepath = " + song.getFilepath() + 
+                    "WHERE id = " + song.getId() + ";";
+            statement.executeUpdate(sql);
+        }catch (SQLException ex) {
             throw new UnsupportedOperationException();
         }
     }

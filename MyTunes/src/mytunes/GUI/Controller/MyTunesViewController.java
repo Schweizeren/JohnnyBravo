@@ -206,7 +206,7 @@ public class MyTunesViewController implements Initializable
     @FXML
     private void searchSong(ActionEvent event)
     {
-        listSongs.setItems(mtm.searchSongs(mtm.getSongs(), writeSearch.getText()));
+        listSongs.setItems(mtm.searchSongs(mtm.getSongs(), writeSearch.getText().toLowerCase()));
     }
 
     @FXML
