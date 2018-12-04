@@ -182,10 +182,15 @@ public class MyTunesViewController implements Initializable
         if (song == null) {
             testlbl.setText("Please select a song first");
         } else {
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/EditSong.fxml"));
         Parent root = (Parent)loader.load();
         
         EditSongController escontroller = loader.getController();
+        escontroller.txtTitleInput.setText(song.getTitle());
+        escontroller.txtArtistInput.setText(song.getArtist());
+        escontroller.txtDuration.setText(Integer.toString(song.getLength()));
+        escontroller.txtFile.setText(song.getFilepath());
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
         stage.show();

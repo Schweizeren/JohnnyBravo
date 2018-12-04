@@ -21,35 +21,44 @@ import javafx.stage.Stage;
 import mytunes.GUI.Model.MyTunesModel;
 import mytunes.be.Song;
 
+
 /**
  * FXML Controller class
  *
  * @author Kristian Urup laptop
  */
 public class EditSongController implements Initializable
-{  
+
+{
+    private MyTunesModel mtm;
     @FXML
     private AnchorPane rootPane;
     @FXML
-    private TextField txtTitleInput;
+    public TextField txtTitleInput;
     @FXML
-    private TextField txtArtistInput;
+    public TextField txtArtistInput;
     @FXML
-    private TextField txtDuration;
+    public TextField txtDuration;
     @FXML
     private ComboBox<String> comboEditSong;
     @FXML
-    private TextField txtFile;
+    public TextField txtFile;
     @FXML
     private TextField txtOtherCategory;
-    
+
+    public EditSongController() {
+        try
+        {
+            mtm = new MyTunesModel();
+        } catch (IOException ex)
+        {
+            
+        }
+    }
+
     /**
      * Initializes the controller class.
      */
-    
-    public EditSongController() {
-        
-    }
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
@@ -57,6 +66,7 @@ public class EditSongController implements Initializable
                 "Rock","Techno","Other"));
         comboEditSong.setVisibleRowCount(6);
         txtOtherCategory.setVisible(false);
+        
     }    
 
     @FXML
@@ -105,7 +115,10 @@ public class EditSongController implements Initializable
     @FXML
     private void handleSaveBtn(ActionEvent event)
     {
+        
     }
     
-    
+    public void setSongInformation(String title) {
+        txtTitleInput.setText(title);
+    }
 }

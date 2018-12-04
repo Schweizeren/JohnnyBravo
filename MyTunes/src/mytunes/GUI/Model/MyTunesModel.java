@@ -12,6 +12,7 @@ import java.util.List;
 import javafx.collections.FXCollections;
 import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.FileChooser;
 import mytunes.BLL.MyTunesManager;
 import mytunes.BLL.SongSearcher;
@@ -25,6 +26,7 @@ import mytunes.be.Song;
 public class MyTunesModel
 {
     private ObservableList<Playlist> playlistList;
+
     private ObservableList<Song> songList;
     private final SongSearcher ss;
     private MyTunesManager mtm;
@@ -138,7 +140,7 @@ public class MyTunesModel
     public Song getSong(int id) {
         return mtm.getSong(id);
     }
-    
+
     public Playlist getPlaylist(int id) throws SQLException
     {
         return mtm.getPlaylist(id);
@@ -149,11 +151,4 @@ public class MyTunesModel
         mtm.deletePlaylist(playlist);
         songList.remove(playlist);
     }
-    
-    public ObservableList<Playlist> getAllPlaylist()
-    {
-        return playlistList;
-    }
-    
-    
 }
