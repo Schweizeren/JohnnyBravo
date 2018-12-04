@@ -41,7 +41,7 @@
       <Button layoutX="611.0" layoutY="706.0" mnemonicParsing="false" onAction="#pauseMusic" prefHeight="31.0" prefWidth="33.0" text="| |" />
       <Button layoutX="525.0" layoutY="706.0" mnemonicParsing="false" onAction="#stopMusic" prefHeight="31.0" prefWidth="33.0" text="⬛" />
       <Label fx:id="testlbl" layoutX="519.0" layoutY="214.0" prefHeight="21.0" prefWidth="117.0" />
-      <Slider fx:id="sliderDuration" layoutX="242.0" layoutY="741.0" onDragDetected="#sliderDrag" prefHeight="14.0" prefWidth="684.0" />
+      <Slider fx:id="sliderDuration" layoutX="242.0" layoutY="741.0" max="300.0" onDragDetected="#sliderDrag" prefHeight="14.0" prefWidth="684.0" />
       <Slider fx:id="sliderVolume" layoutX="575.0" layoutY="535.0" orientation="VERTICAL" />
    </children>
 </AnchorPane>
