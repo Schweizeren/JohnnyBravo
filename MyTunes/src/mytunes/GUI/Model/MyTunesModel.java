@@ -27,16 +27,16 @@ public class MyTunesModel
 
     private ObservableList<Song> songList;
     private final SongSearcher ss;
-    private MyTunesManager mtm;
+    private MyTunesManager mtmanager;
     private String trueTrueFilePath;
     
     public MyTunesModel() throws IOException {
         playlistList = FXCollections.observableArrayList();
         songList = FXCollections.observableArrayList();
         ss = new SongSearcher();
-        mtm = new MyTunesManager();
-        songList.addAll(mtm.getAllSongs());
-        playlistList.addAll(mtm.getAllPlaylist());
+        mtmanager = new MyTunesManager();
+        songList.addAll(mtmanager.getAllSongs());
+        playlistList.addAll(mtmanager.getAllPlaylist());
     }
     
     
@@ -66,7 +66,7 @@ public class MyTunesModel
     
     public void deleteSong(Song song)
     {
-        mtm.deleteSong(song);
+        mtmanager.deleteSong(song);
         songList.remove(song);
     }
     
@@ -77,7 +77,7 @@ public class MyTunesModel
     }
     
     public String getSongTitle() {
-        String songTitle = mtm.getSongTitle(trueTrueFilePath);
+        String songTitle = mtmanager.getSongTitle(trueTrueFilePath);
         if (!songTitle.isEmpty() || !songTitle.equals(null)) {
             return songTitle;
         }else {
@@ -86,7 +86,7 @@ public class MyTunesModel
     }
     
     public String getDuration() {
-        int duration = mtm.getDurationInSec(trueTrueFilePath);
+        int duration = mtmanager.getDurationInSec(trueTrueFilePath);
         int seconds = duration % 60;
         int minutes = (duration - seconds) / 60;
         
@@ -103,7 +103,7 @@ public class MyTunesModel
     }
     
     public int getDurationInSec() {
-        return mtm.getDurationInSec(trueTrueFilePath);
+        return mtmanager.getDurationInSec(trueTrueFilePath);
     }
     
     public String getFilePath() {
@@ -111,18 +111,18 @@ public class MyTunesModel
     }
     
     public String getArtist() {
-        String artist = mtm.getAuthor(trueTrueFilePath);
+        String artist = mtmanager.getAuthor(trueTrueFilePath);
         return artist;
     }
     
     public void createSong(String title, int duration, String author, String genre, String filepath) {
-        Song song = mtm.createSong(title, duration, author, genre, filepath);
+        Song song = mtmanager.createSong(title, duration, author, genre, filepath);
         songList.add(song);
     }
     
     public void createPlaylist(String name) throws SQLException
     {
-        Playlist playlist = mtm.createPlaylist(name);
+        Playlist playlist = mtmanager.createPlaylist(name);
         playlistList.add(playlist);
         
     }
@@ -132,21 +132,21 @@ public class MyTunesModel
     }
     
     public void updateSong(Song song) {
-        mtm.updateSong(song);
+        mtmanager.updateSong(song);
     }
     
     public Song getSong(int id) {
-        return mtm.getSong(id);
+        return mtmanager.getSong(id);
     }
     
     public Playlist getPlaylist(int id) throws SQLException
     {
-        return mtm.getPlaylist(id);
+        return mtmanager.getPlaylist(id);
     }
     
     public void deletePlaylist(Playlist playlist) throws SQLException
     {
-        mtm.deletePlaylist(playlist);
+        mtmanager.deletePlaylist(playlist);
         songList.remove(playlist);
     }
     

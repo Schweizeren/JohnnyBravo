@@ -119,7 +119,14 @@ public class MyTunesManager
     }
     
     public Playlist createPlaylist(String name) throws SQLException {
-        return pdao.createPlaylist(name);
+    try
+        {
+            return pdao.createPlaylist(name);
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(MyTunesManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
     
     public List<Playlist> getAllPlaylist()
