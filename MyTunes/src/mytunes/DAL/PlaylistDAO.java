@@ -79,7 +79,7 @@ public class PlaylistDAO
             return playlist;
         }
     }
-    public void deletePlaylist(Playlist playlist) throws SQLException
+    public void deletePlaylist(Playlist playlist)
     {
         try (Connection con = cb.getConnection())
         {
@@ -114,15 +114,24 @@ public class PlaylistDAO
         }
         return null;
     }
-    public void updatePlaylist(Playlist playlist) {
+    public void updatePlaylist(Playlist playlist)
+    {
+        String name = playlist.getName();
+        int id = playlist.getId();
+        
         try (Connection con = cb.getConnection()) {
             Statement statement = con.createStatement();
-            String sql = "UPDATE Playlist SET "
-                    + "name = " + playlist.getName() + 
-                    "WHERE id = " + playlist.getId() + ";";
-            statement.executeUpdate(sql);
-        }catch (SQLException ex) {
-            throw new UnsupportedOperationException();
+            String sql = "UPDATE Playlist SET name = ? WHERE id = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, name);
+            ps.setInt(4, id);
+            
+            ps.executeUpdate();
+            ps.close();
+        }
+        catch (SQLException ex)
+        {
+            
         }
     }
     

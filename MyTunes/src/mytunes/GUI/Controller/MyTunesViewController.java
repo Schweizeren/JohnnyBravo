@@ -10,6 +10,7 @@ package mytunes.GUI.Controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -138,8 +139,21 @@ public class MyTunesViewController implements Initializable
     }
 
     @FXML
-    private void deletePlaylist(ActionEvent event)
+    private void deletePlaylist(ActionEvent event) throws SQLException, IOException
     {
+        Playlist playlist = listPlaylists.getSelectionModel().getSelectedItem();
+          if (playlist == null) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/NoSongChosen.fxml"));
+            Parent root = (Parent)loader.load();
+            
+            NoSongChosenController nsccontroller = loader.getController();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+            
+            }else {
+            mtm.deletePlaylist(playlist);
+            }
     }
 
     @FXML
@@ -153,15 +167,9 @@ public class MyTunesViewController implements Initializable
     }
 
     @FXML
-    private void deleteSongOnPlaylist(ActionEvent event)
+    private void deleteSongOnPlaylist(ActionEvent event) throws IOException, SQLException
     {
-          /*FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/NoSongChosen.fxml"));
-            Parent root = (Parent)loader.load();
-            
-            NoSongChosenController nsccontroller = loader.getController();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();*/
+        
     }
 
     @FXML
