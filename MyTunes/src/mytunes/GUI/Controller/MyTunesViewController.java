@@ -38,6 +38,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import mytunes.GUI.Model.MyTunesModel;
 import mytunes.BLL.SongSearcher;
+import mytunes.be.Playlist;
 import mytunes.be.Song;
 
 /**
@@ -51,7 +52,7 @@ public class MyTunesViewController implements Initializable
     private SongSearcher ss;
     
     @FXML
-    private ListView<?> listPlaylists;
+    private ListView<Playlist> listPlaylists;
     @FXML
     private ListView<Song> listSongs;
     @FXML
@@ -114,6 +115,7 @@ public class MyTunesViewController implements Initializable
     public void initialize(URL url, ResourceBundle rb)
     {
         listSongs.setItems(mtm.getSongs());
+        listPlaylists.setItems(mtm.getAllPlaylist());
         
     }    
 

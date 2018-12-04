@@ -122,7 +122,7 @@ public class MyTunesManager
         return pdao.createPlaylist(name);
     }
     
-    public List<Playlist> getPlaylist()
+    public List<Playlist> getAllPlaylist()
     {
         return pdao.getAllPlaylist();
     }
