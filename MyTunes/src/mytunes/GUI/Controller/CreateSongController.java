@@ -130,6 +130,8 @@ public class CreateSongController implements Initializable
                 break;
             case 6:
                 txtOtherCategory.setVisible(true);
+                category = txtOtherCategory.getText();
+                break;
             default: 
                 throw new UnsupportedOperationException("Category not chosen");
         }

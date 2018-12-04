@@ -118,15 +118,8 @@ public class MyTunesViewController implements Initializable
     }    
 
     @FXML
-    private void createPlaylist(ActionEvent event) throws IOException
+    private void createPlaylist(ActionEvent event)
     {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/CreatePlaylist.fxml"));
-        Parent root = (Parent)loader.load();
-        
-        CreatePlaylistController cpcontroller = loader.getController();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.show();
     }
 
     @FXML
@@ -159,6 +152,13 @@ public class MyTunesViewController implements Initializable
     @FXML
     private void deleteSongOnPlaylist(ActionEvent event)
     {
+          /*FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/NoSongChosen.fxml"));
+            Parent root = (Parent)loader.load();
+            
+            NoSongChosenController nsccontroller = loader.getController();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();*/
     }
 
     @FXML
@@ -177,9 +177,18 @@ public class MyTunesViewController implements Initializable
     private void editSong(ActionEvent event) throws IOException
     {
         Song song = listSongs.getSelectionModel().getSelectedItem();
-        if (song == null) {
-            testlbl.setText("Please select a song first");
-        } else {
+        if (song == null) 
+        {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/NoSongChosen.fxml"));
+            Parent root = (Parent)loader.load();
+            
+            NoSongChosenController nsccontroller = loader.getController();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } 
+        else 
+        {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/EditSong.fxml"));
         Parent root = (Parent)loader.load();
         
@@ -191,11 +200,17 @@ public class MyTunesViewController implements Initializable
     }
 
     @FXML
-    private void deleteSong(ActionEvent event)
+    private void deleteSong(ActionEvent event) throws IOException
     {
         Song song = listSongs.getSelectionModel().getSelectedItem();
         if (song == null) {
-            testlbl.setText("Please choose a song you want to delete first");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/NoSongChosen.fxml"));
+            Parent root = (Parent)loader.load();
+            
+            NoSongChosenController nsccontroller = loader.getController();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
         }else {
         mtm.deleteSong(song);
         testlbl.setText("");
