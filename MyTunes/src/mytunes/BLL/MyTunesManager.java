@@ -142,5 +142,9 @@ public class MyTunesManager
     {
         return pdao.getPlaylist(id);
     }
+    public void updatePlaylist(Playlist playlist)
+    {
+        pdao.updatePlaylist(playlist);
+    }
 }
 

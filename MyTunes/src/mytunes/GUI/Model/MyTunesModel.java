@@ -154,4 +154,8 @@ public class MyTunesModel
     {
         return playlistList;
     }
+    public void updatePlaylist(Playlist playlist)
+    {
+        mtmanager.updatePlaylist(playlist);
+    }
 }

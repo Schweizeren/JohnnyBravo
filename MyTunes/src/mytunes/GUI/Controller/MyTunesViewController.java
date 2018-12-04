@@ -180,29 +180,24 @@ public class MyTunesViewController implements Initializable
     private void editSong(ActionEvent event) throws IOException
     {
         Song song = listSongs.getSelectionModel().getSelectedItem();
+        if (song == null) 
+        {
 
-
-
-            if (song == null) {
-
-            testlbl.setText("Please select a song first");
+        testlbl.setText("Please select a song first");
         } 
         else 
         {
-
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/EditSong.fxml"));
             Parent root = (Parent)loader.load();
         
-        EditSongController escontroller = loader.getController();
-        escontroller.initializeSong(song);
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.show();
-
-            
-            }
-
+            EditSongController escontroller = loader.getController();
+            escontroller.initializeSong(song);
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();  
         }
+
+    }
 
     @FXML
     private void deleteSong(ActionEvent event) throws IOException
