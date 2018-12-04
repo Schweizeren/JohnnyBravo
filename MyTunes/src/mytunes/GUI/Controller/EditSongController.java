@@ -29,6 +29,7 @@ import mytunes.be.Song;
  * @author Kristian Urup laptop
  */
 public class EditSongController implements Initializable
+
 {
     private MyTunesModel mtm;
 
@@ -121,8 +122,12 @@ public class EditSongController implements Initializable
         
     }
     
-    public void setSongInformation(String title) {
-        txtTitleInput.setText(title);
+    public Song initializeSong(Song song) {
+        txtTitleInput.setText(song.getTitle());
+        txtArtistInput.setText(song.getArtist());
+        txtDuration.setText(Integer.toString(song.getLength()));
+        txtFile.setText(song.getFilepath());
+        return song;
     }
 }
 
