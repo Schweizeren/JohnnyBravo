@@ -5,8 +5,12 @@
  */
 package mytunes.GUI.Controller;
 
+
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,6 +19,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import mytunes.GUI.Model.MyTunesModel;
 
 /**
  * FXML Controller class
@@ -23,22 +28,31 @@ import javafx.stage.Stage;
  */
 public class EditSongController implements Initializable
 {
-
+    private MyTunesModel mtm;
     @FXML
     private AnchorPane rootPane;
     @FXML
-    private TextField txtTitleInput;
+    public TextField txtTitleInput;
     @FXML
-    private TextField txtArtistInput;
+    public TextField txtArtistInput;
     @FXML
-    private TextField txtDuration;
+    public TextField txtDuration;
     @FXML
     private ComboBox<String> comboEditSong;
     @FXML
-    private TextField txtFile;
+    public TextField txtFile;
     @FXML
     private TextField txtOtherCategory;
-
+    
+    public EditSongController() {
+        try
+        {
+            mtm = new MyTunesModel();
+        } catch (IOException ex)
+        {
+            
+        }
+    }
     /**
      * Initializes the controller class.
      */
@@ -49,6 +63,7 @@ public class EditSongController implements Initializable
                 "Rock","Techno","Other"));
         comboEditSong.setVisibleRowCount(6);
         txtOtherCategory.setVisible(false);
+        
     }    
 
     @FXML
@@ -97,5 +112,11 @@ public class EditSongController implements Initializable
     @FXML
     private void handleSaveBtn(ActionEvent event)
     {
+        
     }
+    
+    public void setSongInformation(String title) {
+        txtTitleInput.setText(title);
+    }
+    
 }

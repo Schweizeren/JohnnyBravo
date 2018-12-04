@@ -10,8 +10,6 @@ import java.io.IOException;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.ListView;
-import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.FileChooser;
 import mytunes.BLL.MyTunesManager;
@@ -24,14 +22,11 @@ import mytunes.be.Song;
  */
 public class MyTunesModel
 {
-//    final JFXPanel fxPanel = new JFXPanel();
     private ObservableList<Song> songList;
     private MediaPlayer mediaPlayer;
     private final SongSearcher ss;
     private MyTunesManager mtm;
     private String trueTrueFilePath;
-//    Media media = new Media(new File(filePath).toURI().toString());
-//    MediaPlayer mediaPlayer = new MediaPlayer(media);
     
     public MyTunesModel() throws IOException {
         songList = FXCollections.observableArrayList();
@@ -129,5 +124,4 @@ public class MyTunesModel
         searchedSongList.addAll(ss.searchSongs(searchBase, query));
         return searchedSongList;
     }
-    
 }

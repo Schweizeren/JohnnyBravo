@@ -171,10 +171,15 @@ public class MyTunesViewController implements Initializable
     @FXML
     private void editSong(ActionEvent event) throws IOException
     {
+        Song song = listSongs.getSelectionModel().getSelectedItem();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/EditSong.fxml"));
         Parent root = (Parent)loader.load();
         
         EditSongController escontroller = loader.getController();
+        escontroller.txtTitleInput.setText(song.getTitle());
+        escontroller.txtArtistInput.setText(song.getArtist());
+        escontroller.txtDuration.setText(Integer.toString(song.getLength()));
+        escontroller.txtFile.setText(song.getFilepath());
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
         stage.show();
