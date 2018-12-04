@@ -53,5 +53,4 @@ public class CreatePlaylistController implements Initializable
         Stage stage = (Stage) rootPane.getScene().getWindow();
         stage.close();
     }
-    
 }
