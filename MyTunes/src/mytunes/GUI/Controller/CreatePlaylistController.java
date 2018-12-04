@@ -7,16 +7,15 @@ package mytunes.GUI.Controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import mytunes.GUI.Model.MyTunesModel;
 
 /**
  * FXML Controller class
@@ -25,7 +24,8 @@ import javafx.stage.Stage;
  */
 public class CreatePlaylistController implements Initializable
 {
-
+    private MyTunesModel mtm;
+    
     @FXML
     private AnchorPane rootPane;
     @FXML
@@ -41,9 +41,10 @@ public class CreatePlaylistController implements Initializable
     }    
 
     @FXML
-    private void handleCreateBtn(ActionEvent event)
+    private void handleCreateBtn(ActionEvent event) throws SQLException
     {
-        
+        String name = txtNameInput.getText();
+        mtm.createPlaylist(name);
     }
 
     @FXML

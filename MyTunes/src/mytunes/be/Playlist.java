@@ -16,12 +16,10 @@ public class Playlist
     private List<Song> playlist;
     private String name;
     private int id;
-    private int songCount;
 
-    public Playlist(String name, int id, int songCount) {
-        this.name = name;
+    public Playlist(int id, String name) {
         this.id = id;
-        this.songCount = songCount;
+        this.name = name;
     }
 
     public List<Song> getPlaylist() {
@@ -43,24 +41,4 @@ public class Playlist
     public int getId() {
         return id;
     }
-
-    public int getSongCount() {
-        return songCount;
-    }
-
-    public void setSongCount(int songCount) {
-        this.songCount = songCount;
-    }
-
-    @Override
-    public String toString() {
-        return "Playlist{" + "Name=" + name + ", Number of songs in playlist=" + songCount + '}';
-    }
-
-    
-    
-    
-    
-    
-    
 }
