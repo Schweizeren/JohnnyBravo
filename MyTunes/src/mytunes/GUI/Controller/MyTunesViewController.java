@@ -255,36 +255,7 @@ public class MyTunesViewController implements Initializable
 
     @FXML
     private void playMusic(ActionEvent event)
-    {
-        Song song = listSongs.getSelectionModel().getSelectedItem();
-        String filePath = song.getFilepath();
-        String trueFilePath = "file:/" + filePath;
-        String trueTrueFilePath = trueFilePath.replace(" ", "%20");
-        System.out.println(trueTrueFilePath);
-        if(trueTrueFilePath != null)
-        {
-            Media media = new Media(trueTrueFilePath);
-            mediaPlayer = new MediaPlayer(media);
-            sliderVolume.setValue(mediaPlayer.getVolume() * 100);
-            sliderVolume.valueProperty().addListener(new InvalidationListener() 
-            {
-                @Override
-                public void invalidated(Observable observable)
-                {
-                    mediaPlayer.setVolume(sliderVolume.getValue()/100);
-                }
-            });
-            
-            mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>()
-            {
-                @Override
-                public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) {
-                sliderDuration.setValue(newValue.toSeconds());
-                sliderDuration.maxProperty().bind(Bindings.createDoubleBinding(() -> mediaPlayer.getTotalDuration().toSeconds(), mediaPlayer.totalDurationProperty()));
-                }
-            });
-        }
-        
+    {      
         mediaPlayer.play();
     }
 
@@ -315,7 +286,34 @@ public class MyTunesViewController implements Initializable
     @FXML
     private void songPressed(MouseEvent event)
     {
-        
+        Song song = listSongs.getSelectionModel().getSelectedItem();
+        String filePath = song.getFilepath();
+        String trueFilePath = "file:/" + filePath;
+        String trueTrueFilePath = trueFilePath.replace(" ", "%20");
+        System.out.println(trueTrueFilePath);
+        if(trueTrueFilePath != null)
+        {
+            Media media = new Media(trueTrueFilePath);
+            mediaPlayer = new MediaPlayer(media);
+            sliderVolume.setValue(mediaPlayer.getVolume() * 100);
+            sliderVolume.valueProperty().addListener(new InvalidationListener() 
+            {
+                @Override
+                public void invalidated(Observable observable)
+                {
+                    mediaPlayer.setVolume(sliderVolume.getValue()/100);
+                }
+            });
+            
+            mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>()
+            {
+                @Override
+                public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) {
+                sliderDuration.setValue(newValue.toSeconds());
+                sliderDuration.maxProperty().bind(Bindings.createDoubleBinding(() -> mediaPlayer.getTotalDuration().toSeconds(), mediaPlayer.totalDurationProperty()));
+                }
+            });
+        }
     }
     
 }
