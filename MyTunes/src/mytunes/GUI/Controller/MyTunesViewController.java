@@ -272,12 +272,12 @@ public class MyTunesViewController implements Initializable
             });
             
             mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>()
-                    {
-                         @Override
-                         public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) {
-                             sliderDuration.setValue(newValue.toSeconds());
-                         }
-                    });
+            {
+                @Override
+                public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) {
+                sliderDuration.setValue(newValue.toSeconds());
+                }
+            });
         }
         
         mediaPlayer.play();
