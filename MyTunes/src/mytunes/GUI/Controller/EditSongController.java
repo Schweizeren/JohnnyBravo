@@ -29,11 +29,6 @@ import mytunes.be.Song;
  * @author Kristian Urup laptop
  */
 public class EditSongController implements Initializable
-
-{  
-    private mytunes.GUI.Model.MyTunesModel mtm;
-
-
 {
     private MyTunesModel mtm;
 
@@ -130,3 +125,4 @@ public class EditSongController implements Initializable
         txtTitleInput.setText(title);
     }
 }
+
