@@ -11,12 +11,14 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import mytunes.DAL.PlaylistDAO;
 import mytunes.DAL.SongDAO;
 import mytunes.DAL.SongMetaData;
 import org.farng.mp3.TagException;
 
-
+import mytunes.DAL.PlaylistDAO;
 import mytunes.DAL.SongMetaData;
+import mytunes.be.Playlist;
 import mytunes.be.Song;
 
 /**
@@ -27,9 +29,11 @@ public class MyTunesManager
 {
     private SongMetaData smd;
     private SongDAO sdao;
+    private PlaylistDAO pdao;
     public MyTunesManager() {
         smd = new SongMetaData();
         sdao = new SongDAO();
+        pdao = new PlaylistDAO();
         
     }
     
@@ -104,6 +108,32 @@ public class MyTunesManager
     
     public void deleteSong(Song song) {
         sdao.deleteSong(song);
+    }
+    
+    public void updateSong(Song song) {
+        sdao.updateSong(song);
+    }
+    
+    public Song getSong(int id) {
+        return sdao.getSong(id);
+    }
+    
+    public Playlist createPlaylist(String name) throws SQLException {
+        return pdao.createPlaylist(name);
+    }
+    
+    public List<Playlist> getPlaylist()
+    {
+        return pdao.getAllPlaylist();
+    }
+    
+    public void deletePlaylist(Playlist playlist) throws SQLException
+    {
+        pdao.deletePlaylist(playlist);
+    }
+    public Playlist getPlaylist(int id) throws SQLException
+    {
+        return pdao.getPlaylist(id);
     }
 }
 

@@ -110,4 +110,26 @@ public class SongDAO
             throw new UnsupportedOperationException();
         }
     }
+    
+    public Song getSong(int id) {
+        try (Connection con = cb.getConnection()) {
+            Statement statement = con.createStatement();
+            String sql = "SELECT FROM Song WHERE id = " + id + ";";
+            ResultSet rs = statement.executeQuery(sql);
+            while(rs.next()) {
+                int songId = rs.getInt("id");
+                String title = rs.getString("title");
+                int duration = rs.getInt("duration");
+                String artist = rs.getString("author");
+                String genre = rs.getString("genre");
+                String filepath = rs.getString("filepath");
+                Song song = new Song(songId, title, duration, artist, genre, filepath);
+                return song;
+            }
+            
+        }catch (SQLException ex) {
+            
+        }
+        return null;
+    }
 }

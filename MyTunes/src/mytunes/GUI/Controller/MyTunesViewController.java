@@ -7,16 +7,16 @@ package mytunes.GUI.Controller;
 
 
 
-import com.sun.deploy.net.URLEncoder;
+
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
-import javafx.collections.ObservableList;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.JFXPanel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -30,10 +30,12 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import mytunes.GUI.Model.MyTunesModel;
 import mytunes.BLL.SongSearcher;
 import mytunes.be.Song;
@@ -82,8 +84,6 @@ public class MyTunesViewController implements Initializable
     private Label lblMusicPlaying;
     @FXML
     private AnchorPane rootPane;
-    @FXML
-    private Slider slider;
     
     final JFXPanel fxPanel = new JFXPanel();
     private MediaPlayer mediaPlayer;
@@ -92,6 +92,10 @@ public class MyTunesViewController implements Initializable
     private TextField writeSearch;
     @FXML
     private Label testlbl;
+    @FXML
+    private Slider sliderDuration;
+    @FXML
+    private Slider sliderVolume;
     
     public MyTunesViewController() {
         try
@@ -110,6 +114,7 @@ public class MyTunesViewController implements Initializable
     public void initialize(URL url, ResourceBundle rb)
     {
         listSongs.setItems(mtm.getSongs());
+        
     }    
 
     @FXML
@@ -172,6 +177,10 @@ public class MyTunesViewController implements Initializable
     private void editSong(ActionEvent event) throws IOException
     {
         Song song = listSongs.getSelectionModel().getSelectedItem();
+        if (song == null) {
+            testlbl.setText("Please select a song first");
+        } else {
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/EditSong.fxml"));
         Parent root = (Parent)loader.load();
         
@@ -183,6 +192,7 @@ public class MyTunesViewController implements Initializable
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
         stage.show();
+        }
     }
 
     @FXML
@@ -236,17 +246,26 @@ public class MyTunesViewController implements Initializable
         {
             Media media = new Media(trueTrueFilePath);
             mediaPlayer = new MediaPlayer(media);
-            mediaPlayer.play();
-            slider.setValue(mediaPlayer.getVolume() * 100);
-            slider.valueProperty().addListener(new InvalidationListener() 
+            sliderVolume.setValue(mediaPlayer.getVolume() * 100);
+            sliderVolume.valueProperty().addListener(new InvalidationListener() 
             {
                 @Override
                 public void invalidated(Observable observable)
                 {
-                    mediaPlayer.setVolume(slider.getValue()/100);
+                    mediaPlayer.setVolume(sliderVolume.getValue()/100);
                 }
             });
+            
+            mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>()
+                    {
+                         @Override
+                         public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) {
+                             sliderDuration.setValue(newValue.toSeconds());
+                         }
+                    });
         }
+        
+        mediaPlayer.play();
     }
 
     @FXML
@@ -263,6 +282,18 @@ public class MyTunesViewController implements Initializable
 
     @FXML
     private void writeSearch(KeyEvent event)
+    {
+        
+    }
+
+    @FXML
+    private void sliderDrag(MouseEvent event)
+    {
+        mediaPlayer.seek(Duration.seconds(sliderDuration.getValue()));
+    }
+
+    @FXML
+    private void songPressed(MouseEvent event)
     {
         
     }

@@ -5,7 +5,6 @@
  */
 package mytunes.GUI.Controller;
 
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -20,6 +19,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import mytunes.GUI.Model.MyTunesModel;
+import mytunes.be.Song;
+
 
 /**
  * FXML Controller class
@@ -27,6 +28,7 @@ import mytunes.GUI.Model.MyTunesModel;
  * @author Kristian Urup laptop
  */
 public class EditSongController implements Initializable
+
 {
     private MyTunesModel mtm;
     @FXML
@@ -43,7 +45,7 @@ public class EditSongController implements Initializable
     public TextField txtFile;
     @FXML
     private TextField txtOtherCategory;
-    
+
     public EditSongController() {
         try
         {
@@ -53,6 +55,7 @@ public class EditSongController implements Initializable
             
         }
     }
+
     /**
      * Initializes the controller class.
      */
@@ -118,5 +121,4 @@ public class EditSongController implements Initializable
     public void setSongInformation(String title) {
         txtTitleInput.setText(title);
     }
-    
 }

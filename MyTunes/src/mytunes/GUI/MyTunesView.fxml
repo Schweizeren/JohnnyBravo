@@ -8,10 +8,10 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="rootPane" prefHeight="762.0" prefWidth="1118.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.GUI.Controller.MyTunesViewController">
+<AnchorPane id="AnchorPane" fx:id="rootPane" prefHeight="762.0" prefWidth="1118.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.GUI.Controller.MyTunesViewController">
    <children>
       <ListView fx:id="listPlaylists" layoutX="28.0" layoutY="104.0" prefHeight="539.0" prefWidth="236.0" />
-      <ListView fx:id="listSongs" layoutX="684.0" layoutY="104.0" prefHeight="539.0" prefWidth="403.0" />
+      <ListView fx:id="listSongs" layoutX="684.0" layoutY="104.0" onMousePressed="#songPressed" prefHeight="539.0" prefWidth="403.0" />
       <ListView fx:id="listSongsOnPlaylist" layoutX="281.0" layoutY="104.0" prefHeight="539.0" prefWidth="191.0" />
       <Button fx:id="btnNewPlaylist" layoutX="28.0" layoutY="659.0" mnemonicParsing="false" onAction="#createPlaylist" prefHeight="31.0" prefWidth="65.0" text="New..." />
       <Button fx:id="btnEditPlaylist" layoutX="103.0" layoutY="659.0" mnemonicParsing="false" onAction="#editPlaylist" prefHeight="31.0" prefWidth="63.0" text="Edit..." />
@@ -40,7 +40,8 @@
       <Button layoutX="558.0" layoutY="706.0" mnemonicParsing="false" onAction="#playMusic" prefHeight="31.0" prefWidth="52.0" text="⯈" />
       <Button layoutX="611.0" layoutY="706.0" mnemonicParsing="false" onAction="#pauseMusic" prefHeight="31.0" prefWidth="33.0" text="| |" />
       <Button layoutX="525.0" layoutY="706.0" mnemonicParsing="false" onAction="#stopMusic" prefHeight="31.0" prefWidth="33.0" text="⬛" />
-      <Slider fx:id="slider" layoutX="512.0" layoutY="678.0" />
       <Label fx:id="testlbl" layoutX="519.0" layoutY="214.0" prefHeight="21.0" prefWidth="117.0" />
+      <Slider fx:id="sliderDuration" layoutX="242.0" layoutY="741.0" onDragDetected="#sliderDrag" prefHeight="14.0" prefWidth="684.0" />
+      <Slider fx:id="sliderVolume" layoutX="575.0" layoutY="535.0" orientation="VERTICAL" />
    </children>
 </AnchorPane>
