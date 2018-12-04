@@ -120,12 +120,7 @@ public class MyTunesViewController implements Initializable
     }    
 
     @FXML
-    private void createPlaylist(ActionEvent event)
-    {
-    }
-
-    @FXML
-    private void editPlaylist(ActionEvent event) throws IOException
+    private void createPlaylist(ActionEvent event) throws IOException
     {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/CreatePlaylist.fxml"));
         Parent root = (Parent)loader.load();
@@ -134,6 +129,12 @@ public class MyTunesViewController implements Initializable
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
         stage.show();
+    }
+
+    @FXML
+    private void editPlaylist(ActionEvent event) throws IOException
+    {
+        
     }
 
     @FXML

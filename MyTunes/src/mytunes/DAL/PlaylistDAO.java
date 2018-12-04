@@ -114,4 +114,16 @@ public class PlaylistDAO
         }
         return null;
     }
+    public void updatePlaylist(Playlist playlist) {
+        try (Connection con = cb.getConnection()) {
+            Statement statement = con.createStatement();
+            String sql = "UPDATE Playlist SET "
+                    + "name = " + playlist.getName() + 
+                    "WHERE id = " + playlist.getId() + ";";
+            statement.executeUpdate(sql);
+        }catch (SQLException ex) {
+            throw new UnsupportedOperationException();
+        }
+    }
+    
 }
