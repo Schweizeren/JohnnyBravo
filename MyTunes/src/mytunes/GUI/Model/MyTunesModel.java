@@ -118,6 +118,8 @@ public class MyTunesModel
     public void createSong(String title, int duration, String author, String genre, String filepath) {
         Song song = mtmanager.createSong(title, duration, author, genre, filepath);
         songList.add(song);
+        
+        
     }
     
     public void createPlaylist(String name) throws SQLException

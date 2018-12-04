@@ -8,18 +8,18 @@ package mytunes.GUI.Controller;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.EventObject;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
+import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import mytunes.GUI.Model.MyTunesModel;
-import mytunes.be.Playlist;
 
 /**
  * FXML Controller class
@@ -59,6 +59,9 @@ public class CreatePlaylistController implements Initializable
     {
         String name = txtNameInput.getText();
         mtm.createPlaylist(name);
+        
+        Stage stage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
+        stage.close();
         
     }
 
