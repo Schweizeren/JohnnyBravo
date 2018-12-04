@@ -36,7 +36,7 @@ public class MyTunesModel
         ss = new SongSearcher();
         mtm = new MyTunesManager();
         songList.addAll(mtm.getAllSongs());
-        playlistList.addAll(mtm.getPlaylist());
+        playlistList.addAll(mtm.getAllPlaylist());
     }
     
     
@@ -148,6 +148,11 @@ public class MyTunesModel
     {
         mtm.deletePlaylist(playlist);
         songList.remove(playlist);
+    }
+    
+    public ObservableList<Playlist> getAllPlaylist()
+    {
+        return playlistList;
     }
     
     
