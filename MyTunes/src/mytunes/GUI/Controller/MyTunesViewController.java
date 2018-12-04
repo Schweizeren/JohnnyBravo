@@ -180,19 +180,6 @@ public class MyTunesViewController implements Initializable
     {
         Song song = listSongs.getSelectionModel().getSelectedItem();
 
-        if (song == null) 
-        {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/NoSongChosen.fxml"));
-            Parent root = (Parent)loader.load();
-            
-            NoSongChosenController nsccontroller = loader.getController();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } 
-        else 
-        {
-
         if (song == null) {
             testlbl.setText("Please select a song first");
         } else {
@@ -201,10 +188,7 @@ public class MyTunesViewController implements Initializable
         Parent root = (Parent)loader.load();
         
         EditSongController escontroller = loader.getController();
-        escontroller.txtTitleInput.setText(song.getTitle());
-        escontroller.txtArtistInput.setText(song.getArtist());
-        escontroller.txtDuration.setText(Integer.toString(song.getLength()));
-        escontroller.txtFile.setText(song.getFilepath());
+        escontroller.initializeSong(song);
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
         stage.show();
@@ -321,4 +305,4 @@ public class MyTunesViewController implements Initializable
     }
     
 }
-}
+
