@@ -121,10 +121,12 @@ public class MyTunesManager
     public Playlist createPlaylist(String name) throws SQLException {
         return pdao.createPlaylist(name);
     }
+    
     public List<Playlist> getPlaylist()
     {
         return pdao.getAllPlaylist();
     }
+    
     public void deletePlaylist(Playlist playlist) throws SQLException
     {
         pdao.deletePlaylist(playlist);
