@@ -7,15 +7,15 @@ package mytunes.GUI.Model;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 import javafx.collections.FXCollections;
+import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
-import javafx.scene.control.ListView;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.FileChooser;
 import mytunes.BLL.MyTunesManager;
 import mytunes.BLL.SongSearcher;
+import mytunes.be.Playlist;
 import mytunes.be.Song;
 
 /**
@@ -24,16 +24,19 @@ import mytunes.be.Song;
  */
 public class MyTunesModel
 {
+    private ObservableList<Playlist> playlistList;
     private ObservableList<Song> songList;
     private final SongSearcher ss;
     private MyTunesManager mtm;
     private String trueTrueFilePath;
     
     public MyTunesModel() throws IOException {
+        playlistList = FXCollections.observableArrayList();
         songList = FXCollections.observableArrayList();
         ss = new SongSearcher();
         mtm = new MyTunesManager();
         songList.addAll(mtm.getAllSongs());
+        playlistList.addAll(mtm.getPlaylist());
     }
     
     
@@ -117,6 +120,13 @@ public class MyTunesModel
         songList.add(song);
     }
     
+    public void createPlaylist(String name) throws SQLException
+    {
+        Playlist playlist = mtm.createPlaylist(name);
+        playlistList.add(playlist);
+        
+    }
+    
     public ObservableList<Song> getSongs() {
         return songList;
     }
@@ -127,6 +137,11 @@ public class MyTunesModel
     
     public Song getSong(int id) {
         return mtm.getSong(id);
+    }
+    public void deletePlaylist(Playlist playlist) throws SQLException
+    {
+        mtm.deletePlaylist(playlist);
+        songList.remove(playlist);
     }
     
 }

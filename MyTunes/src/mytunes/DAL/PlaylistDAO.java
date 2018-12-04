@@ -34,7 +34,7 @@ public class PlaylistDAO
         cb = new ConnectionDAO();
     }
     
-    public List<Playlist> getPlaylist()
+    public  List<Playlist> getAllPlaylist()
     {
         List<Playlist> playlists = new ArrayList<>();
         
@@ -78,5 +78,40 @@ public class PlaylistDAO
             Playlist playlist = new Playlist(id,name);
             return playlist;
         }
+    }
+    public void deletePlaylist(Playlist playlist) throws SQLException
+    {
+        try (Connection con = cb.getConnection())
+        {
+            Statement statement = con.createStatement();
+            String sql = "DELETE FROM Playlist WHERE id = " + playlist.getId() + ";";
+            statement.executeUpdate(sql);
+        }
+        catch (SQLException ex)
+        {
+            throw new UnsupportedOperationException();
+        }
+    }
+    
+    public Playlist getPlaylist(int id) throws SQLException
+    {
+        try (Connection con = cb.getConnection())
+        {
+            Statement statement = con.createStatement();
+            String sql = "SELECT FROM Playlist WHERE id = " + id + ";";
+            ResultSet rs = statement.executeQuery(sql);
+            while(rs.next())
+            {
+                int playlistId = rs.getInt("id");
+                String name = rs.getString("name");
+                Playlist playlist = new Playlist(playlistId, name);
+                return playlist;
+            }
+        }
+        catch (SQLException ex)
+        {
+            
+        }
+        return null;
     }
 }

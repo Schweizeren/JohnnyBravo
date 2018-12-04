@@ -43,6 +43,7 @@ public class CreatePlaylistController implements Initializable
     @FXML
     private void handleCreateBtn(ActionEvent event)
     {
+        String name = txtNameInput.getText();
         
     }
 
