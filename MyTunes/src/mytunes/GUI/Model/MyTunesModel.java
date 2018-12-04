@@ -151,4 +151,9 @@ public class MyTunesModel
         mtm.deletePlaylist(playlist);
         songList.remove(playlist);
     }
+    
+    public ObservableList<Playlist> getAllPlaylist()
+    {
+        return playlistList;
+    }
 }
