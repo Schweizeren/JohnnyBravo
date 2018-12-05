@@ -124,19 +124,25 @@ public class MyTunesViewController implements Initializable
     @FXML
     private void createPlaylist(ActionEvent event) throws IOException
     {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/CreatePlaylist.fxml"));
+        /*FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/CreatePlaylist.fxml"));
         Parent root = (Parent)loader.load();
         
         CreatePlaylistController cpcontroller = loader.getController();
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
-        stage.show();
+        stage.show();*/
     }
 
     @FXML
     private void editPlaylist(ActionEvent event) throws IOException
     {
+        /*FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/CreatePlaylist.fxml"));
+        Parent root = (Parent)loader.load();
         
+        CreatePlaylistController cpcontroller = loader.getController();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.show();*/
     }
 
     @FXML
@@ -170,7 +176,13 @@ public class MyTunesViewController implements Initializable
     @FXML
     private void deleteSongOnPlaylist(ActionEvent event) throws IOException, SQLException
     {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/NoPlaylistChosen.fxml"));
+        Parent root = (Parent)loader.load();
         
+        NoPlaylistChosenController npccontroller = loader.getController();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.show();  
     }
 
     @FXML
@@ -191,8 +203,13 @@ public class MyTunesViewController implements Initializable
         Song song = listSongs.getSelectionModel().getSelectedItem();
         if (song == null) 
         {
-
-        testlbl.setText("Please select a song first");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/NoSongChosen.fxml"));
+            Parent root = (Parent)loader.load();
+            
+            NoSongChosenController nsccontroller = loader.getController();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
         } 
         else 
         {
@@ -200,7 +217,6 @@ public class MyTunesViewController implements Initializable
             Parent root = (Parent)loader.load();
         
             EditSongController escontroller = loader.getController();
-            escontroller.initializeSong(song);
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.show();  
