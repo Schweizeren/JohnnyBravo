@@ -8,7 +8,6 @@ package mytunes.DAL;
 import java.io.IOException;
 import java.util.List;
 import mytunes.be.Song;
-import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -97,18 +96,24 @@ public class SongDAO
     }
     
     public void updateSong(Song song) {
+        String title = song.getTitle();
+        String author = song.getArtist();
+        String genre = song.getGenre();
+        int id = song.getId();
         try (Connection con = cb.getConnection()) {
-            Statement statement = con.createStatement();
-            String sql = "UPDATE Song SET "
-                    + "title = " + song.getTitle() + ","
-                    + "author = " + song.getArtist() + ","
-                    + "genre = " + song.getGenre() + ","
-                    + "filepath = " + song.getFilepath() + 
-                    "WHERE id = " + song.getId() + ";";
-            statement.executeUpdate(sql);
+            String sql = "UPDATE Song SET title = ?, author = ?, genre = ? WHERE id = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, title);
+            ps.setString(2, author);
+            ps.setString(3, genre);
+            ps.setInt(4, id);
+            
+            ps.executeUpdate();
+            ps.close();
+            
         }catch (SQLException ex) {
-            throw new UnsupportedOperationException();
         }
+        
     }
     
     public Song getSong(int id) {

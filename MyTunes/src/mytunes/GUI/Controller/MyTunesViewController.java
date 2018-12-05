@@ -10,11 +10,13 @@ package mytunes.GUI.Controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
+import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.JFXPanel;
@@ -120,12 +122,7 @@ public class MyTunesViewController implements Initializable
     }    
 
     @FXML
-    private void createPlaylist(ActionEvent event)
-    {
-    }
-
-    @FXML
-    private void editPlaylist(ActionEvent event) throws IOException
+    private void createPlaylist(ActionEvent event) throws IOException
     {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/CreatePlaylist.fxml"));
         Parent root = (Parent)loader.load();
@@ -137,8 +134,27 @@ public class MyTunesViewController implements Initializable
     }
 
     @FXML
-    private void deletePlaylist(ActionEvent event)
+    private void editPlaylist(ActionEvent event) throws IOException
     {
+        
+    }
+
+    @FXML
+    private void deletePlaylist(ActionEvent event) throws SQLException, IOException
+    {
+        Playlist playlist = listPlaylists.getSelectionModel().getSelectedItem();
+          if (playlist == null) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/NoSongChosen.fxml"));
+            Parent root = (Parent)loader.load();
+            
+            NoSongChosenController nsccontroller = loader.getController();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+            
+            }else {
+            mtm.deletePlaylist(playlist);
+            }
     }
 
     @FXML
@@ -152,15 +168,9 @@ public class MyTunesViewController implements Initializable
     }
 
     @FXML
-    private void deleteSongOnPlaylist(ActionEvent event)
+    private void deleteSongOnPlaylist(ActionEvent event) throws IOException, SQLException
     {
-          /*FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/NoSongChosen.fxml"));
-            Parent root = (Parent)loader.load();
-            
-            NoSongChosenController nsccontroller = loader.getController();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();*/
+        
     }
 
     @FXML
@@ -179,37 +189,22 @@ public class MyTunesViewController implements Initializable
     private void editSong(ActionEvent event) throws IOException
     {
         Song song = listSongs.getSelectionModel().getSelectedItem();
-
         if (song == null) 
         {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/NoSongChosen.fxml"));
-            Parent root = (Parent)loader.load();
-            
-            NoSongChosenController nsccontroller = loader.getController();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();
+
+        testlbl.setText("Please select a song first");
         } 
         else 
         {
-
-        if (song == null) {
-            testlbl.setText("Please select a song first");
-        } else {
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/EditSong.fxml"));
-        Parent root = (Parent)loader.load();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/EditSong.fxml"));
+            Parent root = (Parent)loader.load();
         
-        EditSongController escontroller = loader.getController();
-        escontroller.txtTitleInput.setText(song.getTitle());
-        escontroller.txtArtistInput.setText(song.getArtist());
-        escontroller.txtDuration.setText(Integer.toString(song.getLength()));
-        escontroller.txtFile.setText(song.getFilepath());
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.show();
+            EditSongController escontroller = loader.getController();
+            escontroller.initializeSong(song);
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();  
         }
-    }
     }
 
     @FXML
@@ -259,35 +254,7 @@ public class MyTunesViewController implements Initializable
 
     @FXML
     private void playMusic(ActionEvent event)
-    {
-        Song song = listSongs.getSelectionModel().getSelectedItem();
-        String filePath = song.getFilepath();
-        String trueFilePath = "file:/" + filePath;
-        String trueTrueFilePath = trueFilePath.replace(" ", "%20");
-        System.out.println(trueTrueFilePath);
-        if(trueTrueFilePath != null)
-        {
-            Media media = new Media(trueTrueFilePath);
-            mediaPlayer = new MediaPlayer(media);
-            sliderVolume.setValue(mediaPlayer.getVolume() * 100);
-            sliderVolume.valueProperty().addListener(new InvalidationListener() 
-            {
-                @Override
-                public void invalidated(Observable observable)
-                {
-                    mediaPlayer.setVolume(sliderVolume.getValue()/100);
-                }
-            });
-            
-            mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>()
-                    {
-                         @Override
-                         public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) {
-                             sliderDuration.setValue(newValue.toSeconds());
-                         }
-                    });
-        }
-        
+    {      
         mediaPlayer.play();
     }
 
@@ -318,7 +285,34 @@ public class MyTunesViewController implements Initializable
     @FXML
     private void songPressed(MouseEvent event)
     {
-        
+        Song song = listSongs.getSelectionModel().getSelectedItem();
+        String filePath = song.getFilepath();
+        String trueFilePath = "file:/" + filePath;
+        String trueTrueFilePath = trueFilePath.replace(" ", "%20");
+        System.out.println(trueTrueFilePath);
+        if(trueTrueFilePath != null)
+        {
+            Media media = new Media(trueTrueFilePath);
+            mediaPlayer = new MediaPlayer(media);
+            sliderVolume.setValue(mediaPlayer.getVolume() * 100);
+            sliderVolume.valueProperty().addListener(new InvalidationListener() 
+            {
+                @Override
+                public void invalidated(Observable observable)
+                {
+                    mediaPlayer.setVolume(sliderVolume.getValue()/100);
+                }
+            });
+            
+            mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>()
+            {
+                @Override
+                public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) {
+                sliderDuration.setValue(newValue.toSeconds());
+                sliderDuration.maxProperty().bind(Bindings.createDoubleBinding(() -> mediaPlayer.getTotalDuration().toSeconds(), mediaPlayer.totalDurationProperty()));
+                }
+            });
+        }
     }
     
 }
