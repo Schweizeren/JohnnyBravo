@@ -31,12 +31,7 @@ import mytunes.be.Song;
 public class EditSongController implements Initializable
 
 {  
-    private mytunes.GUI.Model.MyTunesModel mtm;
-
-
-{
     private MyTunesModel mtm;
-
     @FXML
     private AnchorPane rootPane;
     @FXML
@@ -51,6 +46,7 @@ public class EditSongController implements Initializable
     public TextField txtFile;
     @FXML
     private TextField txtOtherCategory;
+
 
     public EditSongController() {
         try

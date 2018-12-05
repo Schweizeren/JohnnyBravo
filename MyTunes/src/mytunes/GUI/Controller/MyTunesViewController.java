@@ -210,6 +210,7 @@ public class MyTunesViewController implements Initializable
         stage.show();
         }
     }
+    }
 
     @FXML
     private void deleteSong(ActionEvent event) throws IOException
@@ -321,4 +322,4 @@ public class MyTunesViewController implements Initializable
     }
     
 }
-}
+
