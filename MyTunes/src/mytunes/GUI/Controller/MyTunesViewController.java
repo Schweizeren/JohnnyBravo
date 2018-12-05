@@ -40,7 +40,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import mytunes.GUI.Model.MyTunesModel;
 import mytunes.BLL.SongSearcher;
-import mytunes.GUI.Model.PlaylistModel;
 import mytunes.GUI.Model.SongModel;
 import mytunes.be.Playlist;
 import mytunes.be.Song;
@@ -52,8 +51,7 @@ import mytunes.be.Song;
  */
 public class MyTunesViewController implements Initializable
 {
-    private SongModel sm;
-    private PlaylistModel pm;
+
     private SongSearcher ss;
     
     @FXML
@@ -108,6 +106,7 @@ public class MyTunesViewController implements Initializable
         {
             sm = new SongModel();
             ss = new SongSearcher();
+            sm = new SongModel();
         } catch (IOException ex)
         {
             Logger.getLogger(MyTunesViewController.class.getName()).log(Level.SEVERE, null, ex);
@@ -120,7 +119,6 @@ public class MyTunesViewController implements Initializable
     public void initialize(URL url, ResourceBundle rb)
     {
         listSongs.setItems(sm.getSongs());
-        listPlaylists.setItems(pm.getAllPlaylist());
         
     }    
 
@@ -254,7 +252,7 @@ public class MyTunesViewController implements Initializable
             stage.show();
         }else {
         sm.deleteSong(song);
-        testlbl.setText("");
+
         }
     }
 
