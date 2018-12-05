@@ -345,5 +345,10 @@ public class MyTunesViewController implements Initializable
         }
     }
     
+    public void endApplication()
+    {
+        System.exit(0);
+    }
+    
 }
 
