@@ -7,17 +7,15 @@ package mytunes.GUI.Controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.EventObject;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -92,6 +90,9 @@ public class CreateSongController implements Initializable
         String genre = comboCategoryBox.getSelectionModel().getSelectedItem();
         String artist = txtArtistInput.getText();
         mtm.createSong(title, duration, artist, genre, filepath);
+        
+        Stage stage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
+        stage.close();
     }
 
     @FXML
@@ -130,6 +131,8 @@ public class CreateSongController implements Initializable
                 break;
             case 6:
                 txtOtherCategory.setVisible(true);
+                category = txtOtherCategory.getText();
+                break;
             default: 
                 throw new UnsupportedOperationException("Category not chosen");
         }

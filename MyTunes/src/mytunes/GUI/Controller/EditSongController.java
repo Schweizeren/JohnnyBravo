@@ -14,6 +14,7 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -28,9 +29,11 @@ import mytunes.be.Song;
  * @author Kristian Urup laptop
  */
 public class EditSongController implements Initializable
-
-{
+{  
     private MyTunesModel mtm;
+
+    private Song oldSong;
+
     @FXML
     private AnchorPane rootPane;
     @FXML
@@ -45,6 +48,7 @@ public class EditSongController implements Initializable
     public TextField txtFile;
     @FXML
     private TextField txtOtherCategory;
+
 
     public EditSongController() {
         try
@@ -98,6 +102,8 @@ public class EditSongController implements Initializable
                 break;
             case 6: 
                 txtOtherCategory.setVisible(true);
+                category = txtOtherCategory.getText();
+                break;
             default: 
                 throw new UnsupportedOperationException("Category not chosen");
         }
@@ -115,10 +121,21 @@ public class EditSongController implements Initializable
     @FXML
     private void handleSaveBtn(ActionEvent event)
     {
-        
+        oldSong.setArtist(txtTitleInput.getText());
+        oldSong.setTitle(txtArtistInput.getText());
+        oldSong.setFilepath(txtFile.getText());
+        oldSong.setGenre(comboEditSong.getSelectionModel().getSelectedItem());
+        mtm.updateSong(oldSong);
     }
     
-    public void setSongInformation(String title) {
-        txtTitleInput.setText(title);
+    public void initializeSong(Song song) {
+        txtTitleInput.setText(song.getTitle());
+        txtArtistInput.setText(song.getArtist());
+        txtDuration.setText(Integer.toString(song.getLength()));
+        txtFile.setText(song.getFilepath());
+        oldSong = new Song(song.getId(), song.getTitle(), song.getLength(), song.getArtist(), song.getGenre(), song.getFilepath());
     }
+    
+    
 }
+
