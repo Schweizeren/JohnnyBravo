@@ -11,11 +11,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import mytunes.BLL.exception.MTBllException;
-import mytunes.DAL.PlaylistDAO;
 import mytunes.DAL.SongDAO;
-import mytunes.DAL.SongMetaData;
-import org.farng.mp3.TagException;
-
 import mytunes.DAL.PlaylistDAO;
 import mytunes.DAL.PlaylistSongDAO;
 import mytunes.DAL.SongMetaData;
@@ -46,64 +42,60 @@ public class MyTunesManager
         }
     }
 
-    public String getSongTitle(String filepath)
+    public String getSongTitle(String filepath) throws MTBllException
     {
         try
         {
             return smd.getSongTitle(filepath);
         } catch (MTDalException ex)
         {
-            Logger.getLogger(MyTunesManager.class.getName()).log(Level.SEVERE, null, ex);
+            throw new MTBllException("Could not get the title of the song. " + ex.getMessage());
         }
-        return null;
     }
 
-    public String getGenre(String filepath)
+    public String getGenre(String filepath) throws MTBllException
     {
         try
         {
             return smd.getGenre(filepath);
         } catch (MTDalException ex)
         {
-            Logger.getLogger(MyTunesManager.class.getName()).log(Level.SEVERE, null, ex);
+            throw new MTBllException("Could not get genre of the song. " + ex.getMessage());
         }
-        return null;
     }
 
-    public String getAuthor(String filepath)
+    public String getAuthor(String filepath) throws MTBllException
     {
         try
         {
             return smd.getAuthor(filepath);
         } catch (MTDalException ex)
         {
-            Logger.getLogger(MyTunesManager.class.getName()).log(Level.SEVERE, null, ex);
+            throw new MTBllException("Could not get artist of song. " + ex.getMessage());
         }
-        return null;
+        
     }
 
-    public int getDurationInSec(String filepath)
+    public int getDurationInSec(String filepath) throws MTBllException
     {
         try
         {
             return smd.getDurationInSec(filepath);
         } catch (MTDalException ex)
         {
-            Logger.getLogger(MyTunesManager.class.getName()).log(Level.SEVERE, null, ex);
+            throw new MTBllException("Could not get the duration in seconds. " + ex.getMessage());
         }
-        return 0;
     }
 
-    public Song createSong(String title, int duration, String author, String genre, String filepath)
+    public Song createSong(String title, int duration, String author, String genre, String filepath) throws MTBllException
     {
         try
         {
             return sdao.createSong(title, duration, author, genre, filepath);
         } catch (MTDalException ex)
         {
-            Logger.getLogger(MyTunesManager.class.getName()).log(Level.SEVERE, null, ex);
+            throw new MTBllException("Could not creat song. " + ex.getMessage());
         }
-        return null;
     }
 
     public List<Song> getAllSongs() throws MTBllException
@@ -111,45 +103,44 @@ public class MyTunesManager
         try
         {
             return sdao.getAllSongs();
-        } catch (IOException ex)
+        } catch (MTDalException ex)
         {
-            throw new MTBllException("Could not read all songs.");
+            throw new MTBllException("Could not read all songs. " + ex.getMessage());
         }
 
     }
 
-    public void deleteSong(Song song)
+    public void deleteSong(Song song) throws MTBllException
     {
         try
         {
             sdao.deleteSong(song);
-        } catch (IOException ex)
+        } catch (MTDalException ex)
         {
-            Logger.getLogger(MyTunesManager.class.getName()).log(Level.SEVERE, null, ex);
+            throw new MTBllException("Could not delete song." + ex.getMessage());
         }
     }
 
-    public void updateSong(Song song)
+    public void updateSong(Song song) throws MTBllException
     {
         try
         {
             sdao.updateSong(song);
-        } catch (IOException ex)
+        } catch (MTDalException ex)
         {
-            Logger.getLogger(MyTunesManager.class.getName()).log(Level.SEVERE, null, ex);
+            throw new MTBllException("Could not update song. " + ex.getMessage());
         }
     }
 
-    public Song getSong(int id)
+    public Song getSong(int id) throws MTBllException
     {
         try
         {
             return sdao.getSong(id);
-        } catch (IOException ex)
+        } catch (MTDalException ex)
         {
-            Logger.getLogger(MyTunesManager.class.getName()).log(Level.SEVERE, null, ex);
+            throw new MTBllException("Could not update song. " + ex.getMessage());
         }
-        return null;
     }
 
     public Playlist createPlaylist(String name) throws SQLException

@@ -21,7 +21,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import mytunes.BLL.exception.MTBllException;
-import mytunes.GUI.Model.SongModel;
+import mytunes.BLL.Model.SongModel;
 
 /**
  * FXML Controller class
@@ -51,13 +51,13 @@ public class CreateSongController implements Initializable
     /**
      * Initializes the controller class.
      */
-    public CreateSongController() throws MTBllException {
+    public CreateSongController()  {
         try
         {
             sm = new SongModel();
-        } catch (IOException ex)
+        } catch (MTBllException ex)
         {
-            Logger.getLogger(CreateSongController.class.getName()).log(Level.SEVERE, null, ex);
+            //TODO
         }
     }
     
@@ -75,25 +75,33 @@ public class CreateSongController implements Initializable
     @FXML
     private void handleChooseBtn(ActionEvent event)
     {
-        sm.initializeFile();
-        txtDuration.setText(sm.getDuration());
-        txtTitleInput.setText(sm.getSongTitle());
-        txtFile.setText(sm.getFilePath());
-        txtArtistInput.setText(sm.getArtist());
+        try {
+            sm.initializeFile();
+            txtDuration.setText(sm.getDuration());
+            txtTitleInput.setText(sm.getSongTitle());
+            txtFile.setText(sm.getFilePath());
+            txtArtistInput.setText(sm.getArtist());
+        } catch (MTBllException ex) {
+            //TODO
+        }
     }
 
     @FXML
     private void handleSaveBtn(ActionEvent event)
     {
-        String title = txtTitleInput.getText();
-        int duration = sm.getDurationInSec();
-        String filepath = txtFile.getText();
-        String genre = comboCategoryBox.getSelectionModel().getSelectedItem();
-        String artist = txtArtistInput.getText();
-        sm.createSong(title, duration, artist, genre, filepath);
-        
-        Stage stage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
-        stage.close();
+        try {
+            String title = txtTitleInput.getText();
+            int duration = sm.getDurationInSec();
+            String filepath = txtFile.getText();
+            String genre = comboCategoryBox.getSelectionModel().getSelectedItem();
+            String artist = txtArtistInput.getText();
+            sm.createSong(title, duration, artist, genre, filepath);
+            
+            Stage stage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
+            stage.close();
+        } catch (MTBllException ex) {
+            //TODO
+        }
     }
 
     @FXML

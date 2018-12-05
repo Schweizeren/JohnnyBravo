@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import mytunes.BLL.exception.MTBllException;
 import mytunes.DAL.SongDAO;
+import mytunes.DAL.exception.MTDalException;
 import mytunes.be.Song;
 
 /**
@@ -21,7 +22,7 @@ import mytunes.be.Song;
 public class SongSearcher
 {
 
-    public List<Song> searchSongs(List<Song> searchBase, String query) throws MTBllException
+    public List<Song> searchSongs(List<Song> searchBase, String query) throws MTBllException, IOException
     {
         SongDAO songdao;
         try
@@ -44,7 +45,7 @@ public class SongSearcher
             }
 
             return searchList;
-        } catch (IOException ex)
+        } catch (MTDalException ex)
         {
             throw new MTBllException("Could not connect to the DAL layer.");
         }

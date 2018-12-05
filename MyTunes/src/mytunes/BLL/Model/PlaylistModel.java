@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mytunes.GUI.Model;
+package mytunes.BLL.Model;
 
 import java.io.IOException;
 import java.sql.SQLException;

@@ -41,9 +41,9 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import mytunes.BLL.SongSearcher;
 import mytunes.BLL.exception.MTBllException;
-import mytunes.GUI.Model.PlaylistModel;
-import mytunes.GUI.Model.PlaylistSongModel;
-import mytunes.GUI.Model.SongModel;
+import mytunes.BLL.Model.PlaylistModel;
+import mytunes.BLL.Model.PlaylistSongModel;
+import mytunes.BLL.Model.SongModel;
 import mytunes.be.Playlist;
 import mytunes.be.Song;
 

@@ -14,13 +14,12 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import mytunes.BLL.exception.MTBllException;
-import mytunes.GUI.Model.SongModel;
+import mytunes.BLL.Model.SongModel;
 import mytunes.be.Song;
 
 
@@ -55,9 +54,9 @@ public class EditSongController implements Initializable
         try
         {
             sm = new SongModel();
-        } catch (IOException ex)
+        } catch (MTBllException ex)
         {
-            
+            //TODO
         }
     }
 
@@ -122,11 +121,15 @@ public class EditSongController implements Initializable
     @FXML
     private void handleSaveBtn(ActionEvent event)
     {
-        oldSong.setArtist(txtTitleInput.getText());
-        oldSong.setTitle(txtArtistInput.getText());
-        oldSong.setFilepath(txtFile.getText());
-        oldSong.setGenre(comboEditSong.getSelectionModel().getSelectedItem());
-        sm.updateSong(oldSong);
+        try {
+            oldSong.setArtist(txtTitleInput.getText());
+            oldSong.setTitle(txtArtistInput.getText());
+            oldSong.setFilepath(txtFile.getText());
+            oldSong.setGenre(comboEditSong.getSelectionModel().getSelectedItem());
+            sm.updateSong(oldSong);
+        } catch (MTBllException ex) {
+            //TODO
+        }
     }
     
     public void initializeSong(Song song) {

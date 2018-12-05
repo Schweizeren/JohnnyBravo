@@ -32,7 +32,7 @@ public class SongDAO
         cb = new ConnectionDAO();
     }
     
-    public List<Song> getAllSongs() throws IOException
+    public List<Song> getAllSongs() throws MTDalException
     {
     
     List<Song> songs = new ArrayList<>();
@@ -56,7 +56,7 @@ public class SongDAO
     }
     catch (SQLException ex)
     {
-        ex.printStackTrace();
+        throw new MTDalException("Could not read all songs.", ex);
     }
     return songs;
         
@@ -92,18 +92,18 @@ public class SongDAO
         }
     }
     
-    public void deleteSong(Song song) throws IOException
+    public void deleteSong(Song song) throws MTDalException
     {
         try(Connection con = cb.getConnection()) {
             Statement statement = con.createStatement();
             String sql = "DELETE FROM Song WHERE id = " + song.getId() + ";";
             statement.executeUpdate(sql);
         }catch(SQLException ex) {
-            ex.printStackTrace();
+            throw new MTDalException("Could not delete song.", ex);
         }
     }
     
-    public void updateSong(Song song) throws IOException
+    public void updateSong(Song song) throws MTDalException
     {
         String title = song.getTitle();
         String author = song.getArtist();
@@ -121,12 +121,12 @@ public class SongDAO
             ps.close();
             
         }catch (SQLException ex) {
-            ex.printStackTrace();
+            throw new MTDalException("Could not update song.", ex);
         }
         
     }
     
-    public Song getSong(int id) throws IOException
+    public Song getSong(int id) throws MTDalException
     {
         try (Connection con = cb.getConnection()) {
             Statement statement = con.createStatement();
@@ -144,7 +144,7 @@ public class SongDAO
             }
             
         }catch (SQLException ex) {
-            ex.printStackTrace();
+            throw new MTDalException("Could not get specific song", ex);
         }
         return null;
     }
