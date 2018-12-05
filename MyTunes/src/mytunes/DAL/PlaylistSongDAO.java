@@ -41,24 +41,28 @@ public class PlaylistSongDAO
             while (rs.next())
             {
                 Song song = new Song(rs.getInt("id"), rs.getString("title"), rs.getInt("duration"), rs.getString("author"), rs.getString("genre"), rs.getString("filepath"));
-                song.setLocationInList (rs.getInt("LocationInListID"));
+                song.setLocationInList(rs.getInt("LocationInListID"));
                 playlistsongs.add(song);
             }
-            return playlistsongs;   
-        }
-        catch (SQLServerException ex) 
+            return playlistsongs;
+        } catch (SQLServerException ex)
         {
             System.out.println(ex);
             return null;
-        } 
-        catch (SQLException ex) 
+        } catch (SQLException ex)
         {
             System.out.println(ex);
             return null;
         }
     }
-    
-    
-    
+
+    //public Song addToPlaylist(Playlist playlist, Song song)
+    //{
+        //String sql = "INSERT INTO PlaylistSong(PlaylistID,SongID,locationInListID) VALUES (?,?,?)";
+        //try (Connection con = ds.getConnection())
+        //{
+        //    
+        //}
+    //}
 
 }
