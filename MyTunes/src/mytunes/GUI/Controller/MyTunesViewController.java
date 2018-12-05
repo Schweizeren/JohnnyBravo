@@ -54,6 +54,8 @@ public class MyTunesViewController implements Initializable
     private MyTunesModel mtm;
     private SongModel sm;
     private SongSearcher ss;
+    final JFXPanel fxPanel = new JFXPanel();
+    private MediaPlayer mediaPlayer;
     
     @FXML
     private ListView<Playlist> listPlaylists;
@@ -89,10 +91,6 @@ public class MyTunesViewController implements Initializable
     private Label lblMusicPlaying;
     @FXML
     private AnchorPane rootPane;
-    
-    final JFXPanel fxPanel = new JFXPanel();
-    private MediaPlayer mediaPlayer;
-    private ListView<Song> listSearch;
     @FXML
     private TextField writeSearch;
     @FXML
