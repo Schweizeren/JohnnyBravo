@@ -149,7 +149,7 @@ public class MyTunesModel
     public void deletePlaylist(Playlist playlist) throws SQLException
     {
         mtmanager.deletePlaylist(playlist);
-        songList.remove(playlist);
+        playlistList.remove(playlist);
     }
     
     public ObservableList<Playlist> getAllPlaylist()
