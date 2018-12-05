@@ -40,6 +40,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import mytunes.GUI.Model.MyTunesModel;
 import mytunes.BLL.SongSearcher;
+import mytunes.GUI.Model.PlaylistModel;
+import mytunes.GUI.Model.SongModel;
 import mytunes.be.Playlist;
 import mytunes.be.Song;
 
@@ -50,7 +52,8 @@ import mytunes.be.Song;
  */
 public class MyTunesViewController implements Initializable
 {
-    private MyTunesModel mtm;
+    private SongModel sm;
+    private PlaylistModel pm;
     private SongSearcher ss;
     
     @FXML
@@ -103,7 +106,7 @@ public class MyTunesViewController implements Initializable
     public MyTunesViewController() {
         try
         {
-            mtm = new MyTunesModel();
+            sm = new SongModel();
             ss = new SongSearcher();
         } catch (IOException ex)
         {
@@ -116,8 +119,8 @@ public class MyTunesViewController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        listSongs.setItems(mtm.getSongs());
-        listPlaylists.setItems(mtm.getAllPlaylist());
+        listSongs.setItems(sm.getSongs());
+        listPlaylists.setItems(pm.getAllPlaylist());
         
     }    
 
@@ -173,7 +176,7 @@ public class MyTunesViewController implements Initializable
             stage.show();
             
             }else {
-            mtm.deletePlaylist(playlist);
+            pm.deletePlaylist(playlist);
             }
     }
 
@@ -250,7 +253,7 @@ public class MyTunesViewController implements Initializable
             stage.setScene(new Scene(root));
             stage.show();
         }else {
-        mtm.deleteSong(song);
+        sm.deleteSong(song);
         testlbl.setText("");
         }
     }
@@ -258,7 +261,7 @@ public class MyTunesViewController implements Initializable
     @FXML
     private void endApplication(ActionEvent event)
     {
-        mtm.endApplication();
+        System.exit(0);
     }
 
     @FXML
@@ -269,7 +272,7 @@ public class MyTunesViewController implements Initializable
     @FXML
     private void searchSong(ActionEvent event)
     {
-        listSongs.setItems(mtm.searchSongs(mtm.getSongs(), writeSearch.getText().toLowerCase()));
+        listSongs.setItems(sm.searchSongs(sm.getSongs(), writeSearch.getText().toLowerCase()));
     }
 
     @FXML
