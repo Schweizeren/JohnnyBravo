@@ -40,6 +40,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import mytunes.GUI.Model.MyTunesModel;
 import mytunes.BLL.SongSearcher;
+import mytunes.GUI.Model.SongModel;
 import mytunes.be.Playlist;
 import mytunes.be.Song;
 
@@ -51,6 +52,7 @@ import mytunes.be.Song;
 public class MyTunesViewController implements Initializable
 {
     private MyTunesModel mtm;
+    private SongModel sm;
     private SongSearcher ss;
     
     @FXML
@@ -105,6 +107,7 @@ public class MyTunesViewController implements Initializable
         {
             mtm = new MyTunesModel();
             ss = new SongSearcher();
+            sm = new SongModel();
         } catch (IOException ex)
         {
             Logger.getLogger(MyTunesViewController.class.getName()).log(Level.SEVERE, null, ex);
@@ -116,7 +119,7 @@ public class MyTunesViewController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        listSongs.setItems(mtm.getSongs());
+        listSongs.setItems(sm.getSongs());
         listPlaylists.setItems(mtm.getAllPlaylist());
         
     }    
@@ -250,15 +253,14 @@ public class MyTunesViewController implements Initializable
             stage.setScene(new Scene(root));
             stage.show();
         }else {
-        mtm.deleteSong(song);
-        testlbl.setText("");
+        sm.deleteSong(song);
         }
     }
 
     @FXML
     private void endApplication(ActionEvent event)
     {
-        mtm.endApplication();
+        System.exit(0);
     }
 
     @FXML
@@ -269,7 +271,7 @@ public class MyTunesViewController implements Initializable
     @FXML
     private void searchSong(ActionEvent event)
     {
-        listSongs.setItems(mtm.searchSongs(mtm.getSongs(), writeSearch.getText().toLowerCase()));
+        listSongs.setItems(sm.searchSongs(sm.getSongs(), writeSearch.getText().toLowerCase()));
     }
 
     @FXML
