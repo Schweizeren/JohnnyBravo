@@ -17,6 +17,7 @@ public class Song
     private String artist;
     private String genre;
     private String filepath;
+    private int locationInList; 
     
     public Song (int id, String title, int duration, String author, String genre, String filepath) {
         this.id = id;
@@ -25,6 +26,7 @@ public class Song
         this.artist = author;
         this.genre = genre;
         this.filepath = filepath;
+        
     }
     public int getId() {
         return id;
@@ -68,8 +70,19 @@ public class Song
         this.filepath = filepath;
     }
     
+    public int getLocationInList() {
+        return locationInList;
+    }
+    
+    public void setLocationInList(int locationInList) {
+        this.locationInList = locationInList;
+    }
+    
     @Override
     public String toString() {
         return title + " " + artist + " " + genre + " " + Integer.toString(length);
     }
+    
+    
+    
 }
