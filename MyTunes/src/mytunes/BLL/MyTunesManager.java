@@ -17,6 +17,7 @@ import mytunes.DAL.SongMetaData;
 import org.farng.mp3.TagException;
 
 import mytunes.DAL.PlaylistDAO;
+import mytunes.DAL.PlaylistSongDAO;
 import mytunes.DAL.SongMetaData;
 import mytunes.DAL.exception.MTDalException;
 import mytunes.be.Playlist;
@@ -28,7 +29,7 @@ import mytunes.be.Song;
  */
 public class MyTunesManager
 {
-
+    private PlaylistSongDAO psd;
     private SongMetaData smd;
     private SongDAO sdao;
     private PlaylistDAO pdao;
@@ -36,6 +37,7 @@ public class MyTunesManager
     public MyTunesManager() throws MTBllException
     {
         try {
+        psd = new PlaylistSongDAO();
         smd = new SongMetaData();
         sdao = new SongDAO();
         pdao = new PlaylistDAO();
@@ -180,5 +182,35 @@ public class MyTunesManager
     public void updatePlaylist(Playlist playlist)
     {
         pdao.updatePlaylist(playlist);
+    }
+    
+    public List<Song> getPlaylistSongs(int id)
+    {
+        return psd.getPlaylistSongs(id);
+    }
+    
+    public Song addToPlaylist(Playlist playlist, Song song) throws SQLException
+    {
+        return psd.addToPlaylist(playlist, song);
+    }
+    
+    public int getNewestSongInPlaylist(int id)
+    {
+        return psd.getNewestSongInPlaylist(id);
+    }
+    
+    public void deleteFromPlaylistSongsEverything(Song songToDelete)
+    {
+        psd.deleteFromPlaylistSongsEverything(songToDelete);
+    }
+    
+    public void deleteFromPlaylistSongsEverything(Playlist play)
+    {
+        psd.deleteFromPlaylistSongsEverything(play);
+    }
+    
+    public void removeSongFromPlaylist(Playlist selectedItem, Song selectedSong)
+    {
+        psd.removeSongFromPlaylist(selectedItem, selectedSong);
     }
 }

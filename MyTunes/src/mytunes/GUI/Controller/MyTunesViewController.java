@@ -21,6 +21,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.JFXPanel;
 import javafx.event.ActionEvent;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -41,6 +42,7 @@ import javafx.util.Duration;
 import mytunes.BLL.SongSearcher;
 import mytunes.BLL.exception.MTBllException;
 import mytunes.GUI.Model.PlaylistModel;
+import mytunes.GUI.Model.PlaylistSongModel;
 import mytunes.GUI.Model.SongModel;
 import mytunes.be.Playlist;
 import mytunes.be.Song;
@@ -52,6 +54,7 @@ import mytunes.be.Song;
  */
 public class MyTunesViewController implements Initializable
 {
+    private PlaylistSongModel psm;
     private PlaylistModel pm;
     private SongModel sm;
     private SongSearcher ss;
@@ -105,6 +108,7 @@ public class MyTunesViewController implements Initializable
     public MyTunesViewController() throws MTBllException {
         try
         {
+            psm = new PlaylistSongModel();
             pm = new PlaylistModel();
             sm = new SongModel();
             ss = new SongSearcher();
@@ -346,6 +350,19 @@ public class MyTunesViewController implements Initializable
                 }
             });
         }
+    }
+    public void addToPlaylist(ActionEvent event)
+    {
+        
+    }
+    public void deleteFromPlaylistSongsEverything(ActionEvent event)
+    {
+        
+    }
+    
+    public void removeSongFromPlaylist(ActionEvent event)
+    {
+        
     }
     
     public void endApplication()
