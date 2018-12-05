@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import mytunes.BLL.MyTunesManager;
+import mytunes.BLL.exception.MTBllException;
 import mytunes.be.Playlist;
 
 /**
@@ -21,7 +22,7 @@ public class PlaylistModel
     private ObservableList<Playlist> playlistList;
     private MyTunesManager mtmanager;
     
-    public PlaylistModel() throws IOException 
+    public PlaylistModel() throws IOException, MTBllException 
     {
         playlistList = FXCollections.observableArrayList();
         mtmanager = new MyTunesManager();

@@ -38,8 +38,8 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import mytunes.GUI.Model.MyTunesModel;
 import mytunes.BLL.SongSearcher;
+import mytunes.BLL.exception.MTBllException;
 import mytunes.GUI.Model.PlaylistModel;
 import mytunes.GUI.Model.SongModel;
 import mytunes.be.Playlist;
@@ -102,7 +102,7 @@ public class MyTunesViewController implements Initializable
     @FXML
     private Slider sliderVolume;
     
-    public MyTunesViewController() {
+    public MyTunesViewController() throws MTBllException {
         try
         {
             pm = new PlaylistModel();
@@ -270,7 +270,7 @@ public class MyTunesViewController implements Initializable
     }
 
     @FXML
-    private void searchSong(ActionEvent event)
+    private void searchSong(ActionEvent event) throws MTBllException
     {
         listSongs.setItems(sm.searchSongs(sm.getSongs(), writeSearch.getText().toLowerCase()));
     }

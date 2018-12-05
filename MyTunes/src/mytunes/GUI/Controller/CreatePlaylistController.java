@@ -19,6 +19,7 @@ import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import mytunes.BLL.exception.MTBllException;
 import mytunes.GUI.Model.PlaylistModel;
 
 /**
@@ -34,7 +35,7 @@ public class CreatePlaylistController implements Initializable
     @FXML
     private TextField txtNameInput;
 
-    public CreatePlaylistController()
+    public CreatePlaylistController() throws MTBllException
     {
         try
         {

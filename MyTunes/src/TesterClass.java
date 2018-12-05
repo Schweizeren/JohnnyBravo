@@ -5,6 +5,7 @@ import javafx.embed.swing.JFXPanel;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import mytunes.DAL.SongMetaData;
+import mytunes.DAL.exception.MTDalException;
 import org.farng.mp3.TagException;
 
 /*
@@ -19,7 +20,7 @@ import org.farng.mp3.TagException;
  */
 public class TesterClass
 {
-    public static void main(String[] args) throws IOException, TagException
+    public static void main(String[] args) throws MTDalException
     {
         String filepath = "D:/Dokumenter/GitHub/myTunes/MyTunes/data/music/bitch lasagna.mp3";
         SongMetaData smd = new SongMetaData();

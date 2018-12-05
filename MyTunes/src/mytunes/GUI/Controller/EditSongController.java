@@ -19,7 +19,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import mytunes.GUI.Model.MyTunesModel;
+import mytunes.BLL.exception.MTBllException;
+import mytunes.GUI.Model.SongModel;
 import mytunes.be.Song;
 
 
@@ -30,7 +31,7 @@ import mytunes.be.Song;
  */
 public class EditSongController implements Initializable
 {  
-    private MyTunesModel mtm;
+    private SongModel sm;
 
     private Song oldSong;
 
@@ -50,10 +51,10 @@ public class EditSongController implements Initializable
     private TextField txtOtherCategory;
 
 
-    public EditSongController() {
+    public EditSongController() throws MTBllException {
         try
         {
-            mtm = new MyTunesModel();
+            sm = new SongModel();
         } catch (IOException ex)
         {
             
@@ -125,7 +126,7 @@ public class EditSongController implements Initializable
         oldSong.setTitle(txtArtistInput.getText());
         oldSong.setFilepath(txtFile.getText());
         oldSong.setGenre(comboEditSong.getSelectionModel().getSelectedItem());
-        mtm.updateSong(oldSong);
+        sm.updateSong(oldSong);
     }
     
     public void initializeSong(Song song) {

@@ -20,7 +20,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import mytunes.GUI.Model.MyTunesModel;
+import mytunes.BLL.exception.MTBllException;
+import mytunes.GUI.Model.SongModel;
 
 /**
  * FXML Controller class
@@ -29,7 +30,7 @@ import mytunes.GUI.Model.MyTunesModel;
  */
 public class CreateSongController implements Initializable
 {
-    private MyTunesModel mtm;
+    private SongModel sm;
 
     @FXML
     private AnchorPane rootPane;
@@ -50,10 +51,10 @@ public class CreateSongController implements Initializable
     /**
      * Initializes the controller class.
      */
-    public CreateSongController() {
+    public CreateSongController() throws MTBllException {
         try
         {
-            mtm = new MyTunesModel();
+            sm = new SongModel();
         } catch (IOException ex)
         {
             Logger.getLogger(CreateSongController.class.getName()).log(Level.SEVERE, null, ex);
@@ -74,22 +75,22 @@ public class CreateSongController implements Initializable
     @FXML
     private void handleChooseBtn(ActionEvent event)
     {
-        mtm.initializeFile();
-        txtDuration.setText(mtm.getDuration());
-        txtTitleInput.setText(mtm.getSongTitle());
-        txtFile.setText(mtm.getFilePath());
-        txtArtistInput.setText(mtm.getArtist());
+        sm.initializeFile();
+        txtDuration.setText(sm.getDuration());
+        txtTitleInput.setText(sm.getSongTitle());
+        txtFile.setText(sm.getFilePath());
+        txtArtistInput.setText(sm.getArtist());
     }
 
     @FXML
     private void handleSaveBtn(ActionEvent event)
     {
         String title = txtTitleInput.getText();
-        int duration = mtm.getDurationInSec();
+        int duration = sm.getDurationInSec();
         String filepath = txtFile.getText();
         String genre = comboCategoryBox.getSelectionModel().getSelectedItem();
         String artist = txtArtistInput.getText();
-        mtm.createSong(title, duration, artist, genre, filepath);
+        sm.createSong(title, duration, artist, genre, filepath);
         
         Stage stage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
         stage.close();

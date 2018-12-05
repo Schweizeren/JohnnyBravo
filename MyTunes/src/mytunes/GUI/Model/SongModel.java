@@ -13,6 +13,7 @@ import javafx.collections.ObservableList;
 import javafx.stage.FileChooser;
 import mytunes.BLL.MyTunesManager;
 import mytunes.BLL.SongSearcher;
+import mytunes.BLL.exception.MTBllException;
 import mytunes.be.Song;
 
 /**
@@ -26,7 +27,7 @@ public class SongModel
     private ObservableList<Song> songList;
     private String trueTrueFilePath;
     
-    public SongModel() throws IOException {
+    public SongModel() throws IOException, MTBllException {
         mtmanager = new MyTunesManager();
         ss = new SongSearcher();
         songList = FXCollections.observableArrayList();
@@ -58,7 +59,7 @@ public class SongModel
         songList.remove(song);
     }
     
-    public ObservableList<Song> searchSongs(List<Song> searchBase, String query) {
+    public ObservableList<Song> searchSongs(List<Song> searchBase, String query) throws MTBllException {
         ObservableList<Song> searchedSongList = FXCollections.observableArrayList();
         searchedSongList.addAll(ss.searchSongs(searchBase, query));
         return searchedSongList;
