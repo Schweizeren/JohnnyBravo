@@ -124,25 +124,39 @@ public class MyTunesViewController implements Initializable
     @FXML
     private void createPlaylist(ActionEvent event) throws IOException
     {
-        /*FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/CreatePlaylist.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/CreatePlaylist.fxml"));
         Parent root = (Parent)loader.load();
         
         CreatePlaylistController cpcontroller = loader.getController();
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
-        stage.show();*/
+        stage.show();
     }
 
     @FXML
     private void editPlaylist(ActionEvent event) throws IOException
     {
-        /*FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/CreatePlaylist.fxml"));
+        Playlist playlist = listPlaylists.getSelectionModel().getSelectedItem();
+        if(playlist == null)
+        {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/NoPlaylistChosen.fxml"));
+        Parent root = (Parent)loader.load();
+        
+        NoPlaylistChosenController npccontroller = loader.getController();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.show();
+        }
+        else
+        {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/CreatePlaylist.fxml"));
         Parent root = (Parent)loader.load();
         
         CreatePlaylistController cpcontroller = loader.getController();
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
-        stage.show();*/
+        stage.show();
+        }
     }
 
     @FXML
