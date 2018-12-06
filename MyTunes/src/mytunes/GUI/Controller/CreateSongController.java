@@ -52,13 +52,7 @@ public class CreateSongController implements Initializable
      * Initializes the controller class.
      */
     public CreateSongController()  {
-        try
-        {
-            sm = new SongModel();
-        } catch (MTBllException ex)
-        {
-            displayError(ex);
-        }
+        
     }
     
     @Override
@@ -153,5 +147,9 @@ public class CreateSongController implements Initializable
         //TODO
         System.out.println(ex.getMessage());
         ex.printStackTrace();
+    }
+    
+    public void initializeModel(SongModel songmodel) {
+        this.sm = songmodel;
     }
 }

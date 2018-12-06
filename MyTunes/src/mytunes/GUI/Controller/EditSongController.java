@@ -51,13 +51,6 @@ public class EditSongController implements Initializable
 
 
     public EditSongController() {
-        try
-        {
-            sm = new SongModel();
-        } catch (MTBllException ex)
-        {
-            displayError(ex);
-        }
     }
 
     /**
@@ -146,6 +139,8 @@ public class EditSongController implements Initializable
         ex.printStackTrace();
     }
     
-    
+    public void initializeModel(SongModel songmodel) {
+        this.sm = songmodel;
+    }
 }
 

@@ -58,6 +58,7 @@ public class MyTunesViewController implements Initializable
     private SongSearcher ss;
     final JFXPanel fxPanel = new JFXPanel();
     private MediaPlayer mediaPlayer;
+    private boolean playing;
 
     @FXML
     private ListView<Playlist> listPlaylists;
@@ -213,6 +214,7 @@ public class MyTunesViewController implements Initializable
             Parent root = (Parent) loader.load();
 
             CreateSongController cscontroller = loader.getController();
+            cscontroller.initializeModel(sm);
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.show();
