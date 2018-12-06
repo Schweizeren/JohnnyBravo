@@ -8,6 +8,7 @@ package mytunes.GUI.Controller;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,7 +25,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
@@ -148,6 +153,7 @@ public class MyTunesViewController implements Initializable
             displayNoPlaylistWindow();
         } else
         {
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/EditPlaylist.fxml"));
             Parent root = (Parent) loader.load();
 
@@ -263,19 +269,20 @@ public class MyTunesViewController implements Initializable
             displayNoSongWindow();
         } else
         {
+
             try
             {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/EditSong.fxml"));
-                Parent root = (Parent) loader.load();
-
-                EditSongController escontroller = loader.getController();
-                escontroller.initializeSong(song);
-                Stage stage = new Stage();
-                stage.setScene(new Scene(root));
-                stage.show();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/EditSong.fxml"));
+            Parent root = (Parent) loader.load();
+            
+            EditSongController escontroller = loader.getController();
+            escontroller.initializeSong(song);
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
             } catch (IOException ex)
             {
-                displayError(ex);
+            displayError(ex);
             }
         }
     }
@@ -289,21 +296,23 @@ public class MyTunesViewController implements Initializable
             displayNoSongWindow();
         } else
         {
-            try
+            Alert alert = new Alert(AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation dialog");
+            alert.setContentText("Are you sure you want to delete");
+            
+            ButtonType buttonTypeYes = new ButtonType("Yes");
+            ButtonType buttonTypeNo = new ButtonType("No", ButtonData.CANCEL_CLOSE);
+            
+            alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+            
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == buttonTypeYes)
             {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/AreYouSure.fxml"));
-                Parent root = (Parent) loader.load();
-
-                AreYouSureController aysController = loader.getController();
-                aysController.initializeModel(sm);
-                aysController.initializeSong(song);
-                Stage stage = new Stage();
-                stage.setScene(new Scene(root));
-                stage.show();
-
-            } catch (IOException ex)
+                sm.deleteSong(song);
+            }
+            else
             {
-                displayError(ex);
+                //Den vil automatisk lukke
             }
         }
     }

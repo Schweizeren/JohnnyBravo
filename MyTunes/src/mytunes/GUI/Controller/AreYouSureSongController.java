@@ -26,7 +26,7 @@ import mytunes.be.Song;
  *
  * @author Kristian Urup laptop
  */
-public class AreYouSureController implements Initializable
+public class AreYouSureSongController implements Initializable
 {
     
     private Song selectedSong;
