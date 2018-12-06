@@ -16,6 +16,8 @@ import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.embed.swing.JFXPanel;
 import javafx.event.ActionEvent;
 import javafx.event.EventType;
@@ -58,11 +60,13 @@ public class MyTunesViewController implements Initializable
     private SongSearcher ss;
     final JFXPanel fxPanel = new JFXPanel();
     private MediaPlayer mediaPlayer;
-
+    private ObservableList<Song> songList = FXCollections.observableArrayList();
+    private boolean playing;
+    
     @FXML
     private ListView<Playlist> listPlaylists;
     @FXML
-    private ListView<Song> listSongs;
+    private ListView<Song> listSongs = new ListView<Song>(songList);
     @FXML
     private ListView<?> listSongsOnPlaylist;
     @FXML
@@ -101,7 +105,7 @@ public class MyTunesViewController implements Initializable
     private Slider sliderDuration;
     @FXML
     private Slider sliderVolume;
-    private boolean playing;
+    
 
     public MyTunesViewController() throws MTBllException
     {
@@ -289,6 +293,7 @@ public class MyTunesViewController implements Initializable
     @FXML
     private void nextSong(ActionEvent event)
     {
+        
     }
 
     @FXML
@@ -353,7 +358,7 @@ public class MyTunesViewController implements Initializable
                         mediaPlayer.setVolume(sliderVolume.getValue() / 100);
                     }
                 });
-
+                
                 mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>()
                 {
                     @Override
