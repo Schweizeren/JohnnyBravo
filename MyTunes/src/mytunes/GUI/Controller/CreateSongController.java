@@ -16,6 +16,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -30,6 +31,7 @@ import mytunes.GUI.Model.SongModel;
  */
 public class CreateSongController implements Initializable
 {
+
     private SongModel sm;
 
     @FXML
@@ -46,36 +48,38 @@ public class CreateSongController implements Initializable
     private TextField txtFile;
     @FXML
     private TextField txtOtherCategory;
-    
-    
+
     /**
      * Initializes the controller class.
      */
-    public CreateSongController()  {
-        
+    public CreateSongController()
+    {
+
     }
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
         txtDuration.setDisable(true);
         txtFile.setDisable(true);
-        comboCategoryBox.setItems(FXCollections.observableArrayList("Blues","Hip Hop","Pop","Rap",
-                "Rock","Techno","Other"));
+        comboCategoryBox.setItems(FXCollections.observableArrayList("Blues", "Hip Hop", "Pop", "Rap",
+                "Rock", "Techno", "Other"));
         comboCategoryBox.setVisibleRowCount(6);
         txtOtherCategory.setVisible(false);
-    }    
+    }
 
     @FXML
     private void handleChooseBtn(ActionEvent event)
     {
-        try {
+        try
+        {
             sm.initializeFile();
             txtDuration.setText(sm.getDuration());
             txtTitleInput.setText(sm.getSongTitle());
             txtFile.setText(sm.getFilePath());
             txtArtistInput.setText(sm.getArtist());
-        } catch (MTBllException ex) {
+        } catch (MTBllException ex)
+        {
             displayError(ex);
         }
     }
@@ -83,17 +87,19 @@ public class CreateSongController implements Initializable
     @FXML
     private void handleSaveBtn(ActionEvent event)
     {
-        try {
+        try
+        {
             String title = txtTitleInput.getText();
             int duration = sm.getDurationInSec();
             String filepath = txtFile.getText();
             String genre = comboCategoryBox.getSelectionModel().getSelectedItem();
             String artist = txtArtistInput.getText();
             sm.createSong(title, duration, artist, genre, filepath);
-            
-            Stage stage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
+
+            Stage stage = (Stage) ((Node) ((EventObject) event).getSource()).getScene().getWindow();
             stage.close();
-        } catch (MTBllException ex) {
+        } catch (MTBllException ex)
+        {
             //TODO
             displayError(ex);
         }
@@ -110,10 +116,10 @@ public class CreateSongController implements Initializable
     private String handleComboCategory(ActionEvent event)
     {
         String category;
-        
+
         int selectedIndex = comboCategoryBox.getSelectionModel().getSelectedIndex();
-        
-        switch(selectedIndex)
+
+        switch (selectedIndex)
         {
             case 0:
                 category = "blues";
@@ -137,19 +143,24 @@ public class CreateSongController implements Initializable
                 txtOtherCategory.setVisible(true);
                 category = txtOtherCategory.getText();
                 break;
-            default: 
+            default:
                 throw new UnsupportedOperationException("Category not chosen");
         }
         return category;
     }
-    
-    private void displayError(Exception ex) {
-        //TODO
-        System.out.println(ex.getMessage());
-        ex.printStackTrace();
+
+    private void displayError(Exception ex)
+    {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Error dialog");
+        alert.setHeaderText(null);
+        alert.setContentText(ex.getMessage());
+
+        alert.showAndWait();
     }
-    
-    public void initializeModel(SongModel songmodel) {
+
+    public void initializeModel(SongModel songmodel)
+    {
         this.sm = songmodel;
     }
 }

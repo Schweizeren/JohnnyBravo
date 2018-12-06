@@ -14,6 +14,7 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -22,17 +23,19 @@ import mytunes.BLL.exception.MTBllException;
 import mytunes.GUI.Model.SongModel;
 import mytunes.be.Song;
 
-
 /**
  * FXML Controller class
  *
  * @author Kristian Urup laptop
  */
 public class EditSongController implements Initializable
-{  
+{
+
     private SongModel sm;
 
     private Song oldSong;
+    
+    private int index;
 
     @FXML
     private AnchorPane rootPane;
@@ -49,8 +52,8 @@ public class EditSongController implements Initializable
     @FXML
     private TextField txtOtherCategory;
 
-
-    public EditSongController() {
+    public EditSongController()
+    {
     }
 
     /**
@@ -59,21 +62,21 @@ public class EditSongController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        comboEditSong.setItems(FXCollections.observableArrayList("Blues","Hip Hop","Pop","Rap",
-                "Rock","Techno","Other"));
+        comboEditSong.setItems(FXCollections.observableArrayList("Blues", "Hip Hop", "Pop", "Rap",
+                "Rock", "Techno", "Other"));
         comboEditSong.setVisibleRowCount(6);
         txtOtherCategory.setVisible(false);
-        
-    }    
+
+    }
 
     @FXML
     private String handleComboES(ActionEvent event)
     {
         String category;
-        
+
         int selectedIndex = comboEditSong.getSelectionModel().getSelectedIndex();
-        
-        switch(selectedIndex)
+
+        switch (selectedIndex)
         {
             case 0:
                 category = "blues";
@@ -93,16 +96,15 @@ public class EditSongController implements Initializable
             case 5:
                 category = "techno";
                 break;
-            case 6: 
+            case 6:
                 txtOtherCategory.setVisible(true);
                 category = txtOtherCategory.getText();
                 break;
-            default: 
+            default:
                 throw new UnsupportedOperationException("Category not chosen");
         }
         return category;
     }
-
 
     @FXML
     private void handleCancelBtn(ActionEvent event)
@@ -114,33 +116,43 @@ public class EditSongController implements Initializable
     @FXML
     private void handleSaveBtn(ActionEvent event)
     {
-        try {
-            oldSong.setArtist(txtTitleInput.getText());
-            oldSong.setTitle(txtArtistInput.getText());
+        try
+        {
+            oldSong.setArtist(txtArtistInput.getText());
+            oldSong.setTitle(txtTitleInput.getText());
             oldSong.setFilepath(txtFile.getText());
             oldSong.setGenre(comboEditSong.getSelectionModel().getSelectedItem());
-            sm.updateSong(oldSong);
-        } catch (MTBllException ex) {
+            sm.updateSong(oldSong, index);
+            Stage stage = (Stage) rootPane.getScene().getWindow();
+            stage.close();
+        } catch (MTBllException ex)
+        {
             displayError(ex);
         }
     }
-    
-    public void initializeSong(Song song) {
+
+    public void initializeSong(Song song, int index)
+    {
         txtTitleInput.setText(song.getTitle());
         txtArtistInput.setText(song.getArtist());
         txtDuration.setText(Integer.toString(song.getLength()));
         txtFile.setText(song.getFilepath());
         oldSong = new Song(song.getId(), song.getTitle(), song.getLength(), song.getArtist(), song.getGenre(), song.getFilepath());
+        this.index = index;
     }
-    
-    private void displayError(Exception ex) {
-        //TODO Vise fejl til brugeren
-        System.out.println(ex.getMessage());
-        ex.printStackTrace();
+
+    private void displayError(Exception ex)
+    {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Error dialog");
+        alert.setHeaderText(null);
+        alert.setContentText(ex.getMessage());
+
+        alert.showAndWait();
     }
-    
-    public void initializeModel(SongModel songmodel) {
+
+    public void initializeModel(SongModel songmodel)
+    {
         this.sm = songmodel;
     }
 }
-
