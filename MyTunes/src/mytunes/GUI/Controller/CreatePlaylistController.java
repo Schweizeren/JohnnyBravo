@@ -35,14 +35,14 @@ public class CreatePlaylistController implements Initializable
     @FXML
     private TextField txtNameInput;
 
-    public CreatePlaylistController() throws MTBllException
+    public CreatePlaylistController()
     {
         try
         {
             pm = new PlaylistModel();
-        } catch (IOException ex)
+        } catch (MTBllException ex)
         {
-            Logger.getLogger(CreateSongController.class.getName()).log(Level.SEVERE, null, ex);
+            
         }
     }
     
@@ -56,18 +56,24 @@ public class CreatePlaylistController implements Initializable
     }    
 
     @FXML
-    private void handleCreateBtn(ActionEvent event) throws SQLException
+    private void handleCreateBtn(ActionEvent event)
     {
-        String name = txtNameInput.getText();
-        pm.createPlaylist(name);
-        
-        Stage stage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
-        stage.close();
+        try
+        {
+            String name = txtNameInput.getText();
+            pm.createPlaylist(name);
+            
+            Stage stage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
+            stage.close();
+        } catch (MTBllException ex)
+        {
+            Logger.getLogger(CreatePlaylistController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }
 
     @FXML
-    private void handleCancelBtn(ActionEvent event) throws IOException
+    private void handleCancelBtn(ActionEvent event) 
     {
         Stage stage = (Stage) rootPane.getScene().getWindow();
         stage.close();
