@@ -56,16 +56,16 @@ public class MyTunesViewController implements Initializable
     private PlaylistModel pm;
     private SongModel sm;
     private SongSearcher ss;
-    final JFXPanel fxPanel = new JFXPanel();
+    private JFXPanel fxPanel;
     private MediaPlayer mediaPlayer;
     private boolean playing;
-
+    private Song oldSong;
     @FXML
     private ListView<Playlist> listPlaylists;
     @FXML
     private ListView<Song> listSongs;
     @FXML
-    private ListView<?> listSongsOnPlaylist;
+    private ListView<Song> listSongsOnPlaylist;
     @FXML
     private Button btnNewPlaylist;
     @FXML
@@ -97,8 +97,6 @@ public class MyTunesViewController implements Initializable
     @FXML
     private TextField writeSearch;
     @FXML
-    private Label testlbl;
-    @FXML
     private Slider sliderDuration;
     @FXML
     private Slider sliderVolume;
@@ -111,6 +109,7 @@ public class MyTunesViewController implements Initializable
             pm = new PlaylistModel();
             sm = new SongModel();
             ss = new SongSearcher();
+            fxPanel = new JFXPanel();
         } catch (MTBllException ex)
         {
             displayError(ex);
@@ -149,34 +148,48 @@ public class MyTunesViewController implements Initializable
             displayNoPlaylistWindow();
         } else
         {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/CreatePlaylist.fxml"));
-            Parent root = (Parent) loader.load();
-
-            CreatePlaylistController cpcontroller = loader.getController();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/EditPlaylist.fxml"));
+        Parent root = (Parent)loader.load();
+        
+        EditPlaylistController epcontroller = loader.getController();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.show();
         }
     }
 
     @FXML
-    private void deletePlaylist(ActionEvent event) throws SQLException, IOException
+    private void deletePlaylist(ActionEvent event)
     {
         Playlist playlist = listPlaylists.getSelectionModel().getSelectedItem();
-        if (playlist == null)
-        {
-            displayNoSongWindow();
-        } else
-        {
+          if (playlist == null) {
+            
+            
+            }
+            else 
+            {
             try
             {
                 pm.deletePlaylist(playlist);
-            } catch (MTBllException ex)
+                if (playlist == null)
+                {
+                    displayNoSongWindow();
+                } else
+                {
+                    try
+                    {
+                        pm.deletePlaylist(playlist);
+                    } catch (MTBllException ex)
+                    {
+                        displayError(ex);
+                    }
+                }   } catch (MTBllException ex)
             {
                 displayError(ex);
             }
-        }
     }
+    }
+          
 
     @FXML
     private void moveUp(ActionEvent event)
@@ -191,6 +204,21 @@ public class MyTunesViewController implements Initializable
     @FXML
     private void deleteSongOnPlaylist(ActionEvent event) 
     {
+        /*Song song = listSongsOnPlaylist.getSelectionModel().getSelectedItem();;
+        if(song == null)
+        {
+            
+        }
+        else
+        {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/NoPlaylistChosen.fxml"));
+        Parent root = (Parent)loader.load();
+        
+        NoPlaylistChosenController npccontroller = loader.getController();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.show();
+        }*/
         Playlist playlist = listPlaylists.getSelectionModel().getSelectedItem();
         if (playlist == null) {
         displayNoPlaylistWindow();
@@ -203,6 +231,7 @@ public class MyTunesViewController implements Initializable
                 displayError(ex);
             }
         }
+
     }
 
     @FXML
@@ -254,15 +283,33 @@ public class MyTunesViewController implements Initializable
     private void deleteSong(ActionEvent event)
     {
         Song song = listSongs.getSelectionModel().getSelectedItem();
-        if (song == null)
-        {
+        if (song == null) {
             displayNoSongWindow();
-
-        } else
+        }else 
         {
-            sm.deleteSong(song);
-
-        }
+            try
+            {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/AreYouSure.fxml"));
+                Parent root = (Parent)loader.load();
+                
+                AreYouSureController aysController = loader.getController();
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.show();
+                //mtm.deleteSong(song);
+                //testlbl.setText("")
+                if (song == null)
+                {
+                    displayNoSongWindow();
+                    
+                } else
+                {
+                    sm.deleteSong(song);
+                }   } catch (IOException ex)
+            {
+                displayError(ex);
+            }
+    }
     }
 
     @FXML
@@ -271,10 +318,6 @@ public class MyTunesViewController implements Initializable
         System.exit(0);
     }
 
-    @FXML
-    private void moveSong(ActionEvent event)
-    {
-    }
 
     @FXML
     private void searchSong(ActionEvent event)
@@ -365,21 +408,23 @@ public class MyTunesViewController implements Initializable
         }
     }
 
+    @FXML
     public void addToPlaylist(ActionEvent event)
     {
 
     }
-
+    @FXML
     public void deleteFromPlaylistSongsEverything(ActionEvent event)
     {
 
     }
-
+    @FXML
     public void removeSongFromPlaylist(ActionEvent event)
     {
 
     }
-
+    
+    @FXML
     public void endApplication()
     {
         System.exit(0);
@@ -407,6 +452,11 @@ public class MyTunesViewController implements Initializable
         {
             displayError(ex);
         }
+    }
+    
+    public void initializeSong(Song song)
+    {
+        oldSong = new Song(song.getId(), song.getTitle(), song.getLength(), song.getArtist(), song.getGenre(), song.getFilepath());
     }
     
     private void displayNoPlaylistWindow() {

@@ -56,7 +56,7 @@ public class CreatePlaylistController implements Initializable
     }    
 
     @FXML
-    private void handleCreateBtn(ActionEvent event) throws SQLException
+    private void handleCreateBtn(ActionEvent event)
     {
         try
         {
@@ -73,7 +73,7 @@ public class CreatePlaylistController implements Initializable
     }
 
     @FXML
-    private void handleCancelBtn(ActionEvent event) throws IOException
+    private void handleCancelBtn(ActionEvent event) 
     {
         Stage stage = (Stage) rootPane.getScene().getWindow();
         stage.close();
