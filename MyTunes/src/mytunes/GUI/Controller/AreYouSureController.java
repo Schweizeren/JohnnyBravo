@@ -18,6 +18,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import mytunes.BLL.exception.MTBllException;
+import mytunes.GUI.Model.SongModel;
 import mytunes.be.Song;
 
 /**
@@ -27,7 +28,9 @@ import mytunes.be.Song;
  */
 public class AreYouSureController implements Initializable
 {
-    private mytunes.BLL.Model.SongModel sm;
+    
+    private Song selectedSong;
+    private SongModel sm;
     @FXML
     private AnchorPane rootPane;
     @FXML
@@ -46,6 +49,9 @@ public class AreYouSureController implements Initializable
     @FXML
     private void handleYesBtn(ActionEvent event) throws IOException, MTBllException
     {
+        sm.deleteSong(selectedSong);
+        Stage stage = (Stage) rootPane.getScene().getWindow();
+        stage.close();
     }
 
     @FXML
@@ -55,4 +61,11 @@ public class AreYouSureController implements Initializable
         stage.close();
     }
     
+    public void initializeSong(Song song) {
+        this.selectedSong = song;
+    }
+    
+    public void initializeModel(SongModel songmodel) {
+        this.sm = songmodel;
+    }
 }
