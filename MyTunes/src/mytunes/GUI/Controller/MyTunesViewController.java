@@ -171,13 +171,13 @@ public class MyTunesViewController implements Initializable
         Playlist playlist = listPlaylists.getSelectionModel().getSelectedItem();
         if (playlist == null)
         {
-
+            displayNoPlaylistWindow();
         } 
         else
         {
             Alert alert = new Alert(AlertType.CONFIRMATION);
             alert.setTitle("Confirmation dialog");
-            alert.setContentText("Are you sure you want to delete");
+            alert.setContentText("Are you sure you want to delete: "+ playlist);
             
             ButtonType buttonTypeYes = new ButtonType("Yes");
             ButtonType buttonTypeNo = new ButtonType("No", ButtonData.CANCEL_CLOSE);
@@ -205,21 +205,6 @@ public class MyTunesViewController implements Initializable
     @FXML
     private void deleteSongOnPlaylist(ActionEvent event)
     {
-        /*Song song = listSongsOnPlaylist.getSelectionModel().getSelectedItem();;
-        if(song == null)
-        {
-            
-        }
-        else
-        {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/NoPlaylistChosen.fxml"));
-        Parent root = (Parent)loader.load();
-        
-        NoPlaylistChosenController npccontroller = loader.getController();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.show();
-        }*/
         Playlist playlist = listPlaylists.getSelectionModel().getSelectedItem();
         if (playlist == null)
         {
@@ -443,7 +428,13 @@ public class MyTunesViewController implements Initializable
 
     private void displayNoSongWindow()
     {
-        try
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Information dialog");
+        alert.setHeaderText("You have not chosen a song to delete");
+        alert.setContentText("Please select a song");
+        
+        alert.showAndWait();
+        /*try
         {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/NoSongChosen.fxml"));
             Parent root = (Parent) loader.load();
@@ -455,23 +446,16 @@ public class MyTunesViewController implements Initializable
         } catch (IOException ex)
         {
             displayError(ex);
-        }
+        }*/
     }
 
     private void displayNoPlaylistWindow()
     {
-        try
-        {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/NoPlaylistChosen.fxml"));
-            Parent root = (Parent) loader.load();
-
-            NoPlaylistChosenController npccontroller = loader.getController();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException ex)
-        {
-            displayError(ex);
-        }
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Information dialog");
+        alert.setHeaderText("You have not selected a playlist");
+        alert.setContentText("Please select a playlist to delete");
+        
+        alert.showAndWait();
     }
 }
