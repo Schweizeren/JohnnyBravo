@@ -56,9 +56,9 @@ public class MyTunesViewController implements Initializable
     @FXML
     private ListView<Playlist> listPlaylists;
     @FXML
-    private ListView<Song> listSongs;
+    public ListView<Song> listSongs;
     @FXML
-    private ListView<?> listSongsOnPlaylist;
+    private ListView<Song> listSongsOnPlaylist;
     @FXML
     private Button btnNewPlaylist;
     @FXML
@@ -149,10 +149,10 @@ public class MyTunesViewController implements Initializable
         }
         else
         {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/CreatePlaylist.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/EditPlaylist.fxml"));
         Parent root = (Parent)loader.load();
         
-        CreatePlaylistController cpcontroller = loader.getController();
+        EditPlaylistController epcontroller = loader.getController();
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
         stage.show();
@@ -190,13 +190,21 @@ public class MyTunesViewController implements Initializable
     @FXML
     private void deleteSongOnPlaylist(ActionEvent event) throws IOException, SQLException
     {
+        /*Song song = listSongsOnPlaylist.getSelectionModel().getSelectedItem();;
+        if(song == null)
+        {
+            
+        }
+        else
+        {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/NoPlaylistChosen.fxml"));
         Parent root = (Parent)loader.load();
         
         NoPlaylistChosenController npccontroller = loader.getController();
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
-        stage.show();  
+        stage.show();
+        }*/
     }
 
     @FXML
@@ -249,9 +257,17 @@ public class MyTunesViewController implements Initializable
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.show();
-        }else {
-        mtm.deleteSong(song);
-        testlbl.setText("");
+        }else 
+        {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/AreYouSure.fxml"));
+            Parent root = (Parent)loader.load();
+            
+            AreYouSureController aysController = loader.getController();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+        //mtm.deleteSong(song);
+        //testlbl.setText("");
         }
     }
 
