@@ -21,6 +21,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.JFXPanel;
 import javafx.event.ActionEvent;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -38,8 +39,11 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import mytunes.GUI.Model.MyTunesModel;
 import mytunes.BLL.SongSearcher;
+import mytunes.BLL.exception.MTBllException;
+import mytunes.BLL.Model.PlaylistModel;
+import mytunes.BLL.Model.PlaylistSongModel;
+import mytunes.BLL.Model.SongModel;
 import mytunes.be.Playlist;
 import mytunes.be.Song;
 
@@ -50,8 +54,13 @@ import mytunes.be.Song;
  */
 public class MyTunesViewController implements Initializable
 {
-    private MyTunesModel mtm;
+    private PlaylistSongModel psm;
+    private PlaylistModel pm;
+    private SongModel sm;
     private SongSearcher ss;
+    final JFXPanel fxPanel = new JFXPanel();
+    private MediaPlayer mediaPlayer;
+    
     
     @FXML
     private ListView<Playlist> listPlaylists;
@@ -87,10 +96,6 @@ public class MyTunesViewController implements Initializable
     private Label lblMusicPlaying;
     @FXML
     private AnchorPane rootPane;
-    
-    final JFXPanel fxPanel = new JFXPanel();
-    private MediaPlayer mediaPlayer;
-    private ListView<Song> listSearch;
     @FXML
     private TextField writeSearch;
     @FXML
@@ -100,10 +105,12 @@ public class MyTunesViewController implements Initializable
     @FXML
     private Slider sliderVolume;
     
-    public MyTunesViewController() {
+    public MyTunesViewController() throws MTBllException {
         try
         {
-            mtm = new MyTunesModel();
+            psm = new PlaylistSongModel();
+            pm = new PlaylistModel();
+            sm = new SongModel();
             ss = new SongSearcher();
         } catch (IOException ex)
         {
@@ -116,8 +123,8 @@ public class MyTunesViewController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        listSongs.setItems(mtm.getSongs());
-        listPlaylists.setItems(mtm.getAllPlaylist());
+        listSongs.setItems(sm.getSongs());
+        listPlaylists.setItems(pm.getAllPlaylist());
         
     }    
 
@@ -173,7 +180,7 @@ public class MyTunesViewController implements Initializable
             stage.show();
             
             }else {
-            mtm.deletePlaylist(playlist);
+            pm.deletePlaylist(playlist);
             }
     }
 
@@ -267,14 +274,14 @@ public class MyTunesViewController implements Initializable
             stage.setScene(new Scene(root));
             stage.show();
         //mtm.deleteSong(song);
-        //testlbl.setText("");
+        //testlbl.setText("")
         }
     }
 
     @FXML
     private void endApplication(ActionEvent event)
     {
-        mtm.endApplication();
+        System.exit(0);
     }
 
     @FXML
@@ -283,9 +290,9 @@ public class MyTunesViewController implements Initializable
     }
 
     @FXML
-    private void searchSong(ActionEvent event)
+    private void searchSong(ActionEvent event) throws MTBllException
     {
-        listSongs.setItems(mtm.searchSongs(mtm.getSongs(), writeSearch.getText().toLowerCase()));
+        listSongs.setItems(sm.searchSongs(sm.getSongs(), writeSearch.getText().toLowerCase()));
     }
 
     @FXML
@@ -359,6 +366,24 @@ public class MyTunesViewController implements Initializable
                 }
             });
         }
+    }
+    public void addToPlaylist(ActionEvent event)
+    {
+        
+    }
+    public void deleteFromPlaylistSongsEverything(ActionEvent event)
+    {
+        
+    }
+    
+    public void removeSongFromPlaylist(ActionEvent event)
+    {
+        
+    }
+    
+    public void endApplication()
+    {
+        System.exit(0);
     }
     
 }

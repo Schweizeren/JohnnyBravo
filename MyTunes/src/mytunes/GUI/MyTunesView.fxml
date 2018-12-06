@@ -23,7 +23,7 @@
       <Button fx:id="btnEditSong" layoutX="762.0" layoutY="659.0" mnemonicParsing="false" onAction="#editSong" prefHeight="31.0" prefWidth="65.0" text="Edit..." />
       <Button fx:id="btnDeleteSong" layoutX="842.0" layoutY="659.0" mnemonicParsing="false" onAction="#deleteSong" text="Delete" />
       <Button fx:id="btnClose" layoutX="1031.0" layoutY="659.0" mnemonicParsing="false" onAction="#endApplication" text="Close" />
-      <Button fx:id="btnMoveSongLeft" layoutX="552.0" layoutY="104.0" mnemonicParsing="false" onAction="#moveSong" text="&lt;---" />
+      <Button fx:id="btnMoveSongLeft" layoutX="552.0" layoutY="104.0" mnemonicParsing="false" onAction="#addToPlaylist" text="&lt;---" />
       <Button fx:id="btnSearch" layoutX="1016.0" layoutY="24.0" mnemonicParsing="false" onAction="#searchSong" text="Search" />
       <Label layoutX="28.0" layoutY="83.0" text="Playlists" />
       <Label layoutX="281.0" layoutY="83.0" text="Songs on playlist " />

@@ -19,7 +19,8 @@ import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import mytunes.GUI.Model.MyTunesModel;
+import mytunes.BLL.exception.MTBllException;
+import mytunes.BLL.Model.PlaylistModel;
 
 /**
  * FXML Controller class
@@ -28,17 +29,17 @@ import mytunes.GUI.Model.MyTunesModel;
  */
 public class CreatePlaylistController implements Initializable
 {
-    private MyTunesModel mtm;
+    private PlaylistModel pm;
     @FXML
     private AnchorPane rootPane;
     @FXML
     private TextField txtNameInput;
 
-    public CreatePlaylistController()
+    public CreatePlaylistController() throws MTBllException
     {
         try
         {
-            mtm = new MyTunesModel();
+            pm = new PlaylistModel();
         } catch (IOException ex)
         {
             Logger.getLogger(CreateSongController.class.getName()).log(Level.SEVERE, null, ex);
@@ -58,7 +59,7 @@ public class CreatePlaylistController implements Initializable
     private void handleCreateBtn(ActionEvent event) throws SQLException
     {
         String name = txtNameInput.getText();
-        mtm.createPlaylist(name);
+        pm.createPlaylist(name);
         
         Stage stage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
         stage.close();
