@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.ListView;
 import javafx.stage.FileChooser;
 import mytunes.BLL.MyTunesManager;
 import mytunes.BLL.SongSearcher;
@@ -146,5 +147,10 @@ public class SongModel {
         } catch (MTBllException ex) {
             throw new MTBllException("Could not update song");
         }
+    }
+
+    public void deleteSong(ListView<Song> song)
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

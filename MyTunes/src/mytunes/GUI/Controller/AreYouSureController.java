@@ -14,8 +14,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import mytunes.BLL.exception.MTBllException;
 import mytunes.be.Song;
 
 /**
@@ -25,11 +27,12 @@ import mytunes.be.Song;
  */
 public class AreYouSureController implements Initializable
 {
-    private mytunes.GUI.Model.MyTunesModel mtm;
+    private mytunes.BLL.Model.SongModel sm;
     @FXML
     private AnchorPane rootPane;
     @FXML
     private Label lblNameOfDelete;
+    private MyTunesViewController mtvcontroller;
 
     /**
      * Initializes the controller class.
@@ -41,15 +44,8 @@ public class AreYouSureController implements Initializable
     }    
 
     @FXML
-    private void handleYesBtn(ActionEvent event) throws IOException
+    private void handleYesBtn(ActionEvent event) throws IOException, MTBllException
     {
-        /*FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/MyTunesViewController.fxml"));
-        Parent root = (Parent) loader.load();
-        
-        MyTunesViewController mtvcontroller = loader.getController();
-        Song song = mtvcontroller.listSongs.getSelectionModel().getSelectedItem();
-        
-        mtm.deleteSong(song);*/
     }
 
     @FXML

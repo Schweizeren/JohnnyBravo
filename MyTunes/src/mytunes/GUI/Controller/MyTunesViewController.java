@@ -58,14 +58,15 @@ public class MyTunesViewController implements Initializable
     private PlaylistModel pm;
     private SongModel sm;
     private SongSearcher ss;
-    final JFXPanel fxPanel = new JFXPanel();
+    private JFXPanel fxPanel;
     private MediaPlayer mediaPlayer;
+    private Song oldSong;
     
     
     @FXML
     private ListView<Playlist> listPlaylists;
     @FXML
-    public ListView<Song> listSongs;
+    private ListView<Song> listSongs;
     @FXML
     private ListView<Song> listSongsOnPlaylist;
     @FXML
@@ -99,8 +100,6 @@ public class MyTunesViewController implements Initializable
     @FXML
     private TextField writeSearch;
     @FXML
-    private Label testlbl;
-    @FXML
     private Slider sliderDuration;
     @FXML
     private Slider sliderVolume;
@@ -112,6 +111,7 @@ public class MyTunesViewController implements Initializable
             pm = new PlaylistModel();
             sm = new SongModel();
             ss = new SongSearcher();
+            fxPanel = new JFXPanel();
         } catch (IOException ex)
         {
             Logger.getLogger(MyTunesViewController.class.getName()).log(Level.SEVERE, null, ex);
@@ -179,7 +179,9 @@ public class MyTunesViewController implements Initializable
             stage.setScene(new Scene(root));
             stage.show();
             
-            }else {
+            }
+            else 
+            {
             pm.deletePlaylist(playlist);
             }
     }
@@ -284,10 +286,6 @@ public class MyTunesViewController implements Initializable
         System.exit(0);
     }
 
-    @FXML
-    private void moveSong(ActionEvent event)
-    {
-    }
 
     @FXML
     private void searchSong(ActionEvent event) throws MTBllException
@@ -367,6 +365,7 @@ public class MyTunesViewController implements Initializable
             });
         }
     }
+    @FXML
     public void addToPlaylist(ActionEvent event)
     {
         
@@ -384,6 +383,11 @@ public class MyTunesViewController implements Initializable
     public void endApplication()
     {
         System.exit(0);
+    }
+    
+    public void initializeSong(Song song)
+    {
+        oldSong = new Song(song.getId(), song.getTitle(), song.getLength(), song.getArtist(), song.getGenre(), song.getFilepath());
     }
     
 }
