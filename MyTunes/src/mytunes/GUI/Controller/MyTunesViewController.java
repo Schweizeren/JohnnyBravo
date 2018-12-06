@@ -58,7 +58,6 @@ import mytunes.be.Song;
  */
 public class MyTunesViewController implements Initializable
 {
-
     private PlaylistSongModel psm;
     private PlaylistModel pm;
     private SongModel sm;
@@ -66,7 +65,9 @@ public class MyTunesViewController implements Initializable
     private JFXPanel fxPanel;
     private MediaPlayer mediaPlayer;
     private ObservableList<Song> songList = FXCollections.observableArrayList();
+    private ObservableList<Playlist> playlistList;
     private boolean playing;
+    
     @FXML
     private ListView<Playlist> listPlaylists;
     @FXML
@@ -223,7 +224,7 @@ public class MyTunesViewController implements Initializable
     }
 
     @FXML
-    private void newSong(ActionEvent event)
+    private void newSong(ActionEvent event) throws SQLException
     {
         try
         {
@@ -352,7 +353,13 @@ public class MyTunesViewController implements Initializable
     {
 
     }
-
+    
+    public void addToPlaylist(ActionEvent event)
+    {
+        
+    }
+    
+    
     @FXML
     private void sliderDrag(MouseEvent event)
     {
@@ -391,25 +398,6 @@ public class MyTunesViewController implements Initializable
             });
         }
     }
-
-    @FXML
-    public void addToPlaylist(ActionEvent event)
-    {
-
-    }
-
-    @FXML
-    public void deleteFromPlaylistSongsEverything(ActionEvent event)
-    {
-
-    }
-
-    @FXML
-    public void removeSongFromPlaylist(ActionEvent event)
-    {
-
-    }
-
     @FXML
     public void endApplication()
     {
