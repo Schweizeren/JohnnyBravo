@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mytunes.BLL.Model;
+package mytunes.GUI.Model;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -22,26 +22,26 @@ public class PlaylistModel
     private ObservableList<Playlist> playlistList;
     private MyTunesManager mtmanager;
     
-    public PlaylistModel() throws IOException, MTBllException 
+    public PlaylistModel() throws MTBllException 
     {
         playlistList = FXCollections.observableArrayList();
         mtmanager = new MyTunesManager();
         playlistList.addAll(mtmanager.getAllPlaylist());
     }
     
-    public void createPlaylist(String name) throws SQLException
+    public void createPlaylist(String name) throws MTBllException
     {
         Playlist playlist = mtmanager.createPlaylist(name);
         playlistList.add(playlist);
         
     }
     
-    public Playlist getPlaylist(int id) throws SQLException
+    public Playlist getPlaylist(int id) throws MTBllException
     {
         return mtmanager.getPlaylist(id);
     }
     
-    public void deletePlaylist(Playlist playlist) throws SQLException
+    public void deletePlaylist(Playlist playlist) throws MTBllException
     {
         mtmanager.deletePlaylist(playlist);
         playlistList.remove(playlist);
@@ -52,7 +52,7 @@ public class PlaylistModel
         return playlistList;
     }
     
-    public void updatePlaylist(Playlist playlist)
+    public void updatePlaylist(Playlist playlist) throws MTBllException
     {
         mtmanager.updatePlaylist(playlist);
     }

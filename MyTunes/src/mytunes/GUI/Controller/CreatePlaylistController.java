@@ -20,7 +20,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import mytunes.BLL.exception.MTBllException;
-import mytunes.BLL.Model.PlaylistModel;
+import mytunes.GUI.Model.PlaylistModel;
 
 /**
  * FXML Controller class

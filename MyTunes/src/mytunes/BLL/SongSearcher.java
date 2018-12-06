@@ -22,7 +22,7 @@ import mytunes.be.Song;
 public class SongSearcher
 {
 
-    public List<Song> searchSongs(List<Song> searchBase, String query) throws MTBllException, IOException
+    public List<Song> searchSongs(List<Song> searchBase, String query) throws MTBllException
     {
         SongDAO songdao;
         try
@@ -48,6 +48,9 @@ public class SongSearcher
         } catch (MTDalException ex)
         {
             throw new MTBllException("Could not connect to the DAL layer.");
+        } catch (IOException ex)
+        {
+            throw new MTBllException("Could not connect to the DAL layer");
         }
 
     }

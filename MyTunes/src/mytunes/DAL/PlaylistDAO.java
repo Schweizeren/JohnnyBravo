@@ -19,6 +19,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import mytunes.DAL.exception.MTDalException;
 import mytunes.be.Playlist;
 
 /**
@@ -34,7 +35,7 @@ public class PlaylistDAO
         cb = new ConnectionDAO();
     }
     
-    public  List<Playlist> getAllPlaylist()
+    public  List<Playlist> getAllPlaylist() throws MTDalException
     {
         List<Playlist> playlists = new ArrayList<>();
         
@@ -52,12 +53,12 @@ public class PlaylistDAO
             }
         } catch (SQLException ex)
         {
-            ex.printStackTrace();
+            throw new MTDalException("Could not read all playlists.", ex);
         }
         return playlists;
     }
     
-    public Playlist createPlaylist(String name) throws SQLException
+    public Playlist createPlaylist(String name) throws MTDalException
     {
         String sql = "INSERT INTO Playlist (name) VALUES(?);";
         
@@ -77,9 +78,15 @@ public class PlaylistDAO
             }
             Playlist playlist = new Playlist(id,name);
             return playlist;
+        } catch (SQLServerException ex)
+        {
+            throw new MTDalException("Could not connect to server");
+        } catch (SQLException ex)
+        {
+            throw new MTDalException("Could not create playlist.", ex);
         }
     }
-    public void deletePlaylist(Playlist playlist)
+    public void deletePlaylist(Playlist playlist) throws MTDalException
     {
         try (Connection con = cb.getConnection())
         {
@@ -89,11 +96,11 @@ public class PlaylistDAO
         }
         catch (SQLException ex)
         {
-            throw new UnsupportedOperationException();
+            throw new MTDalException("Could not delete playlist.", ex);
         }
     }
     
-    public Playlist getPlaylist(int id) throws SQLException
+    public Playlist getPlaylist(int id) throws MTDalException
     {
         try (Connection con = cb.getConnection())
         {
@@ -110,11 +117,11 @@ public class PlaylistDAO
         }
         catch (SQLException ex)
         {
-            
+            throw new MTDalException("Could not get current playlist.", ex);
         }
         return null;
     }
-    public void updatePlaylist(Playlist playlist)
+    public void updatePlaylist(Playlist playlist) throws MTDalException
     {
         String name = playlist.getName();
         int id = playlist.getId();
@@ -131,7 +138,7 @@ public class PlaylistDAO
         }
         catch (SQLException ex)
         {
-            
+           throw new MTDalException("Could not update selected playlist", ex); 
         }
     }
     

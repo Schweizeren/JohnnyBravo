@@ -5,9 +5,6 @@
  */
 package mytunes.GUI.Controller;
 
-
-
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -41,9 +38,9 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import mytunes.BLL.SongSearcher;
 import mytunes.BLL.exception.MTBllException;
-import mytunes.BLL.Model.PlaylistModel;
-import mytunes.BLL.Model.PlaylistSongModel;
-import mytunes.BLL.Model.SongModel;
+import mytunes.GUI.Model.PlaylistModel;
+import mytunes.GUI.Model.PlaylistSongModel;
+import mytunes.GUI.Model.SongModel;
 import mytunes.be.Playlist;
 import mytunes.be.Song;
 
@@ -54,14 +51,14 @@ import mytunes.be.Song;
  */
 public class MyTunesViewController implements Initializable
 {
+
     private PlaylistSongModel psm;
     private PlaylistModel pm;
     private SongModel sm;
     private SongSearcher ss;
     final JFXPanel fxPanel = new JFXPanel();
     private MediaPlayer mediaPlayer;
-    
-    
+
     @FXML
     private ListView<Playlist> listPlaylists;
     @FXML
@@ -104,19 +101,21 @@ public class MyTunesViewController implements Initializable
     private Slider sliderDuration;
     @FXML
     private Slider sliderVolume;
-    
-    public MyTunesViewController() throws MTBllException {
+
+    public MyTunesViewController()
+    {
         try
         {
             psm = new PlaylistSongModel();
             pm = new PlaylistModel();
             sm = new SongModel();
             ss = new SongSearcher();
-        } catch (IOException ex)
+        } catch (MTBllException ex)
         {
-            Logger.getLogger(MyTunesViewController.class.getName()).log(Level.SEVERE, null, ex);
+            displayError(ex);
         }
     }
+
     /**
      * Initializes the controller class.
      */
@@ -125,15 +124,15 @@ public class MyTunesViewController implements Initializable
     {
         listSongs.setItems(sm.getSongs());
         listPlaylists.setItems(pm.getAllPlaylist());
-        
-    }    
+
+    }
 
     @FXML
     private void createPlaylist(ActionEvent event) throws IOException
     {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/CreatePlaylist.fxml"));
-        Parent root = (Parent)loader.load();
-        
+        Parent root = (Parent) loader.load();
+
         CreatePlaylistController cpcontroller = loader.getController();
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
@@ -144,25 +143,18 @@ public class MyTunesViewController implements Initializable
     private void editPlaylist(ActionEvent event) throws IOException
     {
         Playlist playlist = listPlaylists.getSelectionModel().getSelectedItem();
-        if(playlist == null)
+        if (playlist == null)
         {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/NoPlaylistChosen.fxml"));
-        Parent root = (Parent)loader.load();
-        
-        NoPlaylistChosenController npccontroller = loader.getController();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.show();
-        }
-        else
+            displayNoPlaylistWindow();
+        } else
         {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/CreatePlaylist.fxml"));
-        Parent root = (Parent)loader.load();
-        
-        CreatePlaylistController cpcontroller = loader.getController();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.show();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/CreatePlaylist.fxml"));
+            Parent root = (Parent) loader.load();
+
+            CreatePlaylistController cpcontroller = loader.getController();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
         }
     }
 
@@ -170,18 +162,19 @@ public class MyTunesViewController implements Initializable
     private void deletePlaylist(ActionEvent event) throws SQLException, IOException
     {
         Playlist playlist = listPlaylists.getSelectionModel().getSelectedItem();
-          if (playlist == null) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/NoSongChosen.fxml"));
-            Parent root = (Parent)loader.load();
-            
-            NoSongChosenController nsccontroller = loader.getController();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();
-            
-            }else {
-            pm.deletePlaylist(playlist);
+        if (playlist == null)
+        {
+            displayNoSongWindow();
+        } else
+        {
+            try
+            {
+                pm.deletePlaylist(playlist);
+            } catch (MTBllException ex)
+            {
+                displayError(ex);
             }
+        }
     }
 
     @FXML
@@ -195,69 +188,76 @@ public class MyTunesViewController implements Initializable
     }
 
     @FXML
-    private void deleteSongOnPlaylist(ActionEvent event) throws IOException, SQLException
+    private void deleteSongOnPlaylist(ActionEvent event) 
     {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/NoPlaylistChosen.fxml"));
-        Parent root = (Parent)loader.load();
-        
-        NoPlaylistChosenController npccontroller = loader.getController();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.show();  
-    }
-
-    @FXML
-    private void newSong(ActionEvent event) throws IOException
-    {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/CreateSong.fxml"));
-        Parent root = (Parent)loader.load();
-        
-        CreateSongController cscontroller = loader.getController();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.show();
-    }
-
-    @FXML
-    private void editSong(ActionEvent event) throws IOException
-    {
-        Song song = listSongs.getSelectionModel().getSelectedItem();
-        if (song == null) 
-        {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/NoSongChosen.fxml"));
-            Parent root = (Parent)loader.load();
-            
-            NoSongChosenController nsccontroller = loader.getController();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } 
-        else 
-        {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/EditSong.fxml"));
-            Parent root = (Parent)loader.load();
-        
-            EditSongController escontroller = loader.getController();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();  
+        Playlist playlist = listPlaylists.getSelectionModel().getSelectedItem();
+        if (playlist == null) {
+        displayNoPlaylistWindow();
+        }else {
+            try
+            {
+                pm.deletePlaylist(playlist);
+            } catch (MTBllException ex)
+            {
+                displayError(ex);
+            }
         }
     }
 
     @FXML
-    private void deleteSong(ActionEvent event) throws IOException
+    private void newSong(ActionEvent event)
     {
-        Song song = listSongs.getSelectionModel().getSelectedItem();
-        if (song == null) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/NoSongChosen.fxml"));
-            Parent root = (Parent)loader.load();
-            
-            NoSongChosenController nsccontroller = loader.getController();
+        try
+        {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/CreateSong.fxml"));
+            Parent root = (Parent) loader.load();
+
+            CreateSongController cscontroller = loader.getController();
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.show();
-        }else {
-        sm.deleteSong(song);
+        } catch (IOException ex)
+        {
+            displayError(ex);
+        }
+    }
+
+    @FXML
+    private void editSong(ActionEvent event)
+    {
+        Song song = listSongs.getSelectionModel().getSelectedItem();
+        if (song == null)
+        {
+            displayNoSongWindow();
+        } else
+        {
+            try
+            {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/EditSong.fxml"));
+                Parent root = (Parent) loader.load();
+
+                EditSongController escontroller = loader.getController();
+                escontroller.initializeSong(song);
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (IOException ex)
+            {
+                displayError(ex);
+            }
+        }
+    }
+
+    @FXML
+    private void deleteSong(ActionEvent event)
+    {
+        Song song = listSongs.getSelectionModel().getSelectedItem();
+        if (song == null)
+        {
+            displayNoSongWindow();
+        } else
+        {
+            sm.deleteSong(song);
 
         }
     }
@@ -274,9 +274,15 @@ public class MyTunesViewController implements Initializable
     }
 
     @FXML
-    private void searchSong(ActionEvent event) throws MTBllException
+    private void searchSong(ActionEvent event)
     {
-        listSongs.setItems(sm.searchSongs(sm.getSongs(), writeSearch.getText().toLowerCase()));
+        try
+        {
+            listSongs.setItems(sm.searchSongs(sm.getSongs(), writeSearch.getText().toLowerCase()));
+        } catch (IOException | MTBllException ex)
+        {
+            displayError(ex);
+        }
     }
 
     @FXML
@@ -291,7 +297,7 @@ public class MyTunesViewController implements Initializable
 
     @FXML
     private void playMusic(ActionEvent event)
-    {      
+    {
         mediaPlayer.play();
     }
 
@@ -310,7 +316,7 @@ public class MyTunesViewController implements Initializable
     @FXML
     private void writeSearch(KeyEvent event)
     {
-        
+
     }
 
     @FXML
@@ -326,49 +332,89 @@ public class MyTunesViewController implements Initializable
         String filePath = song.getFilepath();
         String trueFilePath = "file:/" + filePath;
         String trueTrueFilePath = trueFilePath.replace(" ", "%20");
-        System.out.println(trueTrueFilePath);
-        if(trueTrueFilePath != null)
+        if (trueTrueFilePath != null)
         {
             Media media = new Media(trueTrueFilePath);
             mediaPlayer = new MediaPlayer(media);
             sliderVolume.setValue(mediaPlayer.getVolume() * 100);
-            sliderVolume.valueProperty().addListener(new InvalidationListener() 
+            sliderVolume.valueProperty().addListener(new InvalidationListener()
             {
                 @Override
                 public void invalidated(Observable observable)
                 {
-                    mediaPlayer.setVolume(sliderVolume.getValue()/100);
+                    mediaPlayer.setVolume(sliderVolume.getValue() / 100);
                 }
             });
-            
+
             mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>()
             {
                 @Override
-                public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) {
-                sliderDuration.setValue(newValue.toSeconds());
-                sliderDuration.maxProperty().bind(Bindings.createDoubleBinding(() -> mediaPlayer.getTotalDuration().toSeconds(), mediaPlayer.totalDurationProperty()));
+                public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue)
+                {
+                    sliderDuration.setValue(newValue.toSeconds());
+                    sliderDuration.maxProperty().bind(Bindings.createDoubleBinding(() -> mediaPlayer.getTotalDuration().toSeconds(), mediaPlayer.totalDurationProperty()));
                 }
             });
         }
     }
+
     public void addToPlaylist(ActionEvent event)
     {
-        
+
     }
+
     public void deleteFromPlaylistSongsEverything(ActionEvent event)
     {
-        
+
     }
-    
+
     public void removeSongFromPlaylist(ActionEvent event)
     {
-        
+
     }
-    
+
     public void endApplication()
     {
         System.exit(0);
     }
-    
-}
 
+    private void displayError(Exception ex)
+    {
+        //TODO vise fejl mere ordentlig
+        System.out.println(ex.getMessage());
+        ex.printStackTrace();
+    }
+
+    private void displayNoSongWindow()
+    {
+        try
+        {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/NoSongChosen.fxml"));
+            Parent root = (Parent) loader.load();
+
+            NoSongChosenController nsccontroller = loader.getController();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException ex)
+        {
+            displayError(ex);
+        }
+    }
+    
+    private void displayNoPlaylistWindow() {
+        try
+        {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/NoPlaylistChosen.fxml"));
+            Parent root = (Parent) loader.load();
+            
+            NoPlaylistChosenController npccontroller = loader.getController();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException ex)
+        {
+            displayError(ex);
+        }
+    }
+}

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mytunes.BLL.Model;
+package mytunes.GUI.Model;
 
 import java.io.File;
 import java.io.IOException;
@@ -119,21 +119,14 @@ public class SongModel {
     }
 
     public String getArtist() throws MTBllException {
-        try {
             String artist = mtmanager.getAuthor(trueTrueFilePath);
             return artist;
-        } catch (MTBllException ex) {
-            throw new MTBllException("Could not get artist of song");
-        }
+       
     }
 
     public void createSong(String title, int duration, String author, String genre, String filepath) throws MTBllException {
-        try {
             Song song = mtmanager.createSong(title, duration, author, genre, filepath);
             songList.add(song);
-        } catch (MTBllException ex) {
-            throw new MTBllException("Could not create song");
-        }
     }
 
     public ObservableList<Song> getSongs() {
@@ -141,10 +134,6 @@ public class SongModel {
     }
 
     public void updateSong(Song song) throws MTBllException {
-        try {
             mtmanager.updateSong(song);
-        } catch (MTBllException ex) {
-            throw new MTBllException("Could not update song");
-        }
     }
 }
