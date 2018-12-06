@@ -26,8 +26,10 @@ import mytunes.be.Song;
  *
  * @author Kristian Urup laptop
  */
-public class AreYouSureController implements Initializable
+public class AreYouSureSongController implements Initializable
 {
+    
+    private Song selectedSong;
     private SongModel sm;
     @FXML
     private AnchorPane rootPane;
@@ -47,6 +49,9 @@ public class AreYouSureController implements Initializable
     @FXML
     private void handleYesBtn(ActionEvent event) throws IOException, MTBllException
     {
+        sm.deleteSong(selectedSong);
+        Stage stage = (Stage) rootPane.getScene().getWindow();
+        stage.close();
     }
 
     @FXML
@@ -56,4 +61,11 @@ public class AreYouSureController implements Initializable
         stage.close();
     }
     
+    public void initializeSong(Song song) {
+        this.selectedSong = song;
+    }
+    
+    public void initializeModel(SongModel songmodel) {
+        this.sm = songmodel;
+    }
 }

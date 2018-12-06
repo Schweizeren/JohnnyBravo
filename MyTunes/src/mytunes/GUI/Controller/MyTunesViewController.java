@@ -8,6 +8,7 @@ package mytunes.GUI.Controller;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,6 +17,8 @@ import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.embed.swing.JFXPanel;
 import javafx.event.ActionEvent;
 import javafx.event.EventType;
@@ -27,6 +30,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
@@ -60,13 +65,13 @@ public class MyTunesViewController implements Initializable
     private SongSearcher ss;
     private JFXPanel fxPanel;
     private MediaPlayer mediaPlayer;
+    private ObservableList<Song> songList = FXCollections.observableArrayList();
     private boolean playing;
     private Song oldSong;
-
     @FXML
     private ListView<Playlist> listPlaylists;
     @FXML
-    private ListView<Song> listSongs;
+    private ListView<Song> listSongs = new ListView<Song>(songList);
     @FXML
     private ListView<Song> listSongsOnPlaylist;
     @FXML
@@ -267,6 +272,7 @@ public class MyTunesViewController implements Initializable
             displayNoSongWindow();
         } else
         {
+
             try
             {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/EditSong.fxml"));
@@ -294,28 +300,20 @@ public class MyTunesViewController implements Initializable
             displayNoSongWindow();
         } else
         {
-            try
-            {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/AreYouSure.fxml"));
-                Parent root = (Parent) loader.load();
+            Alert alert = new Alert(AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation dialog");
+            alert.setContentText("Are you sure you want to delete");
 
-                AreYouSureController aysController = loader.getController();
-                Stage stage = new Stage();
-                stage.setScene(new Scene(root));
-                stage.show();
-                //mtm.deleteSong(song);
-                //testlbl.setText("")
-                if (song == null)
-                {
-                    displayNoSongWindow();
+            ButtonType buttonTypeYes = new ButtonType("Yes");
+            ButtonType buttonTypeNo = new ButtonType("No", ButtonData.CANCEL_CLOSE);
 
-                } else
-                {
-                    sm.deleteSong(song);
-                }
-            } catch (IOException ex)
+            alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == buttonTypeYes)
             {
-                displayError(ex);
+                sm.deleteSong(song);
+
             }
         }
     }
@@ -346,6 +344,7 @@ public class MyTunesViewController implements Initializable
     @FXML
     private void nextSong(ActionEvent event)
     {
+
     }
 
     @FXML
@@ -464,11 +463,6 @@ public class MyTunesViewController implements Initializable
         {
             displayError(ex);
         }
-    }
-
-    public void initializeSong(Song song)
-    {
-        oldSong = new Song(song.getId(), song.getTitle(), song.getLength(), song.getArtist(), song.getGenre(), song.getFilepath());
     }
 
     private void displayNoPlaylistWindow()

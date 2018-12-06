@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" fx:id="rootPane" prefHeight="155.0" prefWidth="247.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.GUI.Controller.AreYouSurePlaylistController">
+   <children>
+      <Button layoutX="80.0" layoutY="102.0" mnemonicParsing="false" onAction="#handleYesBtn" text="Yes" />
+      <Button layoutX="134.0" layoutY="102.0" mnemonicParsing="false" onAction="#handleNoBtn" text="No" />
+      <Label layoutX="39.0" layoutY="44.0" text="Are you sure you want to delete" />
+      <Label layoutX="97.0" layoutY="4.0" text="Warning" textFill="RED">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Separator layoutX="-1.0" layoutY="19.0" prefHeight="17.0" prefWidth="247.0" />
+      <Label fx:id="lblNameOfDelete" layoutX="80.0" layoutY="69.0" prefHeight="17.0" prefWidth="82.0" />
+   </children>
+</AnchorPane>
