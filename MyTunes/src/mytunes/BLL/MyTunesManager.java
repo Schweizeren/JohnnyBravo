@@ -143,36 +143,59 @@ public class MyTunesManager
         }
     }
 
-    public Playlist createPlaylist(String name) throws SQLException
+    public Playlist createPlaylist(String name) throws MTBllException
     {
         try
         {
             return pdao.createPlaylist(name);
-        } catch (SQLException ex)
+        } catch (MTDalException ex)
         {
-            Logger.getLogger(MyTunesManager.class.getName()).log(Level.SEVERE, null, ex);
+            throw new MTBllException("Could not create playlist");
         }
-        return null;
     }
 
-    public List<Playlist> getAllPlaylist()
+    public List<Playlist> getAllPlaylist() throws MTBllException
     {
-        return pdao.getAllPlaylist();
+        try
+        {
+            return pdao.getAllPlaylist();
+        } catch (MTDalException ex)
+        {
+            throw new MTBllException("Could not read all playlists");
+        }
     }
 
-    public void deletePlaylist(Playlist playlist) throws SQLException
+    public void deletePlaylist(Playlist playlist) throws MTBllException
     {
-        pdao.deletePlaylist(playlist);
+        try
+        {
+            pdao.deletePlaylist(playlist);
+        } catch (MTDalException ex)
+        {
+            throw new MTBllException("Could not delete playlist");
+        }
     }
 
-    public Playlist getPlaylist(int id) throws SQLException
+    public Playlist getPlaylist(int id) throws MTBllException
     {
-        return pdao.getPlaylist(id);
+        try
+        {
+            return pdao.getPlaylist(id);
+        } catch (MTDalException ex)
+        {
+            throw new MTBllException("Could not get selected playlist");
+        }
     }
 
-    public void updatePlaylist(Playlist playlist)
+    public void updatePlaylist(Playlist playlist) throws MTBllException
     {
-        pdao.updatePlaylist(playlist);
+        try
+        {
+            pdao.updatePlaylist(playlist);
+        } catch (MTDalException ex)
+        {
+            throw new MTBllException("Could not update playlist");
+        }
     }
     
     public List<Song> getPlaylistSongs(int id)

@@ -19,7 +19,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import mytunes.BLL.exception.MTBllException;
-import mytunes.BLL.Model.SongModel;
+import mytunes.GUI.Model.SongModel;
 import mytunes.be.Song;
 
 
@@ -50,13 +50,13 @@ public class EditSongController implements Initializable
     private TextField txtOtherCategory;
 
 
-    public EditSongController() throws MTBllException {
+    public EditSongController() {
         try
         {
             sm = new SongModel();
         } catch (MTBllException ex)
         {
-            //TODO
+            displayError(ex);
         }
     }
 
@@ -128,7 +128,7 @@ public class EditSongController implements Initializable
             oldSong.setGenre(comboEditSong.getSelectionModel().getSelectedItem());
             sm.updateSong(oldSong);
         } catch (MTBllException ex) {
-            //TODO
+            displayError(ex);
         }
     }
     
@@ -138,6 +138,12 @@ public class EditSongController implements Initializable
         txtDuration.setText(Integer.toString(song.getLength()));
         txtFile.setText(song.getFilepath());
         oldSong = new Song(song.getId(), song.getTitle(), song.getLength(), song.getArtist(), song.getGenre(), song.getFilepath());
+    }
+    
+    private void displayError(Exception ex) {
+        //TODO Vise fejl til brugeren
+        System.out.println(ex.getMessage());
+        ex.printStackTrace();
     }
     
     

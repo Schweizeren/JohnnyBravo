@@ -21,7 +21,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import mytunes.BLL.exception.MTBllException;
-import mytunes.BLL.Model.SongModel;
+import mytunes.GUI.Model.SongModel;
 
 /**
  * FXML Controller class
@@ -57,7 +57,7 @@ public class CreateSongController implements Initializable
             sm = new SongModel();
         } catch (MTBllException ex)
         {
-            //TODO
+            displayError(ex);
         }
     }
     
@@ -82,7 +82,7 @@ public class CreateSongController implements Initializable
             txtFile.setText(sm.getFilePath());
             txtArtistInput.setText(sm.getArtist());
         } catch (MTBllException ex) {
-            //TODO
+            displayError(ex);
         }
     }
 
@@ -101,6 +101,7 @@ public class CreateSongController implements Initializable
             stage.close();
         } catch (MTBllException ex) {
             //TODO
+            displayError(ex);
         }
     }
 
@@ -146,5 +147,11 @@ public class CreateSongController implements Initializable
                 throw new UnsupportedOperationException("Category not chosen");
         }
         return category;
+    }
+    
+    private void displayError(Exception ex) {
+        //TODO
+        System.out.println(ex.getMessage());
+        ex.printStackTrace();
     }
 }
