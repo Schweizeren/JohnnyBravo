@@ -67,12 +67,10 @@ public class MyTunesViewController implements Initializable
     private MediaPlayer mediaPlayer;
     private ObservableList<Song> songList = FXCollections.observableArrayList();
     private boolean playing;
-    
     @FXML
     private ListView<Playlist> listPlaylists;
     @FXML
     private ListView<Song> listSongs = new ListView<Song>(songList);
-    private Song oldSong;
     @FXML
     private ListView<Song> listSongsOnPlaylist;
     @FXML
@@ -157,7 +155,6 @@ public class MyTunesViewController implements Initializable
             displayNoPlaylistWindow();
         } else
         {
-
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/EditPlaylist.fxml"));
             Parent root = (Parent) loader.load();
 
@@ -263,6 +260,7 @@ public class MyTunesViewController implements Initializable
     private void editSong(ActionEvent event)
     {
         Song song = listSongs.getSelectionModel().getSelectedItem();
+        int index = listSongs.getSelectionModel().getSelectedIndex();
         if (song == null)
         {
             displayNoSongWindow();
@@ -271,17 +269,18 @@ public class MyTunesViewController implements Initializable
 
             try
             {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/EditSong.fxml"));
-            Parent root = (Parent) loader.load();
-            
-            EditSongController escontroller = loader.getController();
-            escontroller.initializeSong(song);
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/EditSong.fxml"));
+                Parent root = (Parent) loader.load();
+
+                EditSongController escontroller = loader.getController();
+                escontroller.initializeModel(sm);
+                escontroller.initializeSong(song, index);
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.show();
             } catch (IOException ex)
             {
-            displayError(ex);
+                displayError(ex);
             }
         }
     }
@@ -298,12 +297,12 @@ public class MyTunesViewController implements Initializable
             Alert alert = new Alert(AlertType.CONFIRMATION);
             alert.setTitle("Confirmation dialog");
             alert.setContentText("Are you sure you want to delete");
-            
+
             ButtonType buttonTypeYes = new ButtonType("Yes");
             ButtonType buttonTypeNo = new ButtonType("No", ButtonData.CANCEL_CLOSE);
-            
+
             alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
-            
+
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == buttonTypeYes)
             {
@@ -338,7 +337,7 @@ public class MyTunesViewController implements Initializable
     @FXML
     private void nextSong(ActionEvent event)
     {
-        
+
     }
 
     @FXML
@@ -392,9 +391,9 @@ public class MyTunesViewController implements Initializable
                 @Override
                 public void invalidated(Observable observable)
                 {
-                        mediaPlayer.setVolume(sliderVolume.getValue() / 100);
+                    mediaPlayer.setVolume(sliderVolume.getValue() / 100);
                 }
-                });
+            });
 
             mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>()
             {
@@ -407,7 +406,6 @@ public class MyTunesViewController implements Initializable
             });
         }
     }
-    
 
     @FXML
     public void addToPlaylist(ActionEvent event)
@@ -435,9 +433,12 @@ public class MyTunesViewController implements Initializable
 
     private void displayError(Exception ex)
     {
-        //TODO vise fejl mere ordentlig
-        System.out.println(ex.getMessage());
-        ex.printStackTrace();
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Error dialog");
+        alert.setHeaderText(null);
+        alert.setContentText(ex.getMessage());
+
+        alert.showAndWait();
     }
 
     private void displayNoSongWindow()

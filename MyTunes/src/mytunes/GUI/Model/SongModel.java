@@ -23,14 +23,16 @@ import mytunes.be.Song;
  *
  * @author Frederik Jensen
  */
-public class SongModel {
+public class SongModel
+{
 
     private MyTunesManager mtmanager;
     private SongSearcher ss;
     private ObservableList<Song> songList;
     private String trueTrueFilePath;
 
-    public SongModel() throws MTBllException {
+    public SongModel() throws MTBllException
+    {
         mtmanager = new MyTunesManager();
         ss = new SongSearcher();
         songList = FXCollections.observableArrayList();
@@ -38,85 +40,103 @@ public class SongModel {
 
     }
 
-    public void initializeFile() throws MTBllException {
+    public void initializeFile() throws MTBllException
+    {
         String filePath;
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Select a File (*.mp3)", "*.mp3");
         fileChooser.getExtensionFilters().add(filter);
         File file = fileChooser.showOpenDialog(null);
-        if (file != null) {
+        if (file != null)
+        {
             filePath = file.toURI().toString();
             System.out.print(trueTrueFilePath);
             String trueFilePath = filePath.replaceFirst("file:/", "");
             trueTrueFilePath = trueFilePath.replace("%20", " ");
 
-        } else {
+        } else
+        {
             throw new MTBllException("File was not chosen");
         }
     }
 
-    public void deleteSong(Song song) {
-        try {
+    public void deleteSong(Song song)
+    {
+        try
+        {
             mtmanager.deleteSong(song);
             songList.remove(song);
-        } catch (MTBllException ex) {
+        } catch (MTBllException ex)
+        {
             Logger.getLogger(SongModel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public ObservableList<Song> searchSongs(List<Song> searchBase, String query) throws MTBllException, IOException {
-            ObservableList<Song> searchedSongList = FXCollections.observableArrayList();
-            searchedSongList.addAll(ss.searchSongs(searchBase, query));
-            return searchedSongList;
+    public ObservableList<Song> searchSongs(List<Song> searchBase, String query) throws MTBllException, IOException
+    {
+        ObservableList<Song> searchedSongList = FXCollections.observableArrayList();
+        searchedSongList.addAll(ss.searchSongs(searchBase, query));
+        return searchedSongList;
     }
 
-    public String getSongTitle() throws MTBllException {
-            String songTitle = mtmanager.getSongTitle(trueTrueFilePath);
-            return songTitle;
+    public String getSongTitle() throws MTBllException
+    {
+        String songTitle = mtmanager.getSongTitle(trueTrueFilePath);
+        return songTitle;
     }
 
-    public String getDuration() throws MTBllException {
-            int duration = mtmanager.getDurationInSec(trueTrueFilePath);
-            int seconds = duration % 60;
-            int minutes = (duration - seconds) / 60;
+    public String getDuration() throws MTBllException
+    {
+        int duration = mtmanager.getDurationInSec(trueTrueFilePath);
+        int seconds = duration % 60;
+        int minutes = (duration - seconds) / 60;
 
-            String mp3Seconds;
-            String mp3Minutes = "" + minutes;
-            if (seconds < 10) {
-                mp3Seconds = "0" + seconds;
-            } else {
-                mp3Seconds = "" + seconds;
-            }
+        String mp3Seconds;
+        String mp3Minutes = "" + minutes;
+        if (seconds < 10)
+        {
+            mp3Seconds = "0" + seconds;
+        } else
+        {
+            mp3Seconds = "" + seconds;
+        }
 
-            String formattedTime = mp3Minutes + ":" + mp3Seconds;
-            return formattedTime;
+        String formattedTime = mp3Minutes + ":" + mp3Seconds;
+        return formattedTime;
     }
 
-    public int getDurationInSec() throws MTBllException {
-            return mtmanager.getDurationInSec(trueTrueFilePath);
+    public int getDurationInSec() throws MTBllException
+    {
+        return mtmanager.getDurationInSec(trueTrueFilePath);
     }
 
-    public String getFilePath() {
+    public String getFilePath()
+    {
         return trueTrueFilePath;
     }
 
-    public String getArtist() throws MTBllException {
-            String artist = mtmanager.getAuthor(trueTrueFilePath);
-            return artist;
-       
+    public String getArtist() throws MTBllException
+    {
+        String artist = mtmanager.getAuthor(trueTrueFilePath);
+        return artist;
+
     }
 
-    public void createSong(String title, int duration, String author, String genre, String filepath) throws MTBllException {
-            Song song = mtmanager.createSong(title, duration, author, genre, filepath);
-            songList.add(song);
+    public void createSong(String title, int duration, String author, String genre, String filepath) throws MTBllException
+    {
+        Song song = mtmanager.createSong(title, duration, author, genre, filepath);
+        songList.add(song);
     }
 
-    public ObservableList<Song> getSongs() {
+    public ObservableList<Song> getSongs()
+    {
         return songList;
     }
 
-    public void updateSong(Song song) throws MTBllException {
-            mtmanager.updateSong(song);
+    public void updateSong(Song song, int index) throws MTBllException
+    {
+        mtmanager.updateSong(song);
+        songList.set(index, song);
     }
 
     public void deleteSong(ListView<Song> song)
