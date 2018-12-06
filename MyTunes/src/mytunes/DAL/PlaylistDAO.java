@@ -117,7 +117,7 @@ public class PlaylistDAO
         }
         catch (SQLException ex)
         {
-            throw new MTDalException("Could not get current playlist.", ex);
+            throw new MTDalException("Could not get specific playlist.", ex);
         }
         return null;
     }

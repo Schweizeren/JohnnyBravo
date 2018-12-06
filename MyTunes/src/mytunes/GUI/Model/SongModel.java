@@ -63,30 +63,18 @@ public class SongModel {
         }
     }
 
-    public ObservableList<Song> searchSongs(List<Song> searchBase, String query) throws MTBllException {
-
-        try {
+    public ObservableList<Song> searchSongs(List<Song> searchBase, String query) throws MTBllException, IOException {
             ObservableList<Song> searchedSongList = FXCollections.observableArrayList();
             searchedSongList.addAll(ss.searchSongs(searchBase, query));
             return searchedSongList;
-        } catch (IOException ex) {
-            throw new MTBllException("Could not connect to DAL layer");
-        }
-
     }
 
     public String getSongTitle() throws MTBllException {
-        try {
             String songTitle = mtmanager.getSongTitle(trueTrueFilePath);
             return songTitle;
-
-        } catch (MTBllException ex) {
-            throw new MTBllException("");
-        }
     }
 
     public String getDuration() throws MTBllException {
-        try {
             int duration = mtmanager.getDurationInSec(trueTrueFilePath);
             int seconds = duration % 60;
             int minutes = (duration - seconds) / 60;
@@ -101,17 +89,10 @@ public class SongModel {
 
             String formattedTime = mp3Minutes + ":" + mp3Seconds;
             return formattedTime;
-        } catch (MTBllException ex) {
-            throw new MTBllException("");
-        }
     }
 
     public int getDurationInSec() throws MTBllException {
-        try {
             return mtmanager.getDurationInSec(trueTrueFilePath);
-        } catch (MTBllException ex) {
-            throw new MTBllException("Could not get duration in seconds");
-        }
     }
 
     public String getFilePath() {

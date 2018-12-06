@@ -255,6 +255,7 @@ public class MyTunesViewController implements Initializable
         if (song == null)
         {
             displayNoSongWindow();
+
         } else
         {
             sm.deleteSong(song);
@@ -299,18 +300,22 @@ public class MyTunesViewController implements Initializable
     private void playMusic(ActionEvent event)
     {
         mediaPlayer.play();
+        playing = true;
     }
 
     @FXML
     private void pauseMusic(ActionEvent event)
     {
         mediaPlayer.pause();
+        playing = false;
+        
     }
 
     @FXML
     private void stopMusic(ActionEvent event)
     {
         mediaPlayer.stop();
+        playing = false;
     }
 
     @FXML
