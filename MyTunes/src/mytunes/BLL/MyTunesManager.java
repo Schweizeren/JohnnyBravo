@@ -114,6 +114,7 @@ public class MyTunesManager
     {
         try
         {
+            psd.deleteFromPlaylistSongsEverything(song);
             sdao.deleteSong(song);
         } catch (MTDalException ex)
         {
@@ -169,6 +170,7 @@ public class MyTunesManager
     {
         try
         {
+            psd.deleteFromPlaylistSongsEverything(playlist);
             pdao.deletePlaylist(playlist);
         } catch (MTDalException ex)
         {
