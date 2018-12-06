@@ -42,7 +42,7 @@ public class CreatePlaylistController implements Initializable
             pm = new PlaylistModel();
         } catch (MTBllException ex)
         {
-            
+            displayError(ex);
         }
     }
     
@@ -67,7 +67,7 @@ public class CreatePlaylistController implements Initializable
             stage.close();
         } catch (MTBllException ex)
         {
-            Logger.getLogger(CreatePlaylistController.class.getName()).log(Level.SEVERE, null, ex);
+            displayError(ex);
         }
         
     }
@@ -77,5 +77,10 @@ public class CreatePlaylistController implements Initializable
     {
         Stage stage = (Stage) rootPane.getScene().getWindow();
         stage.close();
+    }
+    
+    private void displayError(Exception ex) {
+        //TODO
+        System.out.println(ex.getMessage());
     }
 }
