@@ -169,33 +169,28 @@ public class MyTunesViewController implements Initializable
     }
 
     @FXML
-    private void deletePlaylist(ActionEvent event)
+    private void deletePlaylist(ActionEvent event) throws MTBllException
     {
         Playlist playlist = listPlaylists.getSelectionModel().getSelectedItem();
         if (playlist == null)
         {
 
-        } else
+        } 
+        else
         {
-            try
+            Alert alert = new Alert(AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation dialog");
+            alert.setContentText("Are you sure you want to delete");
+            
+            ButtonType buttonTypeYes = new ButtonType("Yes");
+            ButtonType buttonTypeNo = new ButtonType("No", ButtonData.CANCEL_CLOSE);
+            
+            alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+            
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == buttonTypeYes)
             {
                 pm.deletePlaylist(playlist);
-                if (playlist == null)
-                {
-                    displayNoSongWindow();
-                } else
-                {
-                    try
-                    {
-                        pm.deletePlaylist(playlist);
-                    } catch (MTBllException ex)
-                    {
-                        displayError(ex);
-                    }
-                }
-            } catch (MTBllException ex)
-            {
-                displayError(ex);
             }
         }
     }
@@ -313,10 +308,6 @@ public class MyTunesViewController implements Initializable
             if (result.get() == buttonTypeYes)
             {
                 sm.deleteSong(song);
-            }
-            else
-            {
-                //Den vil automatisk lukke
             }
         }
     }
