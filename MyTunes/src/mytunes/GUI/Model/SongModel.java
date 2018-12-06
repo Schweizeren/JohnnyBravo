@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mytunes.BLL.Model;
+package mytunes.GUI.Model;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.ListView;
 import javafx.stage.FileChooser;
 import mytunes.BLL.MyTunesManager;
 import mytunes.BLL.SongSearcher;
@@ -63,30 +64,18 @@ public class SongModel {
         }
     }
 
-    public ObservableList<Song> searchSongs(List<Song> searchBase, String query) throws MTBllException {
-
-        try {
+    public ObservableList<Song> searchSongs(List<Song> searchBase, String query) throws MTBllException, IOException {
             ObservableList<Song> searchedSongList = FXCollections.observableArrayList();
             searchedSongList.addAll(ss.searchSongs(searchBase, query));
             return searchedSongList;
-        } catch (IOException ex) {
-            throw new MTBllException("Could not connect to DAL layer");
-        }
-
     }
 
     public String getSongTitle() throws MTBllException {
-        try {
             String songTitle = mtmanager.getSongTitle(trueTrueFilePath);
             return songTitle;
-
-        } catch (MTBllException ex) {
-            throw new MTBllException("");
-        }
     }
 
     public String getDuration() throws MTBllException {
-        try {
             int duration = mtmanager.getDurationInSec(trueTrueFilePath);
             int seconds = duration % 60;
             int minutes = (duration - seconds) / 60;
@@ -101,17 +90,10 @@ public class SongModel {
 
             String formattedTime = mp3Minutes + ":" + mp3Seconds;
             return formattedTime;
-        } catch (MTBllException ex) {
-            throw new MTBllException("");
-        }
     }
 
     public int getDurationInSec() throws MTBllException {
-        try {
             return mtmanager.getDurationInSec(trueTrueFilePath);
-        } catch (MTBllException ex) {
-            throw new MTBllException("Could not get duration in seconds");
-        }
     }
 
     public String getFilePath() {
@@ -119,21 +101,14 @@ public class SongModel {
     }
 
     public String getArtist() throws MTBllException {
-        try {
             String artist = mtmanager.getAuthor(trueTrueFilePath);
             return artist;
-        } catch (MTBllException ex) {
-            throw new MTBllException("Could not get artist of song");
-        }
+       
     }
 
     public void createSong(String title, int duration, String author, String genre, String filepath) throws MTBllException {
-        try {
             Song song = mtmanager.createSong(title, duration, author, genre, filepath);
             songList.add(song);
-        } catch (MTBllException ex) {
-            throw new MTBllException("Could not create song");
-        }
     }
 
     public ObservableList<Song> getSongs() {
@@ -141,10 +116,11 @@ public class SongModel {
     }
 
     public void updateSong(Song song) throws MTBllException {
-        try {
             mtmanager.updateSong(song);
-        } catch (MTBllException ex) {
-            throw new MTBllException("Could not update song");
-        }
+    }
+
+    public void deleteSong(ListView<Song> song)
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
