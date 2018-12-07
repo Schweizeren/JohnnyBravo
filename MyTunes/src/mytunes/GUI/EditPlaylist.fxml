@@ -6,10 +6,10 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" fx:id="rootPane" prefHeight="197.0" prefWidth="342.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.GUI.Controller.EditPlaylistController">
+<AnchorPane id="AnchorPane" fx:id="rootPane" prefHeight="197.0" prefWidth="342.0" styleClass="background" stylesheets="@MyTunes.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.GUI.Controller.EditPlaylistController">
    <children>
-      <Button layoutX="279.0" layoutY="151.0" mnemonicParsing="false" onAction="#handleSaveBtn" text="Save" />
-      <Button layoutX="217.0" layoutY="151.0" mnemonicParsing="false" onAction="#handleCancelBtn" text="Cancel" />
+      <Button layoutX="277.0" layoutY="151.0" mnemonicParsing="false" onAction="#handleSaveBtn" text="Save" />
+      <Button layoutX="201.0" layoutY="151.0" mnemonicParsing="false" onAction="#handleCancelBtn" text="Cancel" />
       <Label layoutX="106.0" layoutY="10.0" text="Edit playlist:" />
       <Label fx:id="lblPlaylistName" layoutX="173.0" layoutY="12.0" prefHeight="17.0" prefWidth="41.0" />
       <TextField fx:id="txtEditPlaylist" layoutX="97.0" layoutY="74.0" />
