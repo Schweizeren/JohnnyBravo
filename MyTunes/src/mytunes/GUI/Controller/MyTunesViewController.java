@@ -67,6 +67,7 @@ public class MyTunesViewController implements Initializable
     private ObservableList<Song> songList = FXCollections.observableArrayList();
     private ObservableList<Playlist> playlistList;
     private boolean playing;
+    private int currentSongSelected;
     
     @FXML
     private ListView<Playlist> listPlaylists;
@@ -330,8 +331,17 @@ public class MyTunesViewController implements Initializable
     @FXML
     private void playMusic(ActionEvent event)
     {
+        /*if (playing) {
+           mediaPlayer.stop();
+           currentSongSelected = listSongs.getSelectionModel().getSelectedIndex();
+           play(); 
+        }else {
+           currentSongSelected = listSongs.getSelectionModel().getSelectedIndex();
+           play(); 
+        }*/
         mediaPlayer.play();
         playing = true;
+        
     }
 
     @FXML
@@ -363,9 +373,9 @@ public class MyTunesViewController implements Initializable
 
     @FXML
     private void songPressed(MouseEvent event)
-    {
-        Song song = listSongs.getSelectionModel().getSelectedItem();
-        String filePath = song.getFilepath();
+    {/*
+        currentSongSelected = listSongs.getSelectionModel().getSelectedIndex();
+        String filePath = listSongs.getItems().get(currentSongSelected).getFilepath();
         String trueFilePath = "file:/" + filePath;
         String trueTrueFilePath = trueFilePath.replace(" ", "%20");
         if (trueTrueFilePath != null)
@@ -391,7 +401,7 @@ public class MyTunesViewController implements Initializable
                     sliderDuration.maxProperty().bind(Bindings.createDoubleBinding(() -> mediaPlayer.getTotalDuration().toSeconds(), mediaPlayer.totalDurationProperty()));
                 }
             });
-        }
+        }*/
     }
 
 
@@ -445,19 +455,6 @@ public class MyTunesViewController implements Initializable
         alert.setContentText("Please select a song");
         
         alert.showAndWait();
-        /*try
-        {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/NoSongChosen.fxml"));
-            Parent root = (Parent) loader.load();
-
-            NoSongChosenController nsccontroller = loader.getController();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException ex)
-        {
-            displayError(ex);
-        }*/
     }
 
     private void displayNoPlaylistWindow()
@@ -468,5 +465,45 @@ public class MyTunesViewController implements Initializable
         alert.setContentText("Please select a playlist to delete");
         
         alert.showAndWait();
+    }
+    
+    private void play() {
+        String filePath = listSongs.getItems().get(currentSongSelected).getFilepath();
+        String trueFilePath = "file:/" + filePath;
+        String trueTrueFilePath = trueFilePath.replace(" ", "%20");
+        Media media = new Media(trueTrueFilePath);
+        mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.play();
+        sliderVolume.setValue(mediaPlayer.getVolume() * 100);
+            sliderVolume.valueProperty().addListener(new InvalidationListener()
+            {
+                @Override
+                public void invalidated(Observable observable)
+                {
+                    mediaPlayer.setVolume(sliderVolume.getValue() / 100);
+                }
+            });
+
+            mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>()
+            {
+                @Override
+                public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue)
+                {
+                    sliderDuration.setValue(newValue.toSeconds());
+                    sliderDuration.maxProperty().bind(Bindings.createDoubleBinding(() -> mediaPlayer.getTotalDuration().toSeconds(), mediaPlayer.totalDurationProperty()));
+                }
+            });
+        mediaPlayer.setOnEndOfMedia(new Runnable() {
+            @Override
+            public void run() {
+                if (listSongs.getItems().size() == currentSongSelected + 1) {
+                    currentSongSelected = 0;
+                }else {
+                    currentSongSelected++;
+                }
+                play();
+            }
+        });
+        playing = true;
     }
 }

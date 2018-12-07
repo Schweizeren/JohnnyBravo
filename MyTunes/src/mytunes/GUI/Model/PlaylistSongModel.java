@@ -7,6 +7,7 @@ package mytunes.GUI.Model;
 
 import java.sql.SQLException;
 import java.util.List;
+import javafx.collections.ObservableList;
 import mytunes.BLL.MyTunesManager;
 import mytunes.BLL.exception.MTBllException;
 import mytunes.be.Playlist;
