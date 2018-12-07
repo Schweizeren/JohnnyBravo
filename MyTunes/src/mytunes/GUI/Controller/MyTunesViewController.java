@@ -66,6 +66,7 @@ public class MyTunesViewController implements Initializable
     private MediaPlayer mediaPlayer;
     private ObservableList<Song> songList = FXCollections.observableArrayList();
     private ObservableList<Playlist> playlistList;
+    private ObservableList<Song> PlaylistSongList;
     private boolean playing;
     private int currentSongSelected;
     
@@ -410,6 +411,7 @@ public class MyTunesViewController implements Initializable
     {
         Playlist playlist = listPlaylists.getSelectionModel().getSelectedItem();
         Song song = listSongs.getSelectionModel().getSelectedItem();
+        
         try
         {
             psm.addToPlaylist(playlist, song);
@@ -467,6 +469,7 @@ public class MyTunesViewController implements Initializable
         alert.showAndWait();
     }
     
+
     private void play() {
         String filePath = listSongs.getItems().get(currentSongSelected).getFilepath();
         String trueFilePath = "file:/" + filePath;
@@ -505,5 +508,5 @@ public class MyTunesViewController implements Initializable
             }
         });
         playing = true;
-    }
+}
 }
