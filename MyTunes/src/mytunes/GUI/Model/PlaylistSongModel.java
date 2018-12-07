@@ -7,6 +7,8 @@ package mytunes.GUI.Model;
 
 import java.sql.SQLException;
 import java.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import mytunes.BLL.MyTunesManager;
 import mytunes.BLL.exception.MTBllException;
 import mytunes.be.Playlist;
@@ -19,9 +21,11 @@ import mytunes.be.Song;
 public class PlaylistSongModel {
     
     private MyTunesManager mtmanager;
-            
+    private ObservableList<Song> playlistSongList;
+    
     public PlaylistSongModel() throws MTBllException
     {
+        playlistSongList = FXCollections.observableArrayList();
         mtmanager = new MyTunesManager();
     }
     

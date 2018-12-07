@@ -66,6 +66,7 @@ public class MyTunesViewController implements Initializable
     private MediaPlayer mediaPlayer;
     private ObservableList<Song> songList = FXCollections.observableArrayList();
     private ObservableList<Playlist> playlistList;
+    private ObservableList<Song> PlaylistSongList;
     private boolean playing;
     
     @FXML
