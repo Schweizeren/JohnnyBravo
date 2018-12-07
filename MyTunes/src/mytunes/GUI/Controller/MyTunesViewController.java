@@ -58,7 +58,6 @@ import mytunes.be.Song;
  */
 public class MyTunesViewController implements Initializable
 {
-
     private PlaylistSongModel psm;
     private PlaylistModel pm;
     private SongModel sm;
@@ -66,7 +65,9 @@ public class MyTunesViewController implements Initializable
     private JFXPanel fxPanel;
     private MediaPlayer mediaPlayer;
     private ObservableList<Song> songList = FXCollections.observableArrayList();
+    private ObservableList<Playlist> playlistList;
     private boolean playing;
+    
     @FXML
     private ListView<Playlist> listPlaylists;
     @FXML
@@ -166,33 +167,28 @@ public class MyTunesViewController implements Initializable
     }
 
     @FXML
-    private void deletePlaylist(ActionEvent event)
+    private void deletePlaylist(ActionEvent event) throws MTBllException
     {
         Playlist playlist = listPlaylists.getSelectionModel().getSelectedItem();
         if (playlist == null)
         {
-
-        } else
+            displayNoPlaylistWindow();
+        } 
+        else
         {
-            try
+            Alert alert = new Alert(AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation dialog");
+            alert.setContentText("Are you sure you want to delete: "+ playlist);
+            
+            ButtonType buttonTypeYes = new ButtonType("Yes");
+            ButtonType buttonTypeNo = new ButtonType("No", ButtonData.CANCEL_CLOSE);
+            
+            alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+            
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == buttonTypeYes)
             {
                 pm.deletePlaylist(playlist);
-                if (playlist == null)
-                {
-                    displayNoSongWindow();
-                } else
-                {
-                    try
-                    {
-                        pm.deletePlaylist(playlist);
-                    } catch (MTBllException ex)
-                    {
-                        displayError(ex);
-                    }
-                }
-            } catch (MTBllException ex)
-            {
-                displayError(ex);
             }
         }
     }
@@ -210,21 +206,6 @@ public class MyTunesViewController implements Initializable
     @FXML
     private void deleteSongOnPlaylist(ActionEvent event)
     {
-        /*Song song = listSongsOnPlaylist.getSelectionModel().getSelectedItem();;
-        if(song == null)
-        {
-            
-        }
-        else
-        {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/NoPlaylistChosen.fxml"));
-        Parent root = (Parent)loader.load();
-        
-        NoPlaylistChosenController npccontroller = loader.getController();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.show();
-        }*/
         Playlist playlist = listPlaylists.getSelectionModel().getSelectedItem();
         if (playlist == null)
         {
@@ -243,7 +224,7 @@ public class MyTunesViewController implements Initializable
     }
 
     @FXML
-    private void newSong(ActionEvent event)
+    private void newSong(ActionEvent event) throws SQLException
     {
         try
         {
@@ -312,7 +293,6 @@ public class MyTunesViewController implements Initializable
             if (result.get() == buttonTypeYes)
             {
                 sm.deleteSong(song);
-
             }
         }
     }
@@ -373,7 +353,7 @@ public class MyTunesViewController implements Initializable
     {
 
     }
-
+    
     @FXML
     private void sliderDrag(MouseEvent event)
     {
@@ -413,6 +393,7 @@ public class MyTunesViewController implements Initializable
         }
     }
 
+
     @FXML
     public void addToPlaylist(ActionEvent event)
     {
@@ -438,7 +419,7 @@ public class MyTunesViewController implements Initializable
     {
 
     }
-
+    
     @FXML
     public void endApplication()
     {
@@ -457,7 +438,13 @@ public class MyTunesViewController implements Initializable
 
     private void displayNoSongWindow()
     {
-        try
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Information dialog");
+        alert.setHeaderText("You have not chosen a song to delete");
+        alert.setContentText("Please select a song");
+        
+        alert.showAndWait();
+        /*try
         {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/NoSongChosen.fxml"));
             Parent root = (Parent) loader.load();
@@ -469,23 +456,16 @@ public class MyTunesViewController implements Initializable
         } catch (IOException ex)
         {
             displayError(ex);
-        }
+        }*/
     }
 
     private void displayNoPlaylistWindow()
     {
-        try
-        {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/NoPlaylistChosen.fxml"));
-            Parent root = (Parent) loader.load();
-
-            NoPlaylistChosenController npccontroller = loader.getController();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException ex)
-        {
-            displayError(ex);
-        }
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Information dialog");
+        alert.setHeaderText("You have not selected a playlist");
+        alert.setContentText("Please select a playlist to delete");
+        
+        alert.showAndWait();
     }
 }

@@ -31,9 +31,9 @@ public class PlaylistSongDAO {
         List<Song> playlistsongs = new ArrayList<>();
         try (Connection con = cb.getConnection()) {
             String query = "SELECT * FROM PlaylistSong INNER JOIN Song ON PlaylistSongID = Song.id WHERE PlaylistSong.PlaylistID = ? ORDER by LocationInListID desc";
-            PreparedStatement preparedStmt = con.prepareStatement(query);
-            preparedStmt.setInt(1, id);
-            ResultSet rs = preparedStmt.executeQuery();
+            PreparedStatement preparedSt = con.prepareStatement(query);
+            preparedSt.setInt(1, id);
+            ResultSet rs = preparedSt.executeQuery();
             while (rs.next()) {
                 Song song = new Song(rs.getInt("id"), rs.getString("title"), rs.getInt("duration"), rs.getString("author"), rs.getString("genre"), rs.getString("filepath"));
                 song.setLocationInList(rs.getInt("LocationInListID"));
@@ -53,13 +53,13 @@ public class PlaylistSongDAO {
         String sql = "INSERT INTO PlaylistSong(PlaylistID,SongID,LocationInListID) VALUES (?,?,?)";
         int Id = -1;
         try (Connection con = cb.getConnection()) {
-            PreparedStatement ps = con.prepareStatement(sql);
+            PreparedStatement preparedst = con.prepareStatement(sql);
             Id = getNewestSongInPlaylist(playlist.getId()) + 1;
-            ps.setInt(1, playlist.getId());
-            ps.setInt(2, song.getId());
-            ps.setInt(3, Id);
-            ps.addBatch();
-            ps.executeBatch();
+            preparedst.setInt(1, playlist.getId());
+            preparedst.setInt(2, song.getId());
+            preparedst.setInt(3, Id);
+            preparedst.addBatch();
+            preparedst.executeBatch();
             song.setLocationInList(Id);
             return song;
         } catch (SQLServerException ex) {
@@ -95,9 +95,9 @@ public class PlaylistSongDAO {
     public void deleteFromPlaylistSongsEverything(Song songToDelete) {
         try (Connection con = cb.getConnection()) {
             String query = "DELETE from PlaylistSong WHERE SongID = ?";
-            PreparedStatement preparedStmt = con.prepareStatement(query);
-            preparedStmt.setInt(1, songToDelete.getId());
-            preparedStmt.execute();
+            PreparedStatement preparedSt = con.prepareStatement(query);
+            preparedSt.setInt(1, songToDelete.getId());
+            preparedSt.execute();
         } catch (SQLServerException ex) {
             System.out.println(ex);
         } catch (SQLException ex) {
@@ -108,9 +108,9 @@ public class PlaylistSongDAO {
     public void deleteFromPlaylistSongsEverything(Playlist play) {
         try (Connection con = cb.getConnection()) {
             String query = "DELETE from PlaylistSong WHERE PlaylistID = ?";
-            PreparedStatement preparedStmt = con.prepareStatement(query);
-            preparedStmt.setInt(1, play.getId());
-            preparedStmt.execute();
+            PreparedStatement preparedSt = con.prepareStatement(query);
+            preparedSt.setInt(1, play.getId());
+            preparedSt.execute();
         } catch (SQLServerException ex) {
             System.out.println(ex);
         } catch (SQLException ex) {
@@ -121,15 +121,29 @@ public class PlaylistSongDAO {
     public void removeSongFromPlaylist(Playlist selectedItem, Song selectedSong) {
         try (Connection con = cb.getConnection()) {
             String query = "DELETE from PlaylistSong WHERE PlaylistID = ? AND SongID = ? AND locationInListID = ?";
-            PreparedStatement preparedStmt = con.prepareStatement(query);
-            preparedStmt.setInt(1, selectedItem.getId());
-            preparedStmt.setInt(2, selectedSong.getId());
-            preparedStmt.setInt(3, selectedSong.getLocationInList());
-            preparedStmt.execute();
+            PreparedStatement preparedSt = con.prepareStatement(query);
+            preparedSt.setInt(1, selectedItem.getId());
+            preparedSt.setInt(2, selectedSong.getId());
+            preparedSt.setInt(3, selectedSong.getLocationInList());
+            preparedSt.execute();
         } catch (SQLServerException ex) {
             System.out.println(ex);
         } catch (SQLException ex) {
             System.out.println(ex);
+        }
+        
+    }
+    
+    public void insertSongToPlaylist (int songID, int playlistID) throws SQLServerException, SQLException
+    {
+        try (Connection con = cb.getConnection())
+        {
+            String query = "INSERT INTO PlaylistSong(PlaylistID,SongID,locationInListID) VALUES (?,?,?)";
+            PreparedStatement preparedst = con.prepareStatement(query);
+            preparedst.setInt(1, playlistID);
+            preparedst.setInt(2, songID);
+            
+            
         }
     }
 
