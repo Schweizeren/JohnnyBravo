@@ -209,8 +209,9 @@ public class MyTunesViewController implements Initializable
         Playlist playlist = listPlaylists.getSelectionModel().getSelectedItem();
         if (playlist == null)
         {
-            displayNoPlaylistWindow();
-        } else
+            displayNoSongWindow();
+        } 
+        else
         {
             try
             {
