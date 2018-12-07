@@ -16,6 +16,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -81,11 +82,11 @@ public class CreatePlaylistController implements Initializable
     }
     
     private void displayError(Exception ex) {
+        
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Error dialog");
         alert.setHeaderText(null);
         alert.setContentText(ex.getMessage());
-        
         alert.showAndWait();
     }
 }
