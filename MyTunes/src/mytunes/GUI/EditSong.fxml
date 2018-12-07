@@ -7,9 +7,9 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" fx:id="rootPane" prefHeight="322.0" prefWidth="357.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.GUI.Controller.EditSongController">
+<AnchorPane id="AnchorPane" fx:id="rootPane" prefHeight="322.0" prefWidth="357.0" styleClass="background" stylesheets="@MyTunes.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.GUI.Controller.EditSongController">
    <children>
-      <Label layoutX="191.0" layoutY="14.0" text="Edit song" />
+      <Label layoutX="101.0" layoutY="11.0" styleClass="label-bright" text="Edit song: " />
       <Separator layoutY="35.0" prefHeight="17.0" prefWidth="361.0" />
       <Label layoutX="46.0" layoutY="111.0" text="Artist:" />
       <Label layoutX="24.0" layoutY="145.0" prefHeight="17.0" prefWidth="57.0" text="Category:" />
@@ -19,10 +19,10 @@
       <TextField fx:id="txtTitleInput" layoutX="81.0" layoutY="71.0" />
       <TextField fx:id="txtArtistInput" layoutX="81.0" layoutY="107.0" />
       <TextField fx:id="txtDuration" layoutX="81.0" layoutY="178.0" />
-      <ComboBox fx:id="comboEditSong" layoutX="81.0" layoutY="141.0" onAction="#handleComboES" prefHeight="25.0" prefWidth="117.0" />
+      <ComboBox fx:id="comboEditSong" layoutX="81.0" layoutY="141.0" onAction="#handleComboES" prefHeight="25.0" prefWidth="117.0" styleClass="button-sliders" />
       <TextField fx:id="txtFile" layoutX="81.0" layoutY="216.0" />
-      <Button layoutX="210.0" layoutY="266.0" mnemonicParsing="false" onAction="#handleCancelBtn" text="Cancel" />
-      <Button layoutX="272.0" layoutY="266.0" mnemonicParsing="false" onAction="#handleSaveBtn" text="Save" />
-      <TextField fx:id="txtOtherCategory" layoutX="210.0" layoutY="141.0" prefHeight="25.0" prefWidth="117.0" />
+      <Button layoutX="201.0" layoutY="266.0" mnemonicParsing="false" onAction="#handleCancelBtn" text="Cancel" />
+      <Button layoutX="277.0" layoutY="266.0" mnemonicParsing="false" onAction="#handleSaveBtn" text="Save" />
+      <TextField fx:id="txtOtherCategory" layoutX="209.0" layoutY="141.0" prefHeight="25.0" prefWidth="117.0" />
    </children>
 </AnchorPane>
