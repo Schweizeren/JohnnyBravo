@@ -229,4 +229,9 @@ public class MyTunesManager
     {
         psd.removeSongFromPlaylist(selectedItem, selectedSong);
     }
+    
+    public void insertSongToPlaylist ()
+    {
+        
+    }
 }

@@ -54,4 +54,9 @@ public class PlaylistSongModel {
     {
         mtmanager.removeSongFromPlaylist(selectedItem, selectedSong);
     }
+    
+    public void insertSongToPlaylist ()
+    {
+        
+    }
 }
