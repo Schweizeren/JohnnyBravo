@@ -401,6 +401,7 @@ public class MyTunesViewController implements Initializable
     {
         Playlist playlist = listPlaylists.getSelectionModel().getSelectedItem();
         Song song = listSongs.getSelectionModel().getSelectedItem();
+        
         try
         {
             psm.addToPlaylist(playlist, song);
@@ -469,5 +470,10 @@ public class MyTunesViewController implements Initializable
         alert.setContentText("Please select a playlist to delete");
         
         alert.showAndWait();
+    }
+    
+    private void getPlaylistSongs()
+    {
+        
     }
 }

@@ -31,11 +31,18 @@ public class PlaylistSongModel {
     
     public List<Song> getPlaylistSongs(int id)
     {
-        return mtmanager.getPlaylistSongs(id);
+        List<Song> listofSongs = mtmanager.getPlaylistSongs(id);
+        for (Song song : listofSongs)
+        {
+            playlistSongList.add(song);
+        }
+        
+        return playlistSongList;
     }
     
     public Song addToPlaylist(Playlist playlist, Song song) throws SQLException
     {
+        playlistSongList.add(song);
         return mtmanager.addToPlaylist(playlist, song);
     }
     
@@ -59,3 +66,4 @@ public class PlaylistSongModel {
         mtmanager.removeSongFromPlaylist(selectedItem, selectedSong);
     }
 }
+
