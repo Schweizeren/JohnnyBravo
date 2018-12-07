@@ -17,7 +17,8 @@ public class Song
     private String artist;
     private String genre;
     private String filepath;
-    private int locationInList; 
+    private int locationInList;
+    private String formattedLength;
     
     public Song (int id, String title, int duration, String author, String genre, String filepath) {
         this.id = id;
@@ -78,9 +79,27 @@ public class Song
         this.locationInList = locationInList;
     }
     
+    public String getFormattedLength() {
+        int seconds = length % 60;
+        int minutes = (length - seconds) / 60;
+
+        String mp3Seconds;
+        String mp3Minutes = "" + minutes;
+        if (seconds < 10)
+        {
+            mp3Seconds = "0" + seconds;
+        } else
+        {
+            mp3Seconds = "" + seconds;
+        }
+
+        formattedLength = mp3Minutes + ":" + mp3Seconds;
+        return formattedLength;
+    }
+    
     @Override
     public String toString() {
-        return title + " " + artist + " " + genre + " " + Integer.toString(length);
+        return title + " " + artist + " " + genre + " " + getFormattedLength();
     }
     
     

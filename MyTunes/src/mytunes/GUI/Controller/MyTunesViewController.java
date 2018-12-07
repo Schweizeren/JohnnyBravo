@@ -416,7 +416,15 @@ public class MyTunesViewController implements Initializable
     @FXML
     public void addToPlaylist(ActionEvent event)
     {
-
+        Playlist playlist = listPlaylists.getSelectionModel().getSelectedItem();
+        Song song = listSongs.getSelectionModel().getSelectedItem();
+        try
+        {
+            psm.addToPlaylist(playlist, song);
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(MyTunesViewController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML

@@ -50,7 +50,7 @@ public class PlaylistSongDAO {
     }
 
     public Song addToPlaylist(Playlist playlist, Song song) throws SQLException {
-        String sql = "INSERT INTO PlaylistSong(PlaylistID,SongID,locationInListID) VALUES (?,?,?)";
+        String sql = "INSERT INTO PlaylistSong(PlaylistID,SongID,LocationInListID) VALUES (?,?,?)";
         int Id = -1;
         try (Connection con = cb.getConnection()) {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -72,7 +72,7 @@ public class PlaylistSongDAO {
     }
 
     public int getNewestSongInPlaylist(int id) {
-        int newestID = -1;
+        int newestID = 0;
         try (Connection con = cb.getConnection()) {
             String query = "SELECT TOP(1) * FROM PlaylistSong WHERE PlaylistID = ? ORDER by locationInListID desc";
             PreparedStatement preparedStmt = con.prepareStatement(query);
