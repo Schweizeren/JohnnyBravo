@@ -51,6 +51,7 @@ public class SongMetaData
         }
         return null;
     }
+    
     public String getAuthor(String filepath) throws MTDalException{
         File file = new File(filepath);
         MP3File mp3;
@@ -75,6 +76,7 @@ public class SongMetaData
         }
         return null;
     }
+    
     public String getGenre(String filepath) throws MTDalException
     {
         File file = new File(filepath);
