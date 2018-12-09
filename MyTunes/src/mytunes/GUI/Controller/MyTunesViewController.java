@@ -56,8 +56,8 @@ import mytunes.be.Song;
  *
  * @author bonde
  */
-public class MyTunesViewController implements Initializable
-{
+public class MyTunesViewController implements Initializable {
+
     private PlaylistSongModel psm;
     private PlaylistModel pm;
     private SongModel sm;
@@ -68,8 +68,9 @@ public class MyTunesViewController implements Initializable
     private ObservableList<Playlist> playlistList;
     private ObservableList<Song> PlaylistSongList;
     private boolean playing;
+    private boolean paused;
     private int currentSongSelected;
-    
+
     @FXML
     private ListView<Playlist> listPlaylists;
     @FXML
@@ -111,17 +112,14 @@ public class MyTunesViewController implements Initializable
     @FXML
     private Slider sliderVolume;
 
-    public MyTunesViewController()
-    {
-        try
-        {
+    public MyTunesViewController() {
+        try {
             psm = new PlaylistSongModel();
             pm = new PlaylistModel();
             sm = new SongModel();
             ss = new SongSearcher();
             fxPanel = new JFXPanel();
-        } catch (MTBllException ex)
-        {
+        } catch (MTBllException ex) {
             displayError(ex);
         }
     }
@@ -130,16 +128,14 @@ public class MyTunesViewController implements Initializable
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb)
-    {
+    public void initialize(URL url, ResourceBundle rb) {
         listSongs.setItems(sm.getSongs());
         listPlaylists.setItems(pm.getAllPlaylist());
 
     }
 
     @FXML
-    private void createPlaylist(ActionEvent event) throws IOException
-    {
+    private void createPlaylist(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/CreatePlaylist.fxml"));
         Parent root = (Parent) loader.load();
 
@@ -150,14 +146,11 @@ public class MyTunesViewController implements Initializable
     }
 
     @FXML
-    private void editPlaylist(ActionEvent event) throws IOException
-    {
+    private void editPlaylist(ActionEvent event) throws IOException {
         Playlist playlist = listPlaylists.getSelectionModel().getSelectedItem();
-        if (playlist == null)
-        {
+        if (playlist == null) {
             displayNoPlaylistWindow();
-        } else
-        {
+        } else {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/EditPlaylist.fxml"));
             Parent root = (Parent) loader.load();
 
@@ -169,57 +162,44 @@ public class MyTunesViewController implements Initializable
     }
 
     @FXML
-    private void deletePlaylist(ActionEvent event) throws MTBllException
-    {
+    private void deletePlaylist(ActionEvent event) throws MTBllException {
         Playlist playlist = listPlaylists.getSelectionModel().getSelectedItem();
-        if (playlist == null)
-        {
+        if (playlist == null) {
             displayNoPlaylistWindow();
-        } 
-        else
-        {
+        } else {
             Alert alert = new Alert(AlertType.CONFIRMATION);
             alert.setTitle("Confirmation dialog");
-            alert.setContentText("Are you sure you want to delete: "+ playlist);
-            
+            alert.setContentText("Are you sure you want to delete: " + playlist);
+
             ButtonType buttonTypeYes = new ButtonType("Yes");
             ButtonType buttonTypeNo = new ButtonType("No", ButtonData.CANCEL_CLOSE);
-            
+
             alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
-            
+
             Optional<ButtonType> result = alert.showAndWait();
-            if (result.get() == buttonTypeYes)
-            {
+            if (result.get() == buttonTypeYes) {
                 pm.deletePlaylist(playlist);
             }
         }
     }
 
     @FXML
-    private void moveUp(ActionEvent event)
-    {
+    private void moveUp(ActionEvent event) {
     }
 
     @FXML
-    private void moveDown(ActionEvent event)
-    {
+    private void moveDown(ActionEvent event) {
     }
 
     @FXML
-    private void deleteSongOnPlaylist(ActionEvent event)
-    {
+    private void deleteSongOnPlaylist(ActionEvent event) {
         Playlist playlist = listPlaylists.getSelectionModel().getSelectedItem();
-        if (playlist == null)
-        {
+        if (playlist == null) {
             displayNoSongWindow();
-        } 
-        else
-        {
-            try
-            {
+        } else {
+            try {
                 pm.deletePlaylist(playlist);
-            } catch (MTBllException ex)
-            {
+            } catch (MTBllException ex) {
                 displayError(ex);
             }
         }
@@ -227,10 +207,8 @@ public class MyTunesViewController implements Initializable
     }
 
     @FXML
-    private void newSong(ActionEvent event) throws SQLException
-    {
-        try
-        {
+    private void newSong(ActionEvent event) throws SQLException {
+        try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/CreateSong.fxml"));
             Parent root = (Parent) loader.load();
 
@@ -239,25 +217,20 @@ public class MyTunesViewController implements Initializable
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.show();
-        } catch (IOException ex)
-        {
+        } catch (IOException ex) {
             displayError(ex);
         }
     }
 
     @FXML
-    private void editSong(ActionEvent event)
-    {
+    private void editSong(ActionEvent event) {
         Song song = listSongs.getSelectionModel().getSelectedItem();
         int index = listSongs.getSelectionModel().getSelectedIndex();
-        if (song == null)
-        {
+        if (song == null) {
             displayNoSongWindow();
-        } else
-        {
+        } else {
 
-            try
-            {
+            try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/EditSong.fxml"));
                 Parent root = (Parent) loader.load();
 
@@ -267,22 +240,18 @@ public class MyTunesViewController implements Initializable
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root));
                 stage.show();
-            } catch (IOException ex)
-            {
+            } catch (IOException ex) {
                 displayError(ex);
             }
         }
     }
 
     @FXML
-    private void deleteSong(ActionEvent event)
-    {
+    private void deleteSong(ActionEvent event) {
         Song song = listSongs.getSelectionModel().getSelectedItem();
-        if (song == null)
-        {
+        if (song == null) {
             displayNoSongWindow();
-        } else
-        {
+        } else {
             Alert alert = new Alert(AlertType.CONFIRMATION);
             alert.setTitle("Confirmation dialog");
             alert.setContentText("Are you sure you want to delete");
@@ -293,154 +262,128 @@ public class MyTunesViewController implements Initializable
             alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
 
             Optional<ButtonType> result = alert.showAndWait();
-            if (result.get() == buttonTypeYes)
-            {
+            if (result.get() == buttonTypeYes) {
                 sm.deleteSong(song);
             }
         }
     }
 
     @FXML
-    private void endApplication(ActionEvent event)
-    {
+    private void endApplication(ActionEvent event) {
         System.exit(0);
     }
 
     @FXML
-    private void searchSong(ActionEvent event)
-    {
-        try
-        {
+    private void searchSong(ActionEvent event) {
+        try {
             listSongs.setItems(sm.searchSongs(sm.getSongs(), writeSearch.getText().toLowerCase()));
-        } catch (IOException | MTBllException ex)
-        {
+        } catch (IOException | MTBllException ex) {
             displayError(ex);
         }
     }
 
     @FXML
-    private void previousSong(ActionEvent event)
-    {
-    }
-
-    @FXML
-    private void nextSong(ActionEvent event)
-    {
-
-    }
-
-    @FXML
-    private void playMusic(ActionEvent event)
-    {
-        /*if (playing) {
-           mediaPlayer.stop();
-           currentSongSelected = listSongs.getSelectionModel().getSelectedIndex();
-           play(); 
-        }else {
-           currentSongSelected = listSongs.getSelectionModel().getSelectedIndex();
-           play(); 
-        }*/
-        mediaPlayer.play();
+    private void previousSong(ActionEvent event) {
+        mediaPlayer.stop();
+        paused = false;
         playing = true;
-        
+        if(currentSongSelected < 0) {
+            currentSongSelected = listSongs.getItems().size() - 1;
+        } else {
+            currentSongSelected--;
+        }
+        play();
     }
 
     @FXML
-    private void pauseMusic(ActionEvent event)
-    {
+    private void nextSong(ActionEvent event) {
+        mediaPlayer.stop();
+        paused = false;
+        playing = true;
+        if (currentSongSelected == listSongs.getItems().size() - 1) {
+            currentSongSelected = 0;
+        } else {
+            currentSongSelected++;
+        }
+        play();
+    }
+
+    @FXML
+    private void playMusic(ActionEvent event) {
+        if (playing) {
+            mediaPlayer.stop();
+            currentSongSelected = listSongs.getSelectionModel().getSelectedIndex();
+            play();
+        } else if (paused) {
+            mediaPlayer.play();
+        } else {
+            currentSongSelected = listSongs.getSelectionModel().getSelectedIndex();
+            play();
+        }
+        playing = true;
+        paused = false;
+        controlSound(); 
+    }
+
+    @FXML
+    private void pauseMusic(ActionEvent event) {
         mediaPlayer.pause();
         playing = false;
+        paused = true;
 
     }
 
     @FXML
-    private void stopMusic(ActionEvent event)
-    {
+    private void stopMusic(ActionEvent event) {
         mediaPlayer.stop();
         playing = false;
+        paused = false;
     }
 
     @FXML
-    private void writeSearch(KeyEvent event)
-    {
+    private void writeSearch(KeyEvent event) {
 
     }
-    
+
     @FXML
-    private void sliderDrag(MouseEvent event)
-    {
+    private void sliderDrag(MouseEvent event) {
         mediaPlayer.seek(Duration.seconds(sliderDuration.getValue()));
     }
 
     @FXML
-    private void songPressed(MouseEvent event)
-    {/*
-        currentSongSelected = listSongs.getSelectionModel().getSelectedIndex();
-        String filePath = listSongs.getItems().get(currentSongSelected).getFilepath();
-        String trueFilePath = "file:/" + filePath;
-        String trueTrueFilePath = trueFilePath.replace(" ", "%20");
-        if (trueTrueFilePath != null)
-        {
-            Media media = new Media(trueTrueFilePath);
-            mediaPlayer = new MediaPlayer(media);
-            sliderVolume.setValue(mediaPlayer.getVolume() * 100);
-            sliderVolume.valueProperty().addListener(new InvalidationListener()
-            {
-                @Override
-                public void invalidated(Observable observable)
-                {
-                    mediaPlayer.setVolume(sliderVolume.getValue() / 100);
-                }
-            });
-
-            mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>()
-            {
-                @Override
-                public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue)
-                {
-                    sliderDuration.setValue(newValue.toSeconds());
-                    sliderDuration.maxProperty().bind(Bindings.createDoubleBinding(() -> mediaPlayer.getTotalDuration().toSeconds(), mediaPlayer.totalDurationProperty()));
-                }
-            });
-        }*/
+    private void songPressed(MouseEvent event) {
+        paused = false;
+        listSongsOnPlaylist.getSelectionModel().clearSelection();
     }
 
-
     @FXML
-    public void addToPlaylist(ActionEvent event)
-    {
+    public void addToPlaylist(ActionEvent event) {
         Playlist playlist = listPlaylists.getSelectionModel().getSelectedItem();
         Song song = listSongs.getSelectionModel().getSelectedItem();
-        
-        try
-        {
+
+        try {
             psm.addToPlaylist(playlist, song);
-        } catch (SQLException ex)
-        {
+        } catch (SQLException ex) {
             Logger.getLogger(MyTunesViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @FXML
-    public void deleteFromPlaylistSongsEverything(ActionEvent event)
-    {
+    public void deleteFromPlaylistSongsEverything(ActionEvent event) {
 
     }
 
     @FXML
-    public void removeSongFromPlaylist(ActionEvent event)
-    {
+    public void removeSongFromPlaylist(ActionEvent event) {
 
     }
-    
+
     @FXML
-    public void endApplication()
-    {
+    public void endApplication() {
         System.exit(0);
     }
 
-    private void displayError(Exception ex)
-    {
+    private void displayError(Exception ex) {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Error dialog");
         alert.setHeaderText(null);
@@ -449,34 +392,54 @@ public class MyTunesViewController implements Initializable
         alert.showAndWait();
     }
 
-    private void displayNoSongWindow()
-    {
+    private void displayNoSongWindow() {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Information dialog");
         alert.setHeaderText("You have not chosen a song to delete");
         alert.setContentText("Please select a song");
-        
+
         alert.showAndWait();
     }
 
-    private void displayNoPlaylistWindow()
-    {
+    private void displayNoPlaylistWindow() {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Information dialog");
         alert.setHeaderText("You have not selected a playlist");
         alert.setContentText("Please select a playlist to delete");
-        
+
         alert.showAndWait();
     }
-    
 
     private void play() {
         String filePath = listSongs.getItems().get(currentSongSelected).getFilepath();
+        listSongs.getSelectionModel().clearAndSelect(currentSongSelected);
         String trueFilePath = "file:/" + filePath;
         String trueTrueFilePath = trueFilePath.replace(" ", "%20");
         Media media = new Media(trueTrueFilePath);
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.play();
+        mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
+            @Override
+            public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) {
+                sliderDuration.setValue(newValue.toSeconds());
+                sliderDuration.maxProperty().bind(Bindings.createDoubleBinding(() -> mediaPlayer.getTotalDuration().toSeconds(), mediaPlayer.totalDurationProperty()));
+            }
+        });
+        mediaPlayer.setOnEndOfMedia(new Runnable() {
+            @Override
+            public void run() {
+                if (listSongs.getItems().size() == currentSongSelected + 1) {
+                    currentSongSelected = 0;
+                } else {
+                    currentSongSelected++;
+                }
+                play();
+            }
+        });
+        playing = true;
+    }
+    
+    private void controlSound() {
         sliderVolume.setValue(mediaPlayer.getVolume() * 100);
             sliderVolume.valueProperty().addListener(new InvalidationListener()
             {
@@ -486,27 +449,5 @@ public class MyTunesViewController implements Initializable
                     mediaPlayer.setVolume(sliderVolume.getValue() / 100);
                 }
             });
-
-            mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>()
-            {
-                @Override
-                public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue)
-                {
-                    sliderDuration.setValue(newValue.toSeconds());
-                    sliderDuration.maxProperty().bind(Bindings.createDoubleBinding(() -> mediaPlayer.getTotalDuration().toSeconds(), mediaPlayer.totalDurationProperty()));
-                }
-            });
-        mediaPlayer.setOnEndOfMedia(new Runnable() {
-            @Override
-            public void run() {
-                if (listSongs.getItems().size() == currentSongSelected + 1) {
-                    currentSongSelected = 0;
-                }else {
-                    currentSongSelected++;
-                }
-                play();
-            }
-        });
-        playing = true;
-}
+    }
 }

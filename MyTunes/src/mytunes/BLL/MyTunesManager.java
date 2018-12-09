@@ -212,7 +212,7 @@ public class MyTunesManager
     
     public int getNewestSongInPlaylist(int id)
     {
-        return psd.getNewestSongInPlaylist(id);
+        return psd.getNewestIdInPlaylist(id);
     }
     
     public void deleteFromPlaylistSongsEverything(Song songToDelete)
