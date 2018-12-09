@@ -62,6 +62,8 @@ public class EditSongController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
+        txtDuration.setDisable(true);
+        txtFile.setDisable(true);
         comboEditSong.setItems(FXCollections.observableArrayList("Blues", "Hip Hop", "Pop", "Rap",
                 "Rock", "Techno", "Other"));
         comboEditSong.setVisibleRowCount(6);
