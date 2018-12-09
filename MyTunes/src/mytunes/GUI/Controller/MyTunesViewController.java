@@ -284,60 +284,78 @@ public class MyTunesViewController implements Initializable {
 
     @FXML
     private void previousSong(ActionEvent event) {
-        mediaPlayer.stop();
-        paused = false;
-        playing = true;
-        if(currentSongSelected < 0) {
-            currentSongSelected = listSongs.getItems().size() - 1;
-        } else {
-            currentSongSelected--;
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+            paused = false;
+            playing = true;
+            if (currentSongSelected < 0) {
+                currentSongSelected = listSongs.getItems().size() - 1;
+            } else {
+                currentSongSelected--;
+            }
+            play();
         }
-        play();
     }
 
     @FXML
     private void nextSong(ActionEvent event) {
-        mediaPlayer.stop();
-        paused = false;
-        playing = true;
-        if (currentSongSelected == listSongs.getItems().size() - 1) {
-            currentSongSelected = 0;
-        } else {
-            currentSongSelected++;
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+            paused = false;
+            playing = true;
+            if (currentSongSelected == listSongs.getItems().size() - 1) {
+                currentSongSelected = 0;
+            } else {
+                currentSongSelected++;
+            }
+            play();
         }
-        play();
     }
 
     @FXML
     private void playMusic(ActionEvent event) {
-        if (playing) {
-            mediaPlayer.stop();
-            currentSongSelected = listSongs.getSelectionModel().getSelectedIndex();
-            play();
-        } else if (paused) {
-            mediaPlayer.play();
+        if (mediaPlayer == null && listSongs.getSelectionModel().getSelectedItem() == null) {
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Information dialog");
+            alert.setHeaderText("You have not chosen a song to play");
+            alert.setContentText("Please select a song");
+
+            alert.showAndWait();
         } else {
-            currentSongSelected = listSongs.getSelectionModel().getSelectedIndex();
-            play();
+            if (playing) {
+                mediaPlayer.stop();
+                currentSongSelected = listSongs.getSelectionModel().getSelectedIndex();
+                play();
+            } else if (paused) {
+                mediaPlayer.play();
+            } else {
+                currentSongSelected = listSongs.getSelectionModel().getSelectedIndex();
+                play();
+            }
+            playing = true;
+            paused = false;
+            controlSound();
         }
-        playing = true;
-        paused = false;
-        controlSound(); 
     }
 
     @FXML
     private void pauseMusic(ActionEvent event) {
-        mediaPlayer.pause();
-        playing = false;
-        paused = true;
-
+        if (mediaPlayer != null) {
+            mediaPlayer.pause();
+            playing = false;
+            paused = true;
+        }
     }
 
     @FXML
     private void stopMusic(ActionEvent event) {
-        mediaPlayer.stop();
-        playing = false;
-        paused = false;
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+            listSongs.getSelectionModel().clearSelection();
+            mediaPlayer = null;
+            playing = false;
+            paused = false;
+        }
     }
 
     @FXML
@@ -438,16 +456,14 @@ public class MyTunesViewController implements Initializable {
         });
         playing = true;
     }
-    
+
     private void controlSound() {
         sliderVolume.setValue(mediaPlayer.getVolume() * 100);
-            sliderVolume.valueProperty().addListener(new InvalidationListener()
-            {
-                @Override
-                public void invalidated(Observable observable)
-                {
-                    mediaPlayer.setVolume(sliderVolume.getValue() / 100);
-                }
-            });
+        sliderVolume.valueProperty().addListener(new InvalidationListener() {
+            @Override
+            public void invalidated(Observable observable) {
+                mediaPlayer.setVolume(sliderVolume.getValue() / 100);
+            }
+        });
     }
 }
