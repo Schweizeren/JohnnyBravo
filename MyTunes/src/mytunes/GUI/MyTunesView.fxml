@@ -14,7 +14,7 @@
    <children>
        <ImageView fx:id="searchView" fitHeight="31.0" fitWidth="30.0" layoutX="982.0" layoutY="22.0" onMouseClicked="#mouseClickedSearch" styleClass="button">
     <image>
-        <Image url="@SearchButton.png">
+        <Image url="@searchButton.png">
             </Image>
             </image>
             </ImageView>
