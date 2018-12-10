@@ -154,7 +154,7 @@ public class MyTunesViewController implements Initializable
         Parent root = (Parent) loader.load();
 
         CreatePlaylistController cpcontroller = loader.getController();
-
+        cpcontroller.initializeModel(pm);
         Stage stage = new Stage();
 
         stage.setScene(new Scene(root));
@@ -207,6 +207,7 @@ public class MyTunesViewController implements Initializable
     }
 
 
+    @FXML
     private void moveUp(ActionEvent event) 
     {
         int i = listSongsOnPlaylist.getSelectionModel().getSelectedItem().getId();
@@ -230,15 +231,18 @@ public class MyTunesViewController implements Initializable
     private void deleteSongOnPlaylist(ActionEvent event) 
     {
         Playlist playlist = listPlaylists.getSelectionModel().getSelectedItem();
+        Song song = listSongsOnPlaylist.getSelectionModel().getSelectedItem();
         if (playlist == null)
         {
+            displayNoPlaylistWindow();
+        } else if (song == null) {
             displayNoSongWindow();
-        } else
+        }else
         {
             try
             {
-                pm.deletePlaylist(playlist);
-            } catch (MTBllException ex)
+                psm.removeSongFromPlaylist(playlist, song);
+            } catch (Exception ex)
             {
                 displayError(ex);
             }
@@ -371,15 +375,15 @@ public class MyTunesViewController implements Initializable
             paused = false;
             playing = true;
             if (listSongs.getSelectionModel().getSelectedItem() != null) {
-            if (currentSongSelected > listSongs.getItems().size())
+            if (currentSongSelected == listSongs.getItems().size() -1)
             {
                 currentSongSelected = 0;
             } else
             {
                 currentSongSelected++;
             }
-            } else {
-                if (currentSongSelected > listSongsOnPlaylist.getItems().size())
+            } else if (listSongsOnPlaylist.getSelectionModel().getSelectedItem() != null) {
+                if (currentSongSelected == listSongsOnPlaylist.getItems().size() -1)
             {
                 currentSongSelected = 0;
             } else
