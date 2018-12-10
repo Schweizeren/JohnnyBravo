@@ -32,7 +32,7 @@ public class PlaylistSongDAO {
     {
         List<Song> playlistsongs = new ArrayList<>();
         try (Connection con = cb.getConnection()) {
-            String query = "SELECT * FROM PlaylistSong INNER JOIN Song ON SongID = Song.id WHERE PlaylistSong.PlaylistID = ? ORDER by LocationInListID desc";
+            String query = "SELECT * FROM PlaylistSong INNER JOIN Song ON SongID = Song.id WHERE PlaylistSong.PlaylistID = ? ORDER by LocationInListID asc";
             PreparedStatement preparedSt = con.prepareStatement(query);
             preparedSt.setInt(1, id);
             ResultSet rs = preparedSt.executeQuery();

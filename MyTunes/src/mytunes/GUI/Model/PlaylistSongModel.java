@@ -52,8 +52,10 @@ public class PlaylistSongModel {
         return mtmanager.getNewestSongInPlaylist(id);
     }
     
+    
     public void deleteFromPlaylist(Playlist playlist) throws SQLException
     {
+        playlistSongList.clear();
         mtmanager.deleteFromPlaylist(playlist);
     }
     

@@ -123,7 +123,11 @@ public class EditSongController implements Initializable
             oldSong.setArtist(txtArtistInput.getText());
             oldSong.setTitle(txtTitleInput.getText());
             oldSong.setFilepath(txtFile.getText());
-            oldSong.setGenre(comboEditSong.getSelectionModel().getSelectedItem());
+            if (comboEditSong.getSelectionModel().getSelectedItem().equals("Other")) {
+                oldSong.setGenre(txtOtherCategory.getText());
+            } else {
+                oldSong.setGenre(comboEditSong.getSelectionModel().getSelectedItem());
+            }
             sm.updateSong(oldSong, index);
             Stage stage = (Stage) rootPane.getScene().getWindow();
             stage.close();
@@ -137,7 +141,7 @@ public class EditSongController implements Initializable
     {
         txtTitleInput.setText(song.getTitle());
         txtArtistInput.setText(song.getArtist());
-        txtDuration.setText(Integer.toString(song.getLength()));
+        txtDuration.setText(song.getFormattedLength());
         txtFile.setText(song.getFilepath());
         oldSong = new Song(song.getId(), song.getTitle(), song.getLength(), song.getArtist(), song.getGenre(), song.getFilepath());
         this.index = index;
