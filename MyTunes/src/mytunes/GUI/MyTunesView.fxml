@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="rootPane" prefHeight="762.0" prefWidth="1118.0" styleClass="background" stylesheets="@MyTunes.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.GUI.Controller.MyTunesViewController">
+<AnchorPane id="AnchorPane" fx:id="rootPane" prefHeight="762.0" prefWidth="1118.0" styleClass="background" stylesheets="@MyTunes.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.GUI.Controller.MyTunesViewController">
    <children>
        <ImageView fx:id="searchView" fitHeight="31.0" fitWidth="30.0" layoutX="982.0" layoutY="22.0" onMouseClicked="#mouseClickedSearch" styleClass="button">
     <image>
@@ -25,9 +25,9 @@
             </Image>
             </image>
             </ImageView>
-            <ImageView fx:id="volumeView" fitHeight="31.0" fitWidth="31.0" layoutX="563.0" layoutY="644.0" styleClass="button">
+            <ImageView fx:id="volumeView" fitHeight="25.0" fitWidth="30.0" layoutX="565.0" layoutY="647.0" styleClass="button-sliders">
                 <image>
-                    <Image url="@volumeWhite.png">
+                    <Image url="@soundWhite.png">
                     </Image>
                 </image>
             </ImageView>
