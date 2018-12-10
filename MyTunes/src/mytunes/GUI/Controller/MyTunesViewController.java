@@ -123,7 +123,8 @@ public class MyTunesViewController implements Initializable {
     @FXML
     private ImageView volumeView;
 
-    public MyTunesViewController() {
+    public MyTunesViewController() 
+    {
         try {
             psm = new PlaylistSongModel();
             pm = new PlaylistModel();
@@ -139,7 +140,8 @@ public class MyTunesViewController implements Initializable {
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle rb) 
+    {
         listSongs.setItems(sm.getSongs());
         listPlaylists.setItems(pm.getAllPlaylist());
     }
@@ -159,7 +161,8 @@ public class MyTunesViewController implements Initializable {
     }
 
     @FXML
-    private void editPlaylist(ActionEvent event) throws IOException {
+    private void editPlaylist(ActionEvent event) throws IOException 
+    {
         Playlist playlist = listPlaylists.getSelectionModel().getSelectedItem();
         if (playlist == null) {
             displayNoPlaylistWindow();
@@ -175,7 +178,8 @@ public class MyTunesViewController implements Initializable {
     }
 
     @FXML
-    private void deletePlaylist(ActionEvent event) throws MTBllException {
+    private void deletePlaylist(ActionEvent event) throws MTBllException
+    {
         Playlist playlist = listPlaylists.getSelectionModel().getSelectedItem();
         if (playlist == null) {
             displayNoPlaylistWindow();
@@ -217,7 +221,8 @@ public class MyTunesViewController implements Initializable {
     }
 
     @FXML
-    private void deleteSongOnPlaylist(ActionEvent event) {
+    private void deleteSongOnPlaylist(ActionEvent event) 
+    {
         Playlist playlist = listPlaylists.getSelectionModel().getSelectedItem();
         if (playlist == null) {
             displayNoSongWindow();
@@ -232,7 +237,8 @@ public class MyTunesViewController implements Initializable {
     }
 
     @FXML
-    private void newSong(ActionEvent event) throws SQLException {
+    private void newSong(ActionEvent event) throws SQLException 
+    {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/CreateSong.fxml"));
             Parent root = (Parent) loader.load();
@@ -250,7 +256,8 @@ public class MyTunesViewController implements Initializable {
     }
 
     @FXML
-    private void editSong(ActionEvent event) {
+    private void editSong(ActionEvent event)
+    {
         Song song = listSongs.getSelectionModel().getSelectedItem();
         int index = listSongs.getSelectionModel().getSelectedIndex();
         if (song == null) {
@@ -274,7 +281,8 @@ public class MyTunesViewController implements Initializable {
     }
 
     @FXML
-    private void deleteSong(ActionEvent event) {
+    private void deleteSong(ActionEvent event) 
+    {
         Song song = listSongs.getSelectionModel().getSelectedItem();
         if (song == null) {
             displayNoSongWindow();
@@ -296,9 +304,9 @@ public class MyTunesViewController implements Initializable {
     }
 
     @FXML
-    private void endApplication(ActionEvent event) {
+    private void endApplication(ActionEvent event) 
+    {
         System.exit(0);
-        i++;
     }
 
     private void searchSong(ActionEvent event) {
@@ -402,22 +410,6 @@ public class MyTunesViewController implements Initializable {
         paused = false;
         listSongsOnPlaylist.getSelectionModel().clearSelection();
     }
-
-
-    public void deleteFromPlaylistSongsEverything(ActionEvent event)
-    {
-
-    }
-
-    public void removeSongFromPlaylist(ActionEvent event)
-    {
-
-    }
-    
-    public void endApplication()
-    {
-        
-    }
     
     public void addToPlaylist(ActionEvent event)
     {
@@ -426,12 +418,24 @@ public class MyTunesViewController implements Initializable {
 
         try {
             psm.addToPlaylist(playlist, song);
-        } catch (SQLException ex) {
+        }
+        catch (SQLException ex) {
             Logger.getLogger(MyTunesViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
+    public void deleteFromPlaylistSongsEverything(ActionEvent event) 
+    {
+    }
 
+    public void removeSongFromPlaylist(ActionEvent event)
+    {
+    }
+    
+    public void endApplication()
+    {
+        System.exit(0);
+    }
 
     private void displayError(Exception ex) {
         Alert alert = new Alert(AlertType.INFORMATION);
