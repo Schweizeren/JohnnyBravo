@@ -23,11 +23,13 @@ public class PlaylistSongDAO {
 
     private final ConnectionDAO cb;
 
-    public PlaylistSongDAO() {
+    public PlaylistSongDAO() 
+    {
         cb = new ConnectionDAO();
     }
 
-    public List<Song> getPlaylistSongs(int id) {
+    public List<Song> getPlaylistSongs(int id) 
+    {
         List<Song> playlistsongs = new ArrayList<>();
         try (Connection con = cb.getConnection()) {
             String query = "SELECT * FROM PlaylistSong INNER JOIN Song ON PlaylistSongID = Song.id WHERE PlaylistSong.PlaylistID = ? ORDER by LocationInListID desc";
@@ -49,12 +51,13 @@ public class PlaylistSongDAO {
         }
     }
 
-    public Song addToPlaylist(Playlist playlist, Song song) throws SQLException {
+    public Song addToPlaylist(Playlist playlist, Song song) throws SQLException 
+    {
         String sql = "INSERT INTO PlaylistSong(PlaylistID,SongID,LocationInListID) VALUES (?,?,?)";
-        int Id = -1;
+        int Id;
         try (Connection con = cb.getConnection()) {
             PreparedStatement preparedst = con.prepareStatement(sql);
-            Id = getNewestSongInPlaylist(playlist.getId()) + 1;
+            Id = getNewestIdInPlaylist(playlist.getId());
             preparedst.setInt(1, playlist.getId());
             preparedst.setInt(2, song.getId());
             preparedst.setInt(3, Id);
@@ -71,7 +74,8 @@ public class PlaylistSongDAO {
         }
     }
 
-    public int getNewestSongInPlaylist(int id) {
+    public int getNewestIdInPlaylist(int id)
+    {
         int newestID = 0;
         try (Connection con = cb.getConnection()) {
             String query = "SELECT TOP(1) * FROM PlaylistSong WHERE PlaylistID = ? ORDER by locationInListID desc";
@@ -82,7 +86,7 @@ public class PlaylistSongDAO {
                 newestID = rs.getInt("locationInListID");
             }
             System.out.println(newestID);
-            return newestID;
+            return newestID + 1;
         } catch (SQLServerException ex) {
             System.out.println(ex);
             return newestID;
@@ -92,7 +96,8 @@ public class PlaylistSongDAO {
         }
     }
 
-    public void deleteFromPlaylistSongsEverything(Song songToDelete) {
+    public void deleteFromPlaylistSongsEverything(Song songToDelete)
+    {
         try (Connection con = cb.getConnection()) {
             String query = "DELETE from PlaylistSong WHERE SongID = ?";
             PreparedStatement preparedSt = con.prepareStatement(query);
@@ -105,7 +110,8 @@ public class PlaylistSongDAO {
         }
     }
 
-    public void deleteFromPlaylistSongsEverything(Playlist play) {
+    public void deleteFromPlaylistSongsEverything(Playlist play) 
+    {
         try (Connection con = cb.getConnection()) {
             String query = "DELETE from PlaylistSong WHERE PlaylistID = ?";
             PreparedStatement preparedSt = con.prepareStatement(query);
@@ -118,7 +124,8 @@ public class PlaylistSongDAO {
         }
     }
 
-    public void removeSongFromPlaylist(Playlist selectedItem, Song selectedSong) {
+    public void removeSongFromPlaylist(Playlist selectedItem, Song selectedSong) 
+    {
         try (Connection con = cb.getConnection()) {
             String query = "DELETE from PlaylistSong WHERE PlaylistID = ? AND SongID = ? AND locationInListID = ?";
             PreparedStatement preparedSt = con.prepareStatement(query);

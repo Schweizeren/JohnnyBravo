@@ -51,6 +51,7 @@ public class SongMetaData
         }
         return null;
     }
+    
     public String getAuthor(String filepath) throws MTDalException{
         File file = new File(filepath);
         MP3File mp3;
@@ -75,6 +76,7 @@ public class SongMetaData
         }
         return null;
     }
+    
     public String getGenre(String filepath) throws MTDalException
     {
         File file = new File(filepath);
@@ -82,19 +84,24 @@ public class SongMetaData
         try
         {
             mp3 = new MP3File(file);
-            if (mp3.hasID3v1Tag()) {
+            if (mp3.hasID3v1Tag()) 
+            {
             ID3v1 tag = mp3.getID3v1Tag();
             String genre = tag.getSongGenre();
             return genre;
-            }else if (mp3.hasID3v2Tag()) {
+            }
+            else if (mp3.hasID3v2Tag()) 
+            {
             AbstractID3v2 tag = mp3.getID3v2Tag();
             String genre = tag.getSongGenre();
             return genre;
-        }
-        } catch (IOException ex)
+            }
+        } 
+        catch (IOException ex)
         {
             throw new MTDalException("Could not find MP3File", ex);
-        } catch (TagException ex)
+        } 
+        catch (TagException ex)
         {
             throw new MTDalException("Could not find corresponding tag", ex);
         }
@@ -107,26 +114,33 @@ public class SongMetaData
         try
         {
             audiofile = AudioFileIO.read(file);
-        } catch (org.jaudiotagger.tag.TagException ex)
+        } 
+        catch (org.jaudiotagger.tag.TagException ex)
         {
             throw new MTDalException();
-        } catch (ReadOnlyFileException ex)
+        } 
+        catch (ReadOnlyFileException ex)
         {
             throw new MTDalException();
-        } catch (InvalidAudioFrameException ex)
+        }
+        catch (InvalidAudioFrameException ex)
         {
             throw new MTDalException();
-        } catch (CannotReadException ex)
+        } 
+        catch (CannotReadException ex)
         {
             throw new MTDalException("Could not read the file.", ex);
-        } catch (IOException ex)
+        } 
+        catch (IOException ex)
         {
             throw new MTDalException("Could not find MP3 file.", ex);
         }
         int duration = 0;
-        try {
+        try 
+        {
          duration = audiofile.getAudioHeader().getTrackLength();
-        } catch (NullPointerException ex) {
+        } 
+        catch (NullPointerException ex) {
             throw new MTDalException("The duration was not initiliazed.", ex);
         }
         return duration;

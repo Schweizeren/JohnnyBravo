@@ -11,15 +11,18 @@ package mytunes.DAL.exception;
  */
 public class MTDalException extends Exception
 {
-    public MTDalException() {
+    public MTDalException() 
+    {
         super();
     }
     
-    public MTDalException(String message) {
+    public MTDalException(String message)
+    {
         super(message);
     }
     
-    public MTDalException(String message, Exception ex) {
+    public MTDalException(String message, Exception ex)
+    {
         super(message, ex);
     }
 }

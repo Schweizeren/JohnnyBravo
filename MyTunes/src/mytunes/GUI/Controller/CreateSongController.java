@@ -87,13 +87,22 @@ public class CreateSongController implements Initializable
     @FXML
     private void handleSaveBtn(ActionEvent event)
     {
+        String title;
+        int duration;
+        String filepath;
+        String genre;
+        String artist;
         try
         {
-            String title = txtTitleInput.getText();
-            int duration = sm.getDurationInSec();
-            String filepath = txtFile.getText();
-            String genre = comboCategoryBox.getSelectionModel().getSelectedItem();
-            String artist = txtArtistInput.getText();
+            title = txtTitleInput.getText();
+            duration = sm.getDurationInSec();
+            filepath = txtFile.getText();
+            if (comboCategoryBox.getSelectionModel().getSelectedItem().equals("Other")) {
+                genre = txtOtherCategory.getText();
+            } else {
+                genre = comboCategoryBox.getSelectionModel().getSelectedItem();
+            }
+            artist = txtArtistInput.getText();
             sm.createSong(title, duration, artist, genre, filepath);
 
             Stage stage = (Stage) ((Node) ((EventObject) event).getSource()).getScene().getWindow();
