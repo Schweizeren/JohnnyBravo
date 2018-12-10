@@ -8,6 +8,7 @@ package mytunes.GUI.Controller;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.Collections;
@@ -47,6 +48,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
+import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -303,6 +305,7 @@ public class MyTunesViewController implements Initializable {
             if (result.get() == buttonTypeYes) {
                 try {
                     sm.deleteSong(song);
+                    psm.deleteSongFromTable(song);
                 } catch (MTBllException ex) {
                     displayError(ex);
                 }
@@ -535,9 +538,13 @@ public class MyTunesViewController implements Initializable {
         }
         String trueFilePath = "file:/" + filePath;
         String trueTrueFilePath = trueFilePath.replace(" ", "%20");
+        try {
         Media media = new Media(trueTrueFilePath);
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.play();
+        } catch(Exception ex) {
+            displayError(ex);
+        }
         mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
             @Override
             public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) {

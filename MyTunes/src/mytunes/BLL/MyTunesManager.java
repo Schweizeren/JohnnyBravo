@@ -248,6 +248,14 @@ public class MyTunesManager
     {
         
     }
+    
+    public void deleteSongFromTable(Song song) throws MTBllException{
+        try {
+            psd.deleteSongFromTable(song);
+        } catch (MTDalException ex) {
+            throw new MTBllException("Could not delete song from table");
+        }
+    }
 
     
 }

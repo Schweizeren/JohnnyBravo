@@ -87,6 +87,14 @@ public class PlaylistSongModel {
         }
     }
     
+    public void deleteSongFromTable(Song song) throws MTBllException {
+        try {
+            mtmanager.deleteSongFromTable(song);
+        } catch (MTBllException ex) {
+            throw new MTBllException("Could not delete song from table");
+        }
+    }
+    
     
 }
 

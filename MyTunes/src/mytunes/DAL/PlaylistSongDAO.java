@@ -141,8 +141,16 @@ public class PlaylistSongDAO {
         }
     }
     
-    public void deleteSongFromTable(Song song) {
-        
+    public void deleteSongFromTable(Song song) throws MTDalException {
+        try (Connection con = cb.getConnection()) {
+            String query = "DELETE FROM PlaylistSong WHERE SongID = ?;";
+            PreparedStatement pst = con.prepareStatement(query);
+            pst.setInt(1, song.getId());
+        } catch (SQLServerException ex) {
+            throw new MTDalException("Could not connect to SQL server.", ex);
+        } catch (SQLException ex) {
+            throw new MTDalException("Could not delete songs from table.", ex);
+        }
     }
 
 }
