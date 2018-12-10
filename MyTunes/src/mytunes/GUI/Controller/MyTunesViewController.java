@@ -574,19 +574,23 @@ public class MyTunesViewController implements Initializable
     {
         Playlist playlist = listPlaylists.getSelectionModel().getSelectedItem();
         Song song = listSongs.getSelectionModel().getSelectedItem();
-        if(song != null)
+        if(song == null)
         {
-        try
+            displayNoSongWindow();
+        }
+        else if(playlist == null)
+        {
+            displayNoPlaylistWindow();
+        }
+        else
+        {
+         try
         {
             psm.addToPlaylist(playlist, song);
         } catch (SQLException ex)
         {
             Logger.getLogger(MyTunesViewController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        }
-        else
-        {
-          displayNoSongWindow();  
+        } 
         }
 
     }
