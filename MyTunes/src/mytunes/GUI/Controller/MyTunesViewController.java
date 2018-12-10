@@ -10,6 +10,7 @@ import java.awt.Toolkit;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -72,10 +73,11 @@ public class MyTunesViewController implements Initializable
     private MediaPlayer mediaPlayer;
     private ObservableList<Song> songList = FXCollections.observableArrayList();
     private ObservableList<Playlist> playlistList;
-    private ObservableList<Song> PlaylistSongList;
+    private ObservableList<Song> playlistSongList;
     private boolean playing;
     private boolean paused;
     private int currentSongSelected;
+    
 
     @FXML
     private ListView<Playlist> listPlaylists;
@@ -204,18 +206,28 @@ public class MyTunesViewController implements Initializable
         }
     }
 
-    @FXML
-    private void moveUp(ActionEvent event)
+
+    private void moveUp(ActionEvent event) 
     {
+        int i = listSongsOnPlaylist.getSelectionModel().getSelectedItem().getId();
+        if(i > 0)
+        {
+            Collections.swap(playlistSongList, i, i - 1);
+        }
     }
 
     @FXML
-    private void moveDown(ActionEvent event)
+    private void moveDown(ActionEvent event) 
     {
+        int i = listSongsOnPlaylist.getSelectionModel().getSelectedItem().getId();
+        if(i > 0)
+        {
+            Collections.swap(playlistSongList, i, i + 1);
+        }
     }
 
     @FXML
-    private void deleteSongOnPlaylist(ActionEvent event)
+    private void deleteSongOnPlaylist(ActionEvent event) 
     {
         Playlist playlist = listPlaylists.getSelectionModel().getSelectedItem();
         if (playlist == null)
@@ -476,6 +488,7 @@ public class MyTunesViewController implements Initializable
         listSongsOnPlaylist.getSelectionModel().clearSelection();
     }
 
+
     private void addToPlaylist(ActionEvent event)
     {
         Playlist playlist = listPlaylists.getSelectionModel().getSelectedItem();
@@ -484,8 +497,8 @@ public class MyTunesViewController implements Initializable
         try
         {
             psm.addToPlaylist(playlist, song);
-        } catch (SQLException ex)
-        {
+        }
+        catch (SQLException ex) {
             Logger.getLogger(MyTunesViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
