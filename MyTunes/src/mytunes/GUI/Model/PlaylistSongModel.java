@@ -52,14 +52,9 @@ public class PlaylistSongModel {
         return mtmanager.getNewestSongInPlaylist(id);
     }
     
-    public void deleteFromPlaylistSongsEverything(Song songToDelete)
+    public void deleteFromPlaylist(Playlist playlist) throws SQLException
     {
-        mtmanager.deleteFromPlaylistSongsEverything(songToDelete);
-    }
-    
-    public void deleteFromPlaylistSongsEverything(Playlist play)
-    {
-        mtmanager.deleteFromPlaylistSongsEverything(play);
+        mtmanager.deleteFromPlaylist(playlist);
     }
     
     public void removeSongFromPlaylist(Playlist selectedItem, Song selectedSong)

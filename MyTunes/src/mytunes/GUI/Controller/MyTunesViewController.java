@@ -201,7 +201,12 @@ public class MyTunesViewController implements Initializable
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == buttonTypeYes)
             {
-                pm.deletePlaylist(playlist);
+                try {
+                    pm.deletePlaylist(playlist);
+                    psm.deleteFromPlaylist(playlist);
+                } catch (SQLException ex) {
+                    Logger.getLogger(MyTunesViewController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
     }

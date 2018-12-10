@@ -114,7 +114,7 @@ public class MyTunesManager
     {
         try
         {
-            psd.deleteFromPlaylistSongsEverything(song);
+            
             sdao.deleteSong(song);
         } catch (MTDalException ex)
         {
@@ -170,7 +170,6 @@ public class MyTunesManager
     {
         try
         {
-            psd.deleteFromPlaylistSongsEverything(playlist);
             pdao.deletePlaylist(playlist);
         } catch (MTDalException ex)
         {
@@ -215,19 +214,14 @@ public class MyTunesManager
         return psd.getNewestIdInPlaylist(id);
     }
     
-    public void deleteFromPlaylistSongsEverything(Song songToDelete)
-    {
-        psd.deleteFromPlaylistSongsEverything(songToDelete);
-    }
-    
-    public void deleteFromPlaylistSongsEverything(Playlist play)
-    {
-        psd.deleteFromPlaylistSongsEverything(play);
-    }
-    
     public void removeSongFromPlaylist(Playlist selectedItem, Song selectedSong)
     {
         psd.removeSongFromPlaylist(selectedItem, selectedSong);
+    }
+    
+    public void deleteFromPlaylist(Playlist playlist) throws SQLException
+    {
+        psd.deleteFromPlaylist(playlist);
     }
     
     public void insertSongToPlaylist ()
