@@ -544,6 +544,7 @@ public class MyTunesViewController implements Initializable {
         mediaPlayer.play();
         } catch(Exception ex) {
             displayError(ex);
+            lblMusicPlaying.setText("Nothing is playing");
         }
         mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
             @Override
