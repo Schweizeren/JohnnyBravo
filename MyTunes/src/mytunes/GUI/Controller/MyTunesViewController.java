@@ -459,7 +459,8 @@ public class MyTunesViewController implements Initializable {
         try
         {
             listSongs.setItems(sm.searchSongs(sm.getSongs(), writeSearch.getText().toLowerCase()));
-        } catch (IOException | MTBllException ex)
+        } 
+        catch (IOException | MTBllException ex)
         {
             displayError(ex);
         }
@@ -470,12 +471,19 @@ public class MyTunesViewController implements Initializable {
     {
         Playlist playlist = listPlaylists.getSelectionModel().getSelectedItem();
         Song song = listSongs.getSelectionModel().getSelectedItem();
+        if(song != null)
+        {
         try
         {
             psm.addToPlaylist(playlist, song);
         } catch (SQLException ex)
         {
             Logger.getLogger(MyTunesViewController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        }
+        else
+        {
+          displayNoSongWindow();  
         }
         
     }

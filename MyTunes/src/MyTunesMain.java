@@ -1,10 +1,17 @@
 
 import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import mytunes.GUI.Controller.EditSongController;
+import mytunes.GUI.Controller.MyTunesViewController;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -35,7 +42,7 @@ public class MyTunesMain extends Application
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args)
+    public static void main(String[] args) throws IOException
     {
         launch(args);
     }
