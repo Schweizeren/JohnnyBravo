@@ -52,8 +52,7 @@ import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
+import javax.naming.Context;
 import mytunes.BLL.SongSearcher;
 import mytunes.BLL.exception.MTBllException;
 import mytunes.GUI.Model.PlaylistModel;
@@ -179,7 +178,8 @@ public class MyTunesViewController implements Initializable {
         Playlist playlist = tablePlaylist.getSelectionModel().getSelectedItem();
         if (playlist == null) {
             displayNoPlaylistWindow();
-        } else {
+        } 
+        else {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/EditPlaylist.fxml"));
             Parent root = (Parent) loader.load();
 
@@ -191,7 +191,8 @@ public class MyTunesViewController implements Initializable {
     }
 
     @FXML
-    private void deletePlaylist(ActionEvent event) {
+    private void deletePlaylist(ActionEvent event) 
+    {
         Playlist playlist = tablePlaylist.getSelectionModel().getSelectedItem();
         if (playlist == null) {
             displayNoPlaylistWindow();
@@ -220,12 +221,11 @@ public class MyTunesViewController implements Initializable {
 
     @FXML
     private void moveUp(ActionEvent event) {
-
     }
 
     @FXML
-    private void moveDown(ActionEvent event) {
-
+    private void moveDown(ActionEvent event) 
+    {
     }
 
     @FXML
@@ -294,7 +294,7 @@ public class MyTunesViewController implements Initializable {
         } else {
             Alert alert = new Alert(AlertType.CONFIRMATION);
             alert.setTitle("Confirmation dialog");
-            alert.setContentText("Are you sure you want to delete");
+            alert.setContentText("Are you sure you want to delete: "+ song);
 
             ButtonType buttonTypeYes = new ButtonType("Yes");
             ButtonType buttonTypeNo = new ButtonType("No", ButtonData.CANCEL_CLOSE);
