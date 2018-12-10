@@ -29,8 +29,9 @@ public class PlaylistSongModel {
         mtmanager = new MyTunesManager();
     }
     
-    public List<Song> getPlaylistSongs(int id)
+    public ObservableList<Song> getPlaylistSongs(int id)
     {
+        playlistSongList.clear();
         List<Song> listofSongs = mtmanager.getPlaylistSongs(id);
         for (Song song : listofSongs)
         {
@@ -65,5 +66,7 @@ public class PlaylistSongModel {
     {
         mtmanager.removeSongFromPlaylist(selectedItem, selectedSong);
     }
+    
+    
 }
 
