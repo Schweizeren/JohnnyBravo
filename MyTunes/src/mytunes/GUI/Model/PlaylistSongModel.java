@@ -29,8 +29,9 @@ public class PlaylistSongModel {
         mtmanager = new MyTunesManager();
     }
     
-    public List<Song> getPlaylistSongs(int id)
+    public ObservableList<Song> getPlaylistSongs(int id)
     {
+        playlistSongList.clear();
         List<Song> listofSongs = mtmanager.getPlaylistSongs(id);
         for (Song song : listofSongs)
         {
@@ -51,19 +52,17 @@ public class PlaylistSongModel {
         return mtmanager.getNewestSongInPlaylist(id);
     }
     
-    public void deleteFromPlaylistSongsEverything(Song songToDelete)
+    public void deleteFromPlaylist(Playlist playlist) throws SQLException
     {
-        mtmanager.deleteFromPlaylistSongsEverything(songToDelete);
-    }
-    
-    public void deleteFromPlaylistSongsEverything(Playlist play)
-    {
-        mtmanager.deleteFromPlaylistSongsEverything(play);
+        mtmanager.deleteFromPlaylist(playlist);
     }
     
     public void removeSongFromPlaylist(Playlist selectedItem, Song selectedSong)
     {
+        playlistSongList.remove(selectedSong);
         mtmanager.removeSongFromPlaylist(selectedItem, selectedSong);
     }
+    
+    
 }
 

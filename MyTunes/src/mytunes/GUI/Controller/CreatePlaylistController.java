@@ -89,4 +89,8 @@ public class CreatePlaylistController implements Initializable
         alert.setContentText(ex.getMessage());
         alert.showAndWait();
     }
+    
+    public void initializeModel(PlaylistModel playlistmodel) {
+        this.pm = playlistmodel;
+    }
 }

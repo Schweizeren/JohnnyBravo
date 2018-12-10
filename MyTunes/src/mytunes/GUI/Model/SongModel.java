@@ -60,7 +60,7 @@ public class SongModel
         }
     }
 
-    public void deleteSong(Song song)
+    public void deleteSong(Song song) throws MTBllException
     {
         try
         {
@@ -68,7 +68,7 @@ public class SongModel
             songList.remove(song);
         } catch (MTBllException ex)
         {
-            Logger.getLogger(SongModel.class.getName()).log(Level.SEVERE, null, ex);
+            throw new MTBllException("Could not delete song");
         }
     }
 

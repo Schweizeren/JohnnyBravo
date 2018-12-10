@@ -30,9 +30,9 @@
                     </Image>
                 </image>
             </ImageView>
-      <ListView fx:id="listPlaylists" layoutX="28.0" layoutY="104.0" prefHeight="539.0" prefWidth="236.0" styleClass="split-pane" />
+      <ListView fx:id="listPlaylists" layoutX="28.0" layoutY="104.0" onMousePressed="#getSongsInPlayList" prefHeight="539.0" prefWidth="236.0" styleClass="split-pane" />
       <ListView fx:id="listSongs" layoutX="684.0" layoutY="104.0" onMousePressed="#songPressed" prefHeight="539.0" prefWidth="403.0" styleClass="split-pane" />
-      <ListView fx:id="listSongsOnPlaylist" layoutX="281.0" layoutY="104.0" prefHeight="539.0" prefWidth="191.0" styleClass="split-pane" />
+      <ListView fx:id="listSongsOnPlaylist" layoutX="281.0" layoutY="104.0" onMousePressed="#songInPlayListPressed" prefHeight="539.0" prefWidth="191.0" styleClass="split-pane" />
       <Button fx:id="btnNewPlaylist" layoutX="28.0" layoutY="659.0" mnemonicParsing="false" onAction="#createPlaylist" prefHeight="31.0" prefWidth="69.0" stylesheets="@MyTunes.css" text="New..." />
       <Button fx:id="btnEditPlaylist" layoutX="103.0" layoutY="659.0" mnemonicParsing="false" onAction="#editPlaylist" prefHeight="31.0" prefWidth="63.0" stylesheets="@MyTunes.css" text="Edit..." />
       <Button fx:id="btnDeletePlaylist" layoutX="201.0" layoutY="659.0" mnemonicParsing="false" onAction="#deletePlaylist" stylesheets="@MyTunes.css" text="Delete" />
@@ -46,7 +46,7 @@
       <Label layoutX="28.0" layoutY="83.0" styleClass="label-bright" text="Playlists" />
       <Label layoutX="281.0" layoutY="83.0" styleClass="label-bright" text="Songs on playlist " />
       <Label layoutX="684.0" layoutY="83.0" styleClass="label-bright" text="Songs" />
-      <Label fx:id="lblMusicPlaying" layoutX="39.0" layoutY="16.0" prefHeight="60.0" prefWidth="684.0" styleClass="label-header" stylesheets="@MyTunes.css" text="Music currently playing">
+      <Label fx:id="lblMusicPlaying" layoutX="39.0" layoutY="16.0" prefHeight="60.0" prefWidth="684.0" styleClass="label-header" stylesheets="@MyTunes.css" text="Nothin is playing">
          <font>
             <Font size="33.0" />
          </font>
