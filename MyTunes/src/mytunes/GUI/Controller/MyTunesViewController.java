@@ -201,7 +201,7 @@ public class MyTunesViewController implements Initializable
     }
 
     @FXML
-    private void deletePlaylist(ActionEvent event) throws MTBllException
+    private void deletePlaylist(ActionEvent event)
     {
         Playlist playlist = tablePlaylist.getSelectionModel().getSelectedItem();
         if (playlist == null)
@@ -221,14 +221,12 @@ public class MyTunesViewController implements Initializable
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == buttonTypeYes)
             {
-                try
-                {
+                try {
                     pm.deletePlaylist(playlist);
                     psm.deleteFromPlaylist(playlist);
                     tablePlaylist.getSelectionModel().clearSelection();
-                } catch (SQLException ex)
-                {
-                    Logger.getLogger(MyTunesViewController.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (MTBllException ex) {
+                    displayError(ex);
                 }
             }
         }
@@ -537,15 +535,12 @@ public class MyTunesViewController implements Initializable
 
     private void addToPlaylist(ActionEvent event)
     {
-        Playlist playlist = tablePlaylist.getSelectionModel().getSelectedItem();
-        Song song = tableSongList.getSelectionModel().getSelectedItem();
-
-        try
-        {
+        try {
+            Playlist playlist = tablePlaylist.getSelectionModel().getSelectedItem();
+            Song song = tableSongList.getSelectionModel().getSelectedItem();
             psm.addToPlaylist(playlist, song);
-        } catch (SQLException ex)
-        {
-            Logger.getLogger(MyTunesViewController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (MTBllException ex) {
+            displayError(ex);
         }
     }
 
@@ -609,13 +604,17 @@ public class MyTunesViewController implements Initializable
     {
         Playlist playlist = tablePlaylist.getSelectionModel().getSelectedItem();
         Song song = tableSongList.getSelectionModel().getSelectedItem();
-        try
-        {
-            psm.addToPlaylist(playlist, song);
-        } catch (SQLException ex)
-        {
-            Logger.getLogger(MyTunesViewController.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        /*if (playlist == null) {
+            displayNoPlaylistWindow();
+        } else if (song == null) {
+            displayNoSongWindow();
+        } else {*/
+            try {
+                psm.addToPlaylist(playlist, song);
+            } catch (MTBllException ex) {
+                displayError(ex);
+            }
+        //} 
         }
 
 
@@ -680,10 +679,14 @@ public class MyTunesViewController implements Initializable
 
     private void getSongsInPlayList(MouseEvent event)
     {
-        Playlist playlist = tablePlaylist.getSelectionModel().getSelectedItem();
-        int id = playlist.getId();
-        tableSongOnPlaylist.getItems().removeAll();
-        tableSongOnPlaylist.setItems(psm.getPlaylistSongs(id));
+        try {
+            Playlist playlist = tablePlaylist.getSelectionModel().getSelectedItem();
+            int id = playlist.getId();
+            tableSongOnPlaylist.getItems().removeAll();
+            tableSongOnPlaylist.setItems(psm.getPlaylistSongs(id));
+        } catch (MTBllException ex) {
+            displayError(ex);
+        }
     }
 
     @FXML
@@ -703,9 +706,13 @@ public class MyTunesViewController implements Initializable
     @FXML
     private void tablePlaylistClicked(MouseEvent event)
     {
-        Playlist playlist = tablePlaylist.getSelectionModel().getSelectedItem();
-        int id = playlist.getId();
-        tableSongOnPlaylist.setItems(psm.getPlaylistSongs(id));
+        try {
+            Playlist playlist = tablePlaylist.getSelectionModel().getSelectedItem();
+            int id = playlist.getId();
+            tableSongOnPlaylist.setItems(psm.getPlaylistSongs(id));
+        } catch (MTBllException ex) {
+            displayError(ex);
+        }
     }
 
 }

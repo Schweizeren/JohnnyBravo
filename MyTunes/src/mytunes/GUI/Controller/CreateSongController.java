@@ -109,7 +109,6 @@ public class CreateSongController implements Initializable
             stage.close();
         } catch (MTBllException ex)
         {
-            //TODO
             displayError(ex);
         }
     }

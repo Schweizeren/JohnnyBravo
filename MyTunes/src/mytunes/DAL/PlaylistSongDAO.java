@@ -13,6 +13,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import mytunes.DAL.exception.MTDalException;
 import mytunes.be.Playlist;
 
 /**
@@ -28,7 +31,7 @@ public class PlaylistSongDAO {
         cb = new ConnectionDAO();
     }
 
-    public List<Song> getPlaylistSongs(int id) 
+    public List<Song> getPlaylistSongs(int id) throws MTDalException
     {
         List<Song> playlistsongs = new ArrayList<>();
         try (Connection con = cb.getConnection()) {
@@ -43,15 +46,13 @@ public class PlaylistSongDAO {
             }
             return playlistsongs;
         } catch (SQLServerException ex) {
-            System.out.println(ex);
-            return null;
+            throw new MTDalException("Could not connect to the SQL server.", ex);
         } catch (SQLException ex) {
-            System.out.println(ex);
-            return null;
+            throw new MTDalException("Could not get songs in playlist.", ex);
         }
     }
 
-    public Song addToPlaylist(Playlist playlist, Song song) throws SQLException 
+    public Song addToPlaylist(Playlist playlist, Song song) throws MTDalException 
     {
         String sql = "INSERT INTO PlaylistSong(PlaylistID,SongID,LocationInListID) VALUES (?,?,?)";
         int Id;
@@ -66,15 +67,13 @@ public class PlaylistSongDAO {
             song.setLocationInList(Id);
             return song;
         } catch (SQLServerException ex) {
-            System.out.println(ex);
-            return null;
+            throw new MTDalException("Could not connect to the SQL server.", ex);
         } catch (SQLException ex) {
-            System.out.println(ex);
-            return null;
+            throw new MTDalException("Could not add a song to the playlist.", ex);
         }
     }
 
-    public int getNewestIdInPlaylist(int id)
+    public int getNewestIdInPlaylist(int id) throws MTDalException
     {
         int newestID = 0;
         try (Connection con = cb.getConnection()) {
@@ -88,16 +87,14 @@ public class PlaylistSongDAO {
             System.out.println(newestID);
             return newestID + 1;
         } catch (SQLServerException ex) {
-            System.out.println(ex);
-            return newestID;
+            throw new MTDalException("Could not connect to the SQL server.", ex);
         } catch (SQLException ex) {
-            System.out.println(ex);
-            return newestID;
+            throw new MTDalException("Could not get the newest ID in playlist.", ex);
         }
     }
 
     
-    public void deleteFromPlaylist(Playlist playlist) throws SQLException
+    public void deleteFromPlaylist(Playlist playlist) throws MTDalException
     {
         try (Connection con = cb.getConnection())
         {
@@ -105,10 +102,14 @@ public class PlaylistSongDAO {
             PreparedStatement preparedSt = con.prepareStatement(query);
             preparedSt.setInt(1, playlist.getId());
             preparedSt.execute();
+        } catch (SQLServerException ex) {
+            throw new MTDalException("Could not connect to the SQL server.", ex);
+        } catch (SQLException ex) {
+            throw new MTDalException("Could delete song from playlist.", ex);
         }
     }
 
-    public void removeSongFromPlaylist(Playlist selectedItem, Song selectedSong) 
+    public void removeSongFromPlaylist(Playlist selectedItem, Song selectedSong) throws MTDalException
     {
         try (Connection con = cb.getConnection()) {
             String query = "DELETE from PlaylistSong WHERE PlaylistID = ? AND SongID = ? AND locationInListID = ?";
@@ -125,7 +126,7 @@ public class PlaylistSongDAO {
         
     }
     
-    public void insertSongToPlaylist (int songID, int playlistID) throws SQLServerException, SQLException
+    public void insertSongToPlaylist (int songID, int playlistID) throws MTDalException
     {
         try (Connection con = cb.getConnection())
         {
@@ -133,6 +134,10 @@ public class PlaylistSongDAO {
             PreparedStatement preparedst = con.prepareStatement(query);
             preparedst.setInt(1, playlistID);
             preparedst.setInt(2, songID);
+        } catch (SQLServerException ex) {
+            throw new MTDalException("Could not connect to the SQL server.", ex);
+        } catch (SQLException ex) {
+            throw new MTDalException("Could not insert song to playlistSong table.", ex);
         }
     }
 
