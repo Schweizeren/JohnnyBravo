@@ -39,5 +39,4 @@ public class MyTunesMain extends Application
     {
         launch(args);
     }
-    
 }

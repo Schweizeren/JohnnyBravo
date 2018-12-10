@@ -207,6 +207,7 @@ public class MyTunesViewController implements Initializable
     }
 
 
+    @FXML
     private void moveUp(ActionEvent event) 
     {
         int i = listSongsOnPlaylist.getSelectionModel().getSelectedItem().getId();
