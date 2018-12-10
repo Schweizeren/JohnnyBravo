@@ -470,6 +470,7 @@ public class MyTunesViewController implements Initializable
             mediaPlayer = null;
             playing = false;
             paused = false;
+            lblMusicPlaying.setText("Nothing is playing");
         }
     }
 
@@ -583,10 +584,12 @@ public class MyTunesViewController implements Initializable
         {
             filePath = listSongs.getItems().get(currentSongSelected).getFilepath();
             listSongs.getSelectionModel().clearAndSelect(currentSongSelected);
+            lblMusicPlaying.setText(listSongs.getItems().get(currentSongSelected).getTitle() + " is now playing");
         } else
         {
             filePath = listSongsOnPlaylist.getItems().get(currentSongSelected).getFilepath();
             listSongsOnPlaylist.getSelectionModel().clearAndSelect(currentSongSelected);
+            lblMusicPlaying.setText(listSongsOnPlaylist.getItems().get(currentSongSelected).getTitle() + " is now playing");
         }
         String trueFilePath = "file:/" + filePath;
         String trueTrueFilePath = trueFilePath.replace(" ", "%20");

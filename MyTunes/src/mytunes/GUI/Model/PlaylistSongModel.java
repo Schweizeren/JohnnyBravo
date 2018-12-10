@@ -64,6 +64,7 @@ public class PlaylistSongModel {
     
     public void removeSongFromPlaylist(Playlist selectedItem, Song selectedSong)
     {
+        playlistSongList.remove(selectedSong);
         mtmanager.removeSongFromPlaylist(selectedItem, selectedSong);
     }
     
