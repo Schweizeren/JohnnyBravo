@@ -154,7 +154,7 @@ public class MyTunesViewController implements Initializable
         Parent root = (Parent) loader.load();
 
         CreatePlaylistController cpcontroller = loader.getController();
-
+        cpcontroller.initializeModel(pm);
         Stage stage = new Stage();
 
         stage.setScene(new Scene(root));
@@ -201,7 +201,12 @@ public class MyTunesViewController implements Initializable
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == buttonTypeYes)
             {
-                pm.deletePlaylist(playlist);
+                try {
+                    pm.deletePlaylist(playlist);
+                    psm.deleteFromPlaylist(playlist);
+                } catch (SQLException ex) {
+                    Logger.getLogger(MyTunesViewController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
     }
@@ -231,15 +236,18 @@ public class MyTunesViewController implements Initializable
     private void deleteSongOnPlaylist(ActionEvent event) 
     {
         Playlist playlist = listPlaylists.getSelectionModel().getSelectedItem();
+        Song song = listSongsOnPlaylist.getSelectionModel().getSelectedItem();
         if (playlist == null)
         {
+            displayNoPlaylistWindow();
+        } else if (song == null) {
             displayNoSongWindow();
-        } else
+        }else
         {
             try
             {
-                pm.deletePlaylist(playlist);
-            } catch (MTBllException ex)
+                psm.removeSongFromPlaylist(playlist, song);
+            } catch (Exception ex)
             {
                 displayError(ex);
             }
@@ -372,15 +380,15 @@ public class MyTunesViewController implements Initializable
             paused = false;
             playing = true;
             if (listSongs.getSelectionModel().getSelectedItem() != null) {
-            if (currentSongSelected > listSongs.getItems().size())
+            if (currentSongSelected == listSongs.getItems().size() -1)
             {
                 currentSongSelected = 0;
             } else
             {
                 currentSongSelected++;
             }
-            } else {
-                if (currentSongSelected > listSongsOnPlaylist.getItems().size())
+            } else if (listSongsOnPlaylist.getSelectionModel().getSelectedItem() != null) {
+                if (currentSongSelected == listSongsOnPlaylist.getItems().size() -1)
             {
                 currentSongSelected = 0;
             } else
@@ -467,6 +475,7 @@ public class MyTunesViewController implements Initializable
             mediaPlayer = null;
             playing = false;
             paused = false;
+            lblMusicPlaying.setText("Nothing is playing");
         }
     }
 
@@ -553,7 +562,8 @@ public class MyTunesViewController implements Initializable
         try
         {
             listSongs.setItems(sm.searchSongs(sm.getSongs(), writeSearch.getText().toLowerCase()));
-        } catch (IOException | MTBllException ex)
+        } 
+        catch (IOException | MTBllException ex)
         {
             displayError(ex);
         }
@@ -564,13 +574,25 @@ public class MyTunesViewController implements Initializable
     {
         Playlist playlist = listPlaylists.getSelectionModel().getSelectedItem();
         Song song = listSongs.getSelectionModel().getSelectedItem();
-        try
+        if(song == null)
+        {
+            displayNoSongWindow();
+        }
+        else if(playlist == null)
+        {
+            displayNoPlaylistWindow();
+        }
+        else
+        {
+         try
         {
             psm.addToPlaylist(playlist, song);
         } catch (SQLException ex)
         {
             Logger.getLogger(MyTunesViewController.class.getName()).log(Level.SEVERE, null, ex);
+        } 
         }
+
     }
 
     private void play()
@@ -580,10 +602,12 @@ public class MyTunesViewController implements Initializable
         {
             filePath = listSongs.getItems().get(currentSongSelected).getFilepath();
             listSongs.getSelectionModel().clearAndSelect(currentSongSelected);
+            lblMusicPlaying.setText(listSongs.getItems().get(currentSongSelected).getTitle() + " is now playing");
         } else
         {
             filePath = listSongsOnPlaylist.getItems().get(currentSongSelected).getFilepath();
             listSongsOnPlaylist.getSelectionModel().clearAndSelect(currentSongSelected);
+            lblMusicPlaying.setText(listSongsOnPlaylist.getItems().get(currentSongSelected).getTitle() + " is now playing");
         }
         String trueFilePath = "file:/" + filePath;
         String trueTrueFilePath = trueFilePath.replace(" ", "%20");

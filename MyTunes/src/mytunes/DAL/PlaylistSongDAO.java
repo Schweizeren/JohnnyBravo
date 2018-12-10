@@ -96,31 +96,15 @@ public class PlaylistSongDAO {
         }
     }
 
-    public void deleteFromPlaylistSongsEverything(Song songToDelete)
+    
+    public void deleteFromPlaylist(Playlist playlist) throws SQLException
     {
-        try (Connection con = cb.getConnection()) {
-            String query = "DELETE from PlaylistSong WHERE SongID = ?";
-            PreparedStatement preparedSt = con.prepareStatement(query);
-            preparedSt.setInt(1, songToDelete.getId());
-            preparedSt.execute();
-        } catch (SQLServerException ex) {
-            System.out.println(ex);
-        } catch (SQLException ex) {
-            System.out.println(ex);
-        }
-    }
-
-    public void deleteFromPlaylistSongsEverything(Playlist play) 
-    {
-        try (Connection con = cb.getConnection()) {
+        try (Connection con = cb.getConnection())
+        {
             String query = "DELETE from PlaylistSong WHERE PlaylistID = ?";
             PreparedStatement preparedSt = con.prepareStatement(query);
-            preparedSt.setInt(1, play.getId());
+            preparedSt.setInt(1, playlist.getId());
             preparedSt.execute();
-        } catch (SQLServerException ex) {
-            System.out.println(ex);
-        } catch (SQLException ex) {
-            System.out.println(ex);
         }
     }
 
