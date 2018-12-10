@@ -615,8 +615,9 @@ public class MyTunesViewController implements Initializable
         } catch (SQLException ex)
         {
             Logger.getLogger(MyTunesViewController.class.getName()).log(Level.SEVERE, null, ex);
+        } 
         }
-    }
+
 
     private void play()
     {

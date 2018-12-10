@@ -133,8 +133,6 @@ public class PlaylistSongDAO {
             PreparedStatement preparedst = con.prepareStatement(query);
             preparedst.setInt(1, playlistID);
             preparedst.setInt(2, songID);
-            
-            
         }
     }
 
