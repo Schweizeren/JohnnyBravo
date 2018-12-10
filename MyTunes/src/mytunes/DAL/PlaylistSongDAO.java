@@ -140,5 +140,9 @@ public class PlaylistSongDAO {
             throw new MTDalException("Could not insert song to playlistSong table.", ex);
         }
     }
+    
+    public void deleteSongFromTable(Song song) {
+        
+    }
 
 }
