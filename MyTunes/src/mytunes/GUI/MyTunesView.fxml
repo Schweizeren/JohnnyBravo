@@ -5,30 +5,48 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" fx:id="rootPane" prefHeight="762.0" prefWidth="1118.0" styleClass="background" stylesheets="@MyTunes.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.GUI.Controller.MyTunesViewController">
    <children>
+       <ImageView fx:id="searchView" fitHeight="31.0" fitWidth="30.0" layoutX="982.0" layoutY="22.0" onMouseClicked="#mouseClickedSearch" styleClass="button">
+    <image>
+        <Image url="@SearchButton.png">
+            </Image>
+            </image>
+            </ImageView>
+    <ImageView fx:id="arrowView" fitHeight="31.0" fitWidth="30.0" layoutX="565.0" layoutY="135.0" onMouseClicked="#mouseClickedArrow" rotate="-90.0" styleClass="button">
+    <image>
+        <Image url="@whiteArrow.png">
+            </Image>
+            </image>
+            </ImageView>
+            <ImageView fx:id="volumeView" fitHeight="31.0" fitWidth="31.0" layoutX="563.0" layoutY="644.0" styleClass="button">
+                <image>
+                    <Image url="@volumeWhite.png">
+                    </Image>
+                </image>
+            </ImageView>
       <ListView fx:id="listPlaylists" layoutX="28.0" layoutY="104.0" prefHeight="539.0" prefWidth="236.0" styleClass="split-pane" />
       <ListView fx:id="listSongs" layoutX="684.0" layoutY="104.0" onMousePressed="#songPressed" prefHeight="539.0" prefWidth="403.0" styleClass="split-pane" />
       <ListView fx:id="listSongsOnPlaylist" layoutX="281.0" layoutY="104.0" prefHeight="539.0" prefWidth="191.0" styleClass="split-pane" />
-      <Button fx:id="btnNewPlaylist" layoutX="28.0" layoutY="659.0" mnemonicParsing="false" onAction="#createPlaylist" prefHeight="31.0" prefWidth="65.0" stylesheets="@MyTunes.css" text="New..." />
+      <Button fx:id="btnNewPlaylist" layoutX="28.0" layoutY="659.0" mnemonicParsing="false" onAction="#createPlaylist" prefHeight="31.0" prefWidth="69.0" stylesheets="@MyTunes.css" text="New..." />
       <Button fx:id="btnEditPlaylist" layoutX="103.0" layoutY="659.0" mnemonicParsing="false" onAction="#editPlaylist" prefHeight="31.0" prefWidth="63.0" stylesheets="@MyTunes.css" text="Edit..." />
       <Button fx:id="btnDeletePlaylist" layoutX="201.0" layoutY="659.0" mnemonicParsing="false" onAction="#deletePlaylist" stylesheets="@MyTunes.css" text="Delete" />
       <Button fx:id="btnMoveSongUp" layoutX="281.0" layoutY="659.0" mnemonicParsing="false" onAction="#moveUp" prefHeight="31.0" prefWidth="52.0" stylesheets="@MyTunes.css" text="▲" />
       <Button fx:id="btnMoveSongDown" layoutX="329.0" layoutY="659.0" mnemonicParsing="false" onAction="#moveDown" prefHeight="31.0" prefWidth="52.0" stylesheets="@MyTunes.css" text="▼" />
       <Button fx:id="btnDeleteSongsOnPlaylist" layoutX="407.0" layoutY="659.0" mnemonicParsing="false" onAction="#deleteSongOnPlaylist" stylesheets="@MyTunes.css" text="Delete" />
-      <Button fx:id="btnNewSong" layoutX="681.0" layoutY="659.0" mnemonicParsing="false" onAction="#newSong" prefHeight="31.0" prefWidth="65.0" text="New..." />
+      <Button fx:id="btnNewSong" layoutX="681.0" layoutY="659.0" mnemonicParsing="false" onAction="#newSong" prefHeight="31.0" prefWidth="69.0" text="New..." />
       <Button fx:id="btnEditSong" layoutX="762.0" layoutY="659.0" mnemonicParsing="false" onAction="#editSong" prefHeight="31.0" prefWidth="65.0" text="Edit..." />
       <Button fx:id="btnDeleteSong" layoutX="842.0" layoutY="659.0" mnemonicParsing="false" onAction="#deleteSong" text="Delete" />
       <Button fx:id="btnClose" layoutX="1031.0" layoutY="659.0" mnemonicParsing="false" onAction="#endApplication" text="Close" />
-      <Button fx:id="btnMoveSongLeft" layoutX="552.0" layoutY="104.0" mnemonicParsing="false" onAction="#addToPlaylist" text="&lt;---" />
-      <Button fx:id="btnSearch" layoutX="986.0" layoutY="23.0" mnemonicParsing="false" onAction="#searchSong" text="Search" />
       <Label layoutX="28.0" layoutY="83.0" styleClass="label-bright" text="Playlists" />
       <Label layoutX="281.0" layoutY="83.0" styleClass="label-bright" text="Songs on playlist " />
       <Label layoutX="684.0" layoutY="83.0" styleClass="label-bright" text="Songs" />
-      <Label fx:id="lblMusicPlaying" layoutX="81.0" layoutY="10.0" prefHeight="60.0" prefWidth="684.0" styleClass="label-header" stylesheets="@MyTunes.css" text="Music currently playing">
+      <Label fx:id="lblMusicPlaying" layoutX="39.0" layoutY="16.0" prefHeight="60.0" prefWidth="684.0" styleClass="label-header" stylesheets="@MyTunes.css" text="Music currently playing">
          <font>
             <Font size="33.0" />
          </font>
@@ -41,6 +59,6 @@
       <Button layoutX="607.0" layoutY="706.0" mnemonicParsing="false" onAction="#pauseMusic" prefHeight="31.0" prefWidth="52.0" stylesheets="@MyTunes.css" text="| |" />
       <Button layoutX="507.0" layoutY="706.0" mnemonicParsing="false" onAction="#stopMusic" prefHeight="31.0" prefWidth="52.0" stylesheets="@MyTunes.css" text="⬛" />
       <Slider fx:id="sliderDuration" layoutX="242.0" layoutY="741.0" max="300.0" onDragDetected="#sliderDrag" prefHeight="14.0" prefWidth="684.0" styleClass="button-sliders" />
-      <Slider fx:id="sliderVolume" layoutX="573.0" layoutY="536.0" orientation="VERTICAL" styleClass="button-sliders" />
+      <Slider fx:id="sliderVolume" layoutX="571.0" layoutY="495.0" orientation="VERTICAL" styleClass="button-sliders" />
    </children>
 </AnchorPane>

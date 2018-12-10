@@ -5,6 +5,8 @@
  */
 package mytunes.GUI.Controller;
 
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -36,6 +38,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -43,6 +46,8 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import mytunes.BLL.SongSearcher;
 import mytunes.BLL.exception.MTBllException;
 import mytunes.GUI.Model.PlaylistModel;
@@ -50,6 +55,7 @@ import mytunes.GUI.Model.PlaylistSongModel;
 import mytunes.GUI.Model.SongModel;
 import mytunes.be.Playlist;
 import mytunes.be.Song;
+
 
 /**
  * FXML Controller class
@@ -67,7 +73,7 @@ public class MyTunesViewController implements Initializable
     private ObservableList<Song> songList = FXCollections.observableArrayList();
     private ObservableList<Playlist> playlistList;
     private boolean playing;
-    
+
     @FXML
     private ListView<Playlist> listPlaylists;
     @FXML
@@ -95,10 +101,6 @@ public class MyTunesViewController implements Initializable
     @FXML
     private Button btnClose;
     @FXML
-    private Button btnMoveSongLeft;
-    @FXML
-    private Button btnSearch;
-    @FXML
     private Label lblMusicPlaying;
     @FXML
     private AnchorPane rootPane;
@@ -108,6 +110,10 @@ public class MyTunesViewController implements Initializable
     private Slider sliderDuration;
     @FXML
     private Slider sliderVolume;
+    @FXML
+    private ImageView searchView;
+    @FXML
+    private ImageView arrowView;
 
     public MyTunesViewController()
     {
@@ -132,7 +138,6 @@ public class MyTunesViewController implements Initializable
     {
         listSongs.setItems(sm.getSongs());
         listPlaylists.setItems(pm.getAllPlaylist());
-
     }
 
     @FXML
@@ -142,7 +147,10 @@ public class MyTunesViewController implements Initializable
         Parent root = (Parent) loader.load();
 
         CreatePlaylistController cpcontroller = loader.getController();
+
+        
         Stage stage = new Stage();
+        
         stage.setScene(new Scene(root));
         stage.show();
     }
@@ -237,7 +245,8 @@ public class MyTunesViewController implements Initializable
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.show();
-        } catch (IOException ex)
+        } 
+        catch (IOException ex)
         {
             displayError(ex);
         }
@@ -304,17 +313,6 @@ public class MyTunesViewController implements Initializable
         System.exit(0);
     }
 
-    @FXML
-    private void searchSong(ActionEvent event)
-    {
-        try
-        {
-            listSongs.setItems(sm.searchSongs(sm.getSongs(), writeSearch.getText().toLowerCase()));
-        } catch (IOException | MTBllException ex)
-        {
-            displayError(ex);
-        }
-    }
 
     @FXML
     private void previousSong(ActionEvent event)
@@ -395,33 +393,17 @@ public class MyTunesViewController implements Initializable
     }
 
 
-    @FXML
-    public void addToPlaylist(ActionEvent event)
-    {
-        Playlist playlist = listPlaylists.getSelectionModel().getSelectedItem();
-        Song song = listSongs.getSelectionModel().getSelectedItem();
-        try
-        {
-            psm.addToPlaylist(playlist, song);
-        } catch (SQLException ex)
-        {
-            Logger.getLogger(MyTunesViewController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
 
-    @FXML
     public void deleteFromPlaylistSongsEverything(ActionEvent event)
     {
 
     }
 
-    @FXML
     public void removeSongFromPlaylist(ActionEvent event)
     {
 
     }
     
-    @FXML
     public void endApplication()
     {
         System.exit(0);
@@ -468,5 +450,31 @@ public class MyTunesViewController implements Initializable
         alert.setContentText("Please select a playlist to delete");
         
         alert.showAndWait();
+    }
+
+    @FXML
+    private void mouseClickedSearch(MouseEvent event)
+    {
+        try
+        {
+            listSongs.setItems(sm.searchSongs(sm.getSongs(), writeSearch.getText().toLowerCase()));
+        } catch (IOException | MTBllException ex)
+        {
+            displayError(ex);
+        }
+    }
+
+    @FXML
+    private void mouseClickedArrow(MouseEvent event)
+    {
+        Playlist playlist = listPlaylists.getSelectionModel().getSelectedItem();
+        Song song = listSongs.getSelectionModel().getSelectedItem();
+        try
+        {
+            psm.addToPlaylist(playlist, song);
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(MyTunesViewController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
