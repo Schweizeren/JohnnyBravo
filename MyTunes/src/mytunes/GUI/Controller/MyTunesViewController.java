@@ -5,6 +5,12 @@
  */
 package mytunes.GUI.Controller;
 
+
+import static com.sun.java.accessibility.util.AWTEventMonitor.addKeyListener;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
@@ -40,6 +46,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -61,8 +68,12 @@ import mytunes.be.Song;
  *
  * @author bonde
  */
+
+
+
 public class MyTunesViewController implements Initializable
 {
+
 
     private PlaylistSongModel psm;
     private PlaylistModel pm;
@@ -105,8 +116,6 @@ public class MyTunesViewController implements Initializable
     @FXML
     private Slider sliderVolume;
     @FXML
-    private ImageView searchView;
-    @FXML
     private ImageView arrowView;
     @FXML
     private ImageView volumeView;
@@ -143,6 +152,7 @@ public class MyTunesViewController implements Initializable
             displayError(ex);
         }
     }
+    
 
     /**
      * Initializes the controller class.
@@ -535,6 +545,7 @@ public class MyTunesViewController implements Initializable
         {
             displayError(ex);
         }
+
     }
 
     @FXML
@@ -614,11 +625,14 @@ public class MyTunesViewController implements Initializable
         alert.showAndWait();
     }
 
+
+
     @FXML
     private void mouseClickedSearch(MouseEvent event)
     {
         try
         {
+
             tableSongList.setItems(sm.searchSongs(sm.getSongs(), writeSearch.getText().toLowerCase()));
         } catch (IOException | MTBllException ex)
         {
@@ -773,5 +787,6 @@ public class MyTunesViewController implements Initializable
             displayError(ex);
         }
     }
-
+     
+    
 }

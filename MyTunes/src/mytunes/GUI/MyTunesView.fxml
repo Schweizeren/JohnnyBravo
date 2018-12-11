@@ -13,12 +13,6 @@
 
 <AnchorPane id="AnchorPane" fx:id="rootPane" prefHeight="762.0" prefWidth="1118.0" styleClass="background" stylesheets="@MyTunes.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.GUI.Controller.MyTunesViewController">
    <children>
-       <ImageView fx:id="searchView" fitHeight="31.0" fitWidth="30.0" layoutX="982.0" layoutY="22.0" onMouseClicked="#mouseClickedSearch" styleClass="button">
-    <image>
-        <Image url="@searchButton.png">
-            </Image>
-            </image>
-            </ImageView>
     <ImageView fx:id="arrowView" fitHeight="31.0" fitWidth="30.0" layoutX="565.0" layoutY="135.0" onMouseClicked="#mouseClickedArrow" rotate="-90.0" styleClass="button">
     <image>
         <Image url="@whiteArrow.png">
