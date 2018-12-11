@@ -131,7 +131,7 @@ public class PlaylistDAO
             String sql = "UPDATE Playlist SET name = ? WHERE id = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, name);
-            ps.setInt(4, id);
+            ps.setInt(2, id);
             
             ps.executeUpdate();
             ps.close();

@@ -38,7 +38,7 @@
       <Label layoutX="28.0" layoutY="83.0" styleClass="label-bright" text="Playlists" />
       <Label layoutX="281.0" layoutY="83.0" styleClass="label-bright" text="Songs on playlist " />
       <Label layoutX="684.0" layoutY="83.0" styleClass="label-bright" text="Songs" />
-      <Label fx:id="lblMusicPlaying" layoutX="39.0" layoutY="16.0" prefHeight="60.0" prefWidth="684.0" styleClass="label-header" stylesheets="@MyTunes.css" text="Nothin is playing">
+      <Label fx:id="lblMusicPlaying" layoutX="39.0" layoutY="16.0" prefHeight="60.0" prefWidth="684.0" styleClass="label-header" stylesheets="@MyTunes.css" text="Nothing is playing">
          <font>
             <Font size="33.0" />
          </font>

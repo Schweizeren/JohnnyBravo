@@ -256,6 +256,15 @@ public class MyTunesManager
             throw new MTBllException("Could not delete song from table");
         }
     }
-
+    
+    public void moveSong(int locationGettingMoved, int locationAffected, int playlistId) throws MTBllException {
+        try
+        {
+            psd.moveSong(locationGettingMoved, locationAffected, playlistId);
+        } catch (MTDalException ex)
+        {
+            throw new MTBllException("Could not move song");
+        }
+    }
     
 }
