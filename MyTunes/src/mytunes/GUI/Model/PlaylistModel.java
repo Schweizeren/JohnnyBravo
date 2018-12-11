@@ -52,9 +52,10 @@ public class PlaylistModel
         return playlistList;
     }
     
-    public void updatePlaylist(Playlist playlist) throws MTBllException
+    public void updatePlaylist(Playlist playlist, int index) throws MTBllException
     {
         mtmanager.updatePlaylist(playlist);
+        playlistList.set(index, playlist);
     }
     
     

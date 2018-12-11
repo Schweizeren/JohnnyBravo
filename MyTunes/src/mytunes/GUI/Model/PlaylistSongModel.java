@@ -6,6 +6,7 @@
 package mytunes.GUI.Model;
 
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -95,6 +96,16 @@ public class PlaylistSongModel {
         }
     }
     
+    public void moveSong(int locationGettingMoved, int locationAffected, int playlistId) throws MTBllException {
+        try
+        {
+            mtmanager.moveSong(locationGettingMoved, locationAffected, playlistId);
+            Collections.swap(playlistSongList, locationGettingMoved - 1, locationAffected - 1);
+        } catch (MTBllException ex)
+        {
+            throw new MTBllException("Could not move song");
+        }
+    }
     
 }
 

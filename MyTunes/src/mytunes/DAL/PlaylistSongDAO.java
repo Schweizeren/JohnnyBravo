@@ -126,29 +126,40 @@ public class PlaylistSongDAO {
         
     }
     
-    public void insertSongToPlaylist (int songID, int playlistID) throws MTDalException
-    {
-        try (Connection con = cb.getConnection())
-        {
-            String query = "INSERT INTO PlaylistSong(PlaylistID,SongID,locationInListID) VALUES (?,?,?)";
-            PreparedStatement preparedst = con.prepareStatement(query);
-            preparedst.setInt(1, playlistID);
-            preparedst.setInt(2, songID);
-        } catch (SQLServerException ex) {
-            throw new MTDalException("Could not connect to the SQL server.", ex);
-        } catch (SQLException ex) {
-            throw new MTDalException("Could not insert song to playlistSong table.", ex);
-        }
-    }
-    
     public void deleteSongFromTable(Song song) throws MTDalException {
         try (Connection con = cb.getConnection()) {
             String query = "DELETE FROM PlaylistSong WHERE SongID = ?;";
             PreparedStatement pst = con.prepareStatement(query);
             pst.setInt(1, song.getId());
+            pst.execute();
         } catch (SQLServerException ex) {
             throw new MTDalException("Could not connect to SQL server.", ex);
         } catch (SQLException ex) {
+            throw new MTDalException("Could not delete songs from table.", ex);
+        }
+    }
+    
+    public void moveSong(int locationGettingMoved, int locationAffected, int playlistId) throws MTDalException 
+    {
+        try (Connection con = cb.getConnection()){
+            String query = "UPDATE PlaylistSong Set LocationInListID = "
+                    + " CASE LocationInListID"
+                    + " WHEN ? THEN ?"
+                    + " WHEN ? THEN ?"
+                    + " END"
+                    + " WHERE playlistID = ?;";
+            PreparedStatement pst = con.prepareStatement(query);
+            pst.setInt(1, locationGettingMoved);
+            pst.setInt(2, locationAffected);
+            pst.setInt(3, locationAffected);
+            pst.setInt(4, locationGettingMoved);
+            pst.setInt(5, playlistId);
+            pst.execute();
+        } catch (SQLServerException ex)
+        {
+            throw new MTDalException("Could not connect to SQL server.", ex);
+        } catch (SQLException ex)
+        {
             throw new MTDalException("Could not delete songs from table.", ex);
         }
     }
