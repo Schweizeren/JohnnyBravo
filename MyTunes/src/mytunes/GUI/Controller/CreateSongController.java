@@ -5,6 +5,8 @@
  */
 package mytunes.GUI.Controller;
 
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.util.EventObject;
@@ -19,6 +21,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import mytunes.BLL.exception.MTBllException;
@@ -170,5 +173,140 @@ public class CreateSongController implements Initializable
     public void initializeModel(SongModel songmodel)
     {
         this.sm = songmodel;
+    }
+
+    @FXML
+    private void titleEnterPressed(KeyEvent event)
+    {
+        
+        if(event.getCode()==KeyCode.ENTER)
+        {
+        String title;
+        int duration;
+        String filepath;
+        String genre;
+        String artist;
+        try
+        {
+            title = txtTitleInput.getText();
+            duration = sm.getDurationInSec();
+            filepath = txtFile.getText();
+            if (comboCategoryBox.getSelectionModel().getSelectedItem().equals("Other")) {
+                genre = txtOtherCategory.getText();
+            } else {
+                genre = comboCategoryBox.getSelectionModel().getSelectedItem();
+            }
+            artist = txtArtistInput.getText();
+            sm.createSong(title, duration, artist, genre, filepath);
+
+            Stage stage = (Stage) ((Node) ((EventObject) event).getSource()).getScene().getWindow();
+            stage.close();
+        } catch (MTBllException ex)
+        {
+            displayError(ex);
+        }
+        }
+    }
+
+    @FXML
+    private void artistEnterPressed(KeyEvent event)
+    {
+        
+        
+        if(event.getCode()==KeyCode.ENTER)
+        {
+        String title;
+        int duration;
+        String filepath;
+        String genre;
+        String artist;
+        try
+        {
+            title = txtTitleInput.getText();
+            duration = sm.getDurationInSec();
+            filepath = txtFile.getText();
+            if (comboCategoryBox.getSelectionModel().getSelectedItem().equals("Other")) {
+                genre = txtOtherCategory.getText();
+            } else {
+                genre = comboCategoryBox.getSelectionModel().getSelectedItem();
+            }
+            artist = txtArtistInput.getText();
+            sm.createSong(title, duration, artist, genre, filepath);
+
+            Stage stage = (Stage) ((Node) ((EventObject) event).getSource()).getScene().getWindow();
+            stage.close();
+        } catch (MTBllException ex)
+        {
+            displayError(ex);
+        }
+        }
+    }
+
+    @FXML
+    private void comboBoxEnterPressed(KeyEvent event)
+    {
+        
+        
+        if(event.getCode()==KeyCode.ENTER)
+        {
+        String title;
+        int duration;
+        String filepath;
+        String genre;
+        String artist;
+        try
+        {
+            title = txtTitleInput.getText();
+            duration = sm.getDurationInSec();
+            filepath = txtFile.getText();
+            if (comboCategoryBox.getSelectionModel().getSelectedItem().equals("Other")) {
+                genre = txtOtherCategory.getText();
+            } else {
+                genre = comboCategoryBox.getSelectionModel().getSelectedItem();
+            }
+            artist = txtArtistInput.getText();
+            sm.createSong(title, duration, artist, genre, filepath);
+
+            Stage stage = (Stage) ((Node) ((EventObject) event).getSource()).getScene().getWindow();
+            stage.close();
+        } catch (MTBllException ex)
+        {
+            displayError(ex);
+        }
+        }
+    }
+
+    @FXML
+    private void otherCategoryEnterPressed(KeyEvent event)
+    {
+        
+        
+        if(event.getCode()==KeyCode.ENTER)
+        {
+        String title;
+        int duration;
+        String filepath;
+        String genre;
+        String artist;
+        try
+        {
+            title = txtTitleInput.getText();
+            duration = sm.getDurationInSec();
+            filepath = txtFile.getText();
+            if (comboCategoryBox.getSelectionModel().getSelectedItem().equals("Other")) {
+                genre = txtOtherCategory.getText();
+            } else {
+                genre = comboCategoryBox.getSelectionModel().getSelectedItem();
+            }
+            artist = txtArtistInput.getText();
+            sm.createSong(title, duration, artist, genre, filepath);
+
+            Stage stage = (Stage) ((Node) ((EventObject) event).getSource()).getScene().getWindow();
+            stage.close();
+        } catch (MTBllException ex)
+        {
+            displayError(ex);
+        }
+        }
     }
 }
