@@ -7,6 +7,7 @@ package mytunes.GUI.Controller;
 
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.Collections;
@@ -44,6 +45,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
+import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -60,8 +62,7 @@ import mytunes.be.Song;
  *
  * @author bonde
  */
-public class MyTunesViewController implements Initializable
-{
+public class MyTunesViewController implements Initializable {
 
     private PlaylistSongModel psm;
     private PlaylistModel pm;
@@ -69,9 +70,6 @@ public class MyTunesViewController implements Initializable
     private SongSearcher ss;
     private JFXPanel fxPanel;
     private MediaPlayer mediaPlayer;
-    private ObservableList<Song> songList = FXCollections.observableArrayList();
-    private ObservableList<Playlist> playlistList;
-    private ObservableList<Song> playlistSongList;
     private boolean playing;
     private boolean paused;
     private int currentSongSelected;
@@ -131,17 +129,14 @@ public class MyTunesViewController implements Initializable
     @FXML
     private TableColumn<Playlist, String> cellPlaylistTitle;
 
-    public MyTunesViewController()
-    {
-        try
-        {
+    public MyTunesViewController() {
+        try {
             psm = new PlaylistSongModel();
             pm = new PlaylistModel();
             sm = new SongModel();
             ss = new SongSearcher();
             fxPanel = new JFXPanel();
-        } catch (MTBllException ex)
-        {
+        } catch (MTBllException ex) {
             displayError(ex);
         }
     }
@@ -150,8 +145,7 @@ public class MyTunesViewController implements Initializable
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb)
-    {
+    public void initialize(URL url, ResourceBundle rb) {
         cellTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
         cellArtist.setCellValueFactory(new PropertyValueFactory<>("artist"));
         cellGenre.setCellValueFactory(new PropertyValueFactory<>("genre"));
@@ -163,8 +157,7 @@ public class MyTunesViewController implements Initializable
     }
 
     @FXML
-    private void createPlaylist(ActionEvent event) throws IOException
-    {
+    private void createPlaylist(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/CreatePlaylist.fxml"));
         Parent root = (Parent) loader.load();
 
@@ -177,14 +170,12 @@ public class MyTunesViewController implements Initializable
     }
 
     @FXML
-    private void editPlaylist(ActionEvent event) throws IOException
-    {
+    private void editPlaylist(ActionEvent event) throws IOException {
         Playlist playlist = tablePlaylist.getSelectionModel().getSelectedItem();
-        if (playlist == null)
-        {
+        if (playlist == null) {
             displayNoPlaylistWindow();
-        } else
-        {
+        } 
+        else {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/EditPlaylist.fxml"));
             Parent root = (Parent) loader.load();
 
@@ -196,14 +187,12 @@ public class MyTunesViewController implements Initializable
     }
 
     @FXML
-    private void deletePlaylist(ActionEvent event) throws MTBllException
+    private void deletePlaylist(ActionEvent event) 
     {
         Playlist playlist = tablePlaylist.getSelectionModel().getSelectedItem();
-        if (playlist == null)
-        {
+        if (playlist == null) {
             displayNoPlaylistWindow();
-        } else
-        {
+        } else {
             Alert alert = new Alert(AlertType.CONFIRMATION);
             alert.setTitle("Confirmation dialog");
             alert.setContentText("Are you sure you want to delete: " + playlist);
@@ -214,59 +203,39 @@ public class MyTunesViewController implements Initializable
             alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
 
             Optional<ButtonType> result = alert.showAndWait();
-            if (result.get() == buttonTypeYes)
-            {
-                try
-                {
+            if (result.get() == buttonTypeYes) {
+                try {
                     pm.deletePlaylist(playlist);
                     psm.deleteFromPlaylist(playlist);
                     tablePlaylist.getSelectionModel().clearSelection();
-                } catch (SQLException ex)
-                {
-                    Logger.getLogger(MyTunesViewController.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (MTBllException ex) {
+                    displayError(ex);
                 }
             }
         }
     }
 
     @FXML
-    private void moveUp(ActionEvent event)
-    {
-        int i = tableSongOnPlaylist.getSelectionModel().getSelectedItem().getId();
-        if (i > 0)
-        {
-            Collections.swap(playlistSongList, i, i - 1);
-        }
+    private void moveUp(ActionEvent event) {
     }
 
     @FXML
-    private void moveDown(ActionEvent event)
+    private void moveDown(ActionEvent event) 
     {
-        int i = tableSongOnPlaylist.getSelectionModel().getSelectedItem().getId();
-        if (i > 0)
-        {
-            Collections.swap(playlistSongList, i, i + 1);
-        }
     }
 
     @FXML
-    private void deleteSongOnPlaylist(ActionEvent event)
-    {
+    private void deleteSongOnPlaylist(ActionEvent event) {
         Playlist playlist = tablePlaylist.getSelectionModel().getSelectedItem();
         Song song = tableSongOnPlaylist.getSelectionModel().getSelectedItem();
-        if (playlist == null)
-        {
+        if (playlist == null) {
             displayNoPlaylistWindow();
-        } else if (song == null)
-        {
+        } else if (song == null) {
             displayNoSongWindow();
-        } else
-        {
-            try
-            {
+        } else {
+            try {
                 psm.removeSongFromPlaylist(playlist, song);
-            } catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 displayError(ex);
             }
         }
@@ -274,10 +243,8 @@ public class MyTunesViewController implements Initializable
     }
 
     @FXML
-    private void newSong(ActionEvent event) throws SQLException
-    {
-        try
-        {
+    private void newSong(ActionEvent event) throws SQLException {
+        try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/CreateSong.fxml"));
             Parent root = (Parent) loader.load();
 
@@ -286,25 +253,20 @@ public class MyTunesViewController implements Initializable
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.show();
-        } catch (IOException ex)
-        {
+        } catch (IOException ex) {
             displayError(ex);
         }
     }
 
     @FXML
-    private void editSong(ActionEvent event)
-    {
+    private void editSong(ActionEvent event) {
         Song song = tableSongList.getSelectionModel().getSelectedItem();
         int index = tableSongList.getSelectionModel().getSelectedIndex();
-        if (song == null)
-        {
+        if (song == null) {
             displayNoSongWindow();
-        } else
-        {
+        } else {
 
-            try
-            {
+            try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/EditSong.fxml"));
                 Parent root = (Parent) loader.load();
 
@@ -314,25 +276,21 @@ public class MyTunesViewController implements Initializable
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root));
                 stage.show();
-            } catch (IOException ex)
-            {
+            } catch (IOException ex) {
                 displayError(ex);
             }
         }
     }
 
     @FXML
-    private void deleteSong(ActionEvent event)
-    {
+    private void deleteSong(ActionEvent event) {
         Song song = tableSongList.getSelectionModel().getSelectedItem();
-        if (song == null)
-        {
+        if (song == null) {
             displayNoSongWindow();
-        } else
-        {
+        } else {
             Alert alert = new Alert(AlertType.CONFIRMATION);
             alert.setTitle("Confirmation dialog");
-            alert.setContentText("Are you sure you want to delete");
+            alert.setContentText("Are you sure you want to delete: "+ song);
 
             ButtonType buttonTypeYes = new ButtonType("Yes");
             ButtonType buttonTypeNo = new ButtonType("No", ButtonData.CANCEL_CLOSE);
@@ -340,13 +298,11 @@ public class MyTunesViewController implements Initializable
             alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
 
             Optional<ButtonType> result = alert.showAndWait();
-            if (result.get() == buttonTypeYes)
-            {
-                try
-                {
+            if (result.get() == buttonTypeYes) {
+                try {
                     sm.deleteSong(song);
-                } catch (MTBllException ex)
-                {
+                    psm.deleteSongFromTable(song);
+                } catch (MTBllException ex) {
                     displayError(ex);
                 }
             }
@@ -354,47 +310,35 @@ public class MyTunesViewController implements Initializable
     }
 
     @FXML
-    private void endApplication(ActionEvent event)
-    {
+    private void endApplication(ActionEvent event) {
         System.exit(0);
     }
 
-    private void searchSong(ActionEvent event)
-    {
-        try
-        {
+    private void searchSong(ActionEvent event) {
+        try {
             tableSongList.setItems(sm.searchSongs(sm.getSongs(), writeSearch.getText().toLowerCase()));
-        } catch (IOException | MTBllException ex)
-        {
+        } catch (IOException | MTBllException ex) {
             displayError(ex);
         }
     }
 
     @FXML
-    private void previousSong(ActionEvent event)
-    {
-        if (mediaPlayer != null)
-        {
+    private void previousSong(ActionEvent event) {
+        if (mediaPlayer != null) {
             mediaPlayer.stop();
             paused = false;
             playing = true;
-            if (tableSongList.getSelectionModel().getSelectedItem() != null)
-            {
-                if (currentSongSelected < 0)
-                {
+            if (tableSongList.getSelectionModel().getSelectedItem() != null) {
+                if (currentSongSelected == 0) {
                     currentSongSelected = tableSongList.getItems().size() - 1;
-                } else
-                {
+                } else {
                     currentSongSelected--;
                 }
                 play();
-            } else if (tableSongOnPlaylist.getSelectionModel().getSelectedItem() != null)
-            {
-                if (currentSongSelected < 0)
-                {
+            } else if (tableSongOnPlaylist.getSelectionModel().getSelectedItem() != null) {
+                if (currentSongSelected == 0) {
                     currentSongSelected = tableSongOnPlaylist.getItems().size() - 1;
-                } else
-                {
+                } else {
                     currentSongSelected--;
                 }
                 play();
@@ -403,29 +347,21 @@ public class MyTunesViewController implements Initializable
     }
 
     @FXML
-    private void nextSong(ActionEvent event)
-    {
-        if (mediaPlayer != null)
-        {
+    private void nextSong(ActionEvent event) {
+        if (mediaPlayer != null) {
             mediaPlayer.stop();
             paused = false;
             playing = true;
-            if (tableSongList.getSelectionModel().getSelectedItem() != null)
-            {
-                if (currentSongSelected == tableSongList.getItems().size() - 1)
-                {
+            if (tableSongList.getSelectionModel().getSelectedItem() != null) {
+                if (currentSongSelected == tableSongList.getItems().size() - 1) {
                     currentSongSelected = 0;
-                } else
-                {
+                } else {
                     currentSongSelected++;
                 }
-            } else if (tableSongOnPlaylist.getSelectionModel().getSelectedItem() != null)
-            {
-                if (currentSongSelected == tableSongOnPlaylist.getItems().size() - 1)
-                {
+            } else if (tableSongOnPlaylist.getSelectionModel().getSelectedItem() != null) {
+                if (currentSongSelected == tableSongOnPlaylist.getItems().size() - 1) {
                     currentSongSelected = 0;
-                } else
-                {
+                } else {
                     currentSongSelected++;
                 }
             }
@@ -435,46 +371,35 @@ public class MyTunesViewController implements Initializable
     }
 
     @FXML
-    private void playMusic(ActionEvent event)
-    {
+    private void playMusic(ActionEvent event) {
         if (mediaPlayer == null && tableSongList.getSelectionModel().getSelectedItem() == null
-                && tableSongOnPlaylist.getSelectionModel().getSelectedItem() == null)
-        {
+                && tableSongOnPlaylist.getSelectionModel().getSelectedItem() == null) {
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("Information dialog");
             alert.setHeaderText("You have not chosen a song to play");
             alert.setContentText("Please select a song");
 
             alert.showAndWait();
-        } else
-        {
-            if (tableSongList.getSelectionModel().getSelectedItem() != null)
-            {
-                if (playing)
-                {
+        } else {
+            if (tableSongList.getSelectionModel().getSelectedItem() != null) {
+                if (playing) {
                     mediaPlayer.stop();
                     currentSongSelected = tableSongList.getSelectionModel().getSelectedIndex();
                     play();
-                } else if (paused)
-                {
+                } else if (paused) {
                     mediaPlayer.play();
-                } else
-                {
+                } else {
                     currentSongSelected = tableSongList.getSelectionModel().getSelectedIndex();
                     play();
                 }
-            } else
-            {
-                if (playing)
-                {
+            } else {
+                if (playing) {
                     mediaPlayer.stop();
                     currentSongSelected = tableSongOnPlaylist.getSelectionModel().getSelectedIndex();
                     play();
-                } else if (paused)
-                {
+                } else if (paused) {
                     mediaPlayer.play();
-                } else
-                {
+                } else {
                     currentSongSelected = tableSongOnPlaylist.getSelectionModel().getSelectedIndex();
                     play();
                 }
@@ -487,10 +412,8 @@ public class MyTunesViewController implements Initializable
     }
 
     @FXML
-    private void pauseMusic(ActionEvent event)
-    {
-        if (mediaPlayer != null)
-        {
+    private void pauseMusic(ActionEvent event) {
+        if (mediaPlayer != null) {
             mediaPlayer.pause();
             playing = false;
             paused = true;
@@ -498,10 +421,8 @@ public class MyTunesViewController implements Initializable
     }
 
     @FXML
-    private void stopMusic(ActionEvent event)
-    {
-        if (mediaPlayer != null)
-        {
+    private void stopMusic(ActionEvent event) {
+        if (mediaPlayer != null) {
             mediaPlayer.stop();
             tableSongList.getSelectionModel().clearSelection();
             tableSongOnPlaylist.getSelectionModel().clearSelection();
@@ -513,52 +434,41 @@ public class MyTunesViewController implements Initializable
     }
 
     @FXML
-    private void writeSearch(KeyEvent event)
-    {
+    private void writeSearch(KeyEvent event) {
 
     }
 
     @FXML
-    private void sliderDrag(MouseEvent event)
-    {
+    private void sliderDrag(MouseEvent event) {
         mediaPlayer.seek(Duration.seconds(sliderDuration.getValue()));
     }
 
-    private void songPressed(MouseEvent event)
-    {
+    private void songPressed(MouseEvent event) {
         paused = false;
         tableSongOnPlaylist.getSelectionModel().clearSelection();
     }
 
-    private void addToPlaylist(ActionEvent event)
-    {
-        Playlist playlist = tablePlaylist.getSelectionModel().getSelectedItem();
-        Song song = tableSongList.getSelectionModel().getSelectedItem();
-
-        try
-        {
+    private void addToPlaylist(ActionEvent event) {
+        try {
+            Playlist playlist = tablePlaylist.getSelectionModel().getSelectedItem();
+            Song song = tableSongList.getSelectionModel().getSelectedItem();
             psm.addToPlaylist(playlist, song);
-        } catch (SQLException ex)
-        {
-            Logger.getLogger(MyTunesViewController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (MTBllException ex) {
+            displayError(ex);
         }
     }
 
-    private void deleteFromPlaylistSongsEverything(ActionEvent event)
-    {
+    private void deleteFromPlaylistSongsEverything(ActionEvent event) {
     }
 
-    private void removeSongFromPlaylist(ActionEvent event)
-    {
+    private void removeSongFromPlaylist(ActionEvent event) {
     }
 
-    private void endApplication()
-    {
+    private void endApplication() {
         System.exit(0);
     }
 
-    private void displayError(Exception ex)
-    {
+    private void displayError(Exception ex) {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Error dialog");
         alert.setHeaderText(null);
@@ -567,8 +477,7 @@ public class MyTunesViewController implements Initializable
         alert.showAndWait();
     }
 
-    private void displayNoSongWindow()
-    {
+    private void displayNoSongWindow() {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Information dialog");
         alert.setHeaderText("You have not chosen a song to delete");
@@ -577,8 +486,7 @@ public class MyTunesViewController implements Initializable
         alert.showAndWait();
     }
 
-    private void displayNoPlaylistWindow()
-    {
+    private void displayNoPlaylistWindow() {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Information dialog");
         alert.setHeaderText("You have not selected a playlist");
@@ -588,70 +496,65 @@ public class MyTunesViewController implements Initializable
     }
 
     @FXML
-    private void mouseClickedSearch(MouseEvent event)
-    {
-        try
-        {
+    private void mouseClickedSearch(MouseEvent event) {
+        try {
             tableSongList.setItems(sm.searchSongs(sm.getSongs(), writeSearch.getText().toLowerCase()));
-        } catch (IOException | MTBllException ex)
-        {
+        } catch (IOException | MTBllException ex) {
             displayError(ex);
         }
     }
 
     @FXML
-    private void mouseClickedArrow(MouseEvent event)
-    {
+    private void mouseClickedArrow(MouseEvent event) {
         Playlist playlist = tablePlaylist.getSelectionModel().getSelectedItem();
         Song song = tableSongList.getSelectionModel().getSelectedItem();
-        try
-        {
-            psm.addToPlaylist(playlist, song);
-        } catch (SQLException ex)
-        {
-            Logger.getLogger(MyTunesViewController.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        if (playlist == null) {
+            displayNoPlaylistWindow();
+        } else if (song == null) {
+            displayNoSongWindow();
+        } else {
+            try {
+                psm.addToPlaylist(playlist, song);
+            } catch (MTBllException ex) {
+                displayError(ex);
+            }
         }
+    }
 
-
-    private void play()
-    {
+    private void play() {
         String filePath;
-        if (tableSongList.getSelectionModel().getSelectedItem() != null)
-        {
+        if (tableSongList.getSelectionModel().getSelectedItem() != null) {
             filePath = tableSongList.getItems().get(currentSongSelected).getFilepath();
             tableSongList.getSelectionModel().clearAndSelect(currentSongSelected);
             lblMusicPlaying.setText(tableSongList.getItems().get(currentSongSelected).getTitle() + " is now playing");
-        } else
-        {
+        } else {
             filePath = tableSongOnPlaylist.getItems().get(currentSongSelected).getFilepath();
             tableSongOnPlaylist.getSelectionModel().clearAndSelect(currentSongSelected);
             lblMusicPlaying.setText(tableSongOnPlaylist.getItems().get(currentSongSelected).getTitle() + " is now playing");
         }
         String trueFilePath = "file:/" + filePath;
         String trueTrueFilePath = trueFilePath.replace(" ", "%20");
+        try {
         Media media = new Media(trueTrueFilePath);
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.play();
-        mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>()
-        {
+        } catch(Exception ex) {
+            displayError(ex);
+            lblMusicPlaying.setText("Nothing is playing");
+        }
+        mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
             @Override
-            public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue)
-            {
+            public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) {
                 sliderDuration.setValue(newValue.toSeconds());
                 sliderDuration.maxProperty().bind(Bindings.createDoubleBinding(() -> mediaPlayer.getTotalDuration().toSeconds(), mediaPlayer.totalDurationProperty()));
             }
         });
-        mediaPlayer.setOnEndOfMedia(new Runnable()
-        {
+        mediaPlayer.setOnEndOfMedia(new Runnable() {
             @Override
-            public void run()
-            {
-                if (tableSongList.getItems().size() == currentSongSelected + 1)
-                {
+            public void run() {
+                if (tableSongList.getItems().size() == currentSongSelected + 1) {
                     currentSongSelected = 0;
-                } else
-                {
+                } else {
                     currentSongSelected++;
                 }
                 play();
@@ -660,47 +563,48 @@ public class MyTunesViewController implements Initializable
         playing = true;
     }
 
-    private void controlSound()
-    {
+    private void controlSound() {
         sliderVolume.setValue(mediaPlayer.getVolume() * 100);
-        sliderVolume.valueProperty().addListener(new InvalidationListener()
-        {
+        sliderVolume.valueProperty().addListener(new InvalidationListener() {
             @Override
-            public void invalidated(Observable observable)
-            {
+            public void invalidated(Observable observable) {
                 mediaPlayer.setVolume(sliderVolume.getValue() / 100);
             }
         });
     }
 
-    private void getSongsInPlayList(MouseEvent event)
-    {
-        Playlist playlist = tablePlaylist.getSelectionModel().getSelectedItem();
-        int id = playlist.getId();
-        tableSongOnPlaylist.getItems().removeAll();
-        tableSongOnPlaylist.setItems(psm.getPlaylistSongs(id));
+    private void getSongsInPlayList(MouseEvent event) {
+        try {
+            Playlist playlist = tablePlaylist.getSelectionModel().getSelectedItem();
+            int id = playlist.getId();
+            tableSongOnPlaylist.getItems().removeAll();
+            tableSongOnPlaylist.setItems(psm.getPlaylistSongs(id));
+        } catch (MTBllException ex) {
+            displayError(ex);
+        }
     }
 
     @FXML
-    private void clickedOnSongs(MouseEvent event)
-    {
+    private void clickedOnSongs(MouseEvent event) {
         tableSongOnPlaylist.getSelectionModel().clearSelection();
         paused = false;
     }
 
     @FXML
-    private void clickedOnSongPlaylist(MouseEvent event)
-    {
+    private void clickedOnSongPlaylist(MouseEvent event) {
         tableSongList.getSelectionModel().clearSelection();
         paused = false;
     }
 
     @FXML
-    private void tablePlaylistClicked(MouseEvent event)
-    {
-        Playlist playlist = tablePlaylist.getSelectionModel().getSelectedItem();
-        int id = playlist.getId();
-        tableSongOnPlaylist.setItems(psm.getPlaylistSongs(id));
+    private void tablePlaylistClicked(MouseEvent event) {
+        try {
+            Playlist playlist = tablePlaylist.getSelectionModel().getSelectedItem();
+            int id = playlist.getId();
+            tableSongOnPlaylist.setItems(psm.getPlaylistSongs(id));
+        } catch (MTBllException ex) {
+            displayError(ex);
+        }
     }
 
 }

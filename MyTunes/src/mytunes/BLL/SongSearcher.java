@@ -8,8 +8,6 @@ package mytunes.BLL;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import mytunes.BLL.exception.MTBllException;
 import mytunes.DAL.SongDAO;
 import mytunes.DAL.exception.MTDalException;

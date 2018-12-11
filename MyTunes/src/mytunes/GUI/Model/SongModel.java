@@ -50,7 +50,6 @@ public class SongModel
         if (file != null)
         {
             filePath = file.toURI().toString();
-            System.out.print(trueTrueFilePath);
             String trueFilePath = filePath.replaceFirst("file:/", "");
             trueTrueFilePath = trueFilePath.replace("%20", " ");
 
@@ -137,10 +136,5 @@ public class SongModel
     {
         mtmanager.updateSong(song);
         songList.set(index, song);
-    }
-
-    public void deleteSong(ListView<Song> song)
-    {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

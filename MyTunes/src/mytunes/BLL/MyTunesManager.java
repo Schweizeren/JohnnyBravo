@@ -199,34 +199,62 @@ public class MyTunesManager
         }
     }
     
-    public List<Song> getPlaylistSongs(int id)
+    public List<Song> getPlaylistSongs(int id) throws MTBllException
     {
-        return psd.getPlaylistSongs(id);
+        try {
+            return psd.getPlaylistSongs(id);
+        } catch (MTDalException ex) {
+            throw new MTBllException("Could not get the songs in playlist");
+        }
     }
     
-    public Song addToPlaylist(Playlist playlist, Song song) throws SQLException
+    public Song addToPlaylist(Playlist playlist, Song song) throws MTBllException
     {
-        return psd.addToPlaylist(playlist, song);
+        try {
+            return psd.addToPlaylist(playlist, song);
+        } catch (MTDalException ex) {
+            throw new MTBllException("Could not add song to playlist");
+        }
     }
     
-    public int getNewestSongInPlaylist(int id)
+    public int getNewestSongInPlaylist(int id) throws MTBllException
     {
-        return psd.getNewestIdInPlaylist(id);
+        try {
+            return psd.getNewestIdInPlaylist(id);
+        } catch (MTDalException ex) {
+            throw new MTBllException("Could not get newest ID in playlist");
+        }
     }
     
-    public void removeSongFromPlaylist(Playlist selectedItem, Song selectedSong)
+    public void removeSongFromPlaylist(Playlist selectedItem, Song selectedSong) throws MTBllException
     {
-        psd.removeSongFromPlaylist(selectedItem, selectedSong);
+        try {
+            psd.removeSongFromPlaylist(selectedItem, selectedSong);
+        } catch (MTDalException ex) {
+            throw new MTBllException("Could not delete song from playlist");
+        }
     }
     
-    public void deleteFromPlaylist(Playlist playlist) throws SQLException
+    public void deleteFromPlaylist(Playlist playlist) throws MTBllException
     {
-        psd.deleteFromPlaylist(playlist);
+        try {
+            psd.deleteFromPlaylist(playlist);
+        } catch (MTDalException ex) {
+            throw new MTBllException("Could not delete all songs from SQL database");
+        }
     }
     
     public void insertSongToPlaylist ()
     {
         
+    }
+    
+    public void deleteSongFromTable(Song song) throws MTBllException{
+        try {
+            psd.deleteSongFromTable(song);
+        } catch (MTDalException ex) {
+            throw new MTBllException("Could not delete song from table");
+        }
     }
 
     
