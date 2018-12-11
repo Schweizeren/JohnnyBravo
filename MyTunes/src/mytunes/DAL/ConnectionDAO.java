@@ -5,16 +5,10 @@
  */
 package mytunes.DAL;
 
-import java.io.IOException;
-import java.util.List;
-import mytunes.be.Song;
+
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 
 /**
  *
@@ -28,6 +22,9 @@ public class ConnectionDAO
     private static final String PASSWORD = "CS2018A_14";
     SQLServerDataSource ds;
     
+    /**
+     * The constructor of the ConnectionDAO class. Initialize the information needed to connect to the database
+     */
     public ConnectionDAO()
     {
     ds = new SQLServerDataSource();
@@ -37,6 +34,11 @@ public class ConnectionDAO
     ds.setPassword(PASSWORD);
     }
     
+    /**
+     * Gets connection to the database
+     * @return the connection
+     * @throws SQLServerException 
+     */
     public Connection getConnection() throws SQLServerException {
         Connection con = ds.getConnection();
         return con;

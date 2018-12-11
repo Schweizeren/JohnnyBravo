@@ -311,7 +311,7 @@ public class MyTunesViewController implements Initializable
         int index = tableSongList.getSelectionModel().getSelectedIndex();
         if (song == null)
         {
-            displayNoSongWindow();
+            displayNoEditWindow();
         } else
         {
 
@@ -344,7 +344,7 @@ public class MyTunesViewController implements Initializable
         {
             Alert alert = new Alert(AlertType.CONFIRMATION);
             alert.setTitle("Confirmation dialog");
-            alert.setContentText("Are you sure you want to delete: " + song);
+            alert.setContentText("Are you sure you want to delete: " + song.getTitle());
 
             ButtonType buttonTypeYes = new ButtonType("Yes");
             ButtonType buttonTypeNo = new ButtonType("No", ButtonData.CANCEL_CLOSE);
@@ -594,6 +594,15 @@ public class MyTunesViewController implements Initializable
 
         alert.showAndWait();
     }
+    
+    private void displayNoEditWindow() {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Information dialog");
+        alert.setHeaderText("You have not chosen a song to delete");
+        alert.setContentText("Please select a song");
+
+        alert.showAndWait();
+    }
 
     private void displayNoPlaylistWindow()
     {
@@ -680,15 +689,29 @@ public class MyTunesViewController implements Initializable
             @Override
             public void run()
             {
-                if (tableSongList.getItems().size() == currentSongSelected + 1)
+                if (tableSongList.getSelectionModel().getSelectedItem() != null)
                 {
-                    currentSongSelected = 0;
+                    if (currentSongSelected == tableSongList.getItems().size() - 1)
+                    {
+                        currentSongSelected = 0;
+                    } else
+                    {
+                        currentSongSelected++;
+                    }
+                    play();
                 } else
                 {
-                    currentSongSelected++;
+                    if (currentSongSelected == tableSongOnPlaylist.getItems().size() - 1)
+                    {
+                        currentSongSelected = 0;
+                    } else
+                    {
+                        currentSongSelected++;
+                    }
+                    play();
                 }
-                play();
             }
+
         });
         playing = true;
     }

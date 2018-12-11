@@ -5,11 +5,8 @@
  */
 package mytunes.DAL;
 
-import java.sql.Connection;
-import java.io.IOException;
+
 import java.util.List;
-import mytunes.be.Song;
-import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,8 +14,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import mytunes.DAL.exception.MTDalException;
 import mytunes.be.Playlist;
 
@@ -30,11 +25,21 @@ public class PlaylistDAO
 {
     private final ConnectionDAO cb;
     
+    /**
+     * The constructor of the PlaylistDAO class. Initialize the conntection to the database
+     */
     public PlaylistDAO()
     {
         cb = new ConnectionDAO();
     }
     
+    /**
+     * Gets all rows from the Playlist table and uses a resultset to make objects
+     * of each row
+     * 
+     * @return an arraylist containing all created playlist objects
+     * @throws MTDalException 
+     */
     public  List<Playlist> getAllPlaylist() throws MTDalException
     {
         List<Playlist> playlists = new ArrayList<>();
@@ -58,6 +63,13 @@ public class PlaylistDAO
         return playlists;
     }
     
+    /**
+     * Inserts a playlist into the playlist table. The Id is auto generated
+     * 
+     * @param name the title of the playlist
+     * @return the created playlist as an object
+     * @throws MTDalException 
+     */
     public Playlist createPlaylist(String name) throws MTDalException
     {
         String sql = "INSERT INTO Playlist (name) VALUES(?);";
@@ -86,6 +98,13 @@ public class PlaylistDAO
             throw new MTDalException("Could not create playlist.", ex);
         }
     }
+    /**
+     * Deletes a playlist from the Playlist table
+     * Specifically uses the id of the playlist to delete the playlist
+     * 
+     * @param playlist the playlist getting deleted
+     * @throws MTDalException 
+     */
     public void deletePlaylist(Playlist playlist) throws MTDalException
     {
         try (Connection con = cb.getConnection())
@@ -121,6 +140,12 @@ public class PlaylistDAO
         }
         return null;
     }
+    
+   /**
+    * Updates the information of an existing playlsit in the Playlist table
+    * @param playlist the playlist getting updated
+    * @throws MTDalException 
+    */
     public void updatePlaylist(Playlist playlist) throws MTDalException
     {
         String name = playlist.getName();

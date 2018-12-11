@@ -133,17 +133,6 @@ public class MyTunesManager
         }
     }
 
-    public Song getSong(int id) throws MTBllException
-    {
-        try
-        {
-            return sdao.getSong(id);
-        } catch (MTDalException ex)
-        {
-            throw new MTBllException("Could not update song. " + ex.getMessage());
-        }
-    }
-
     public Playlist createPlaylist(String name) throws MTBllException
     {
         try
