@@ -6,27 +6,16 @@
 package mytunes.GUI.Controller;
 
 
-import static com.sun.java.accessibility.util.AWTEventMonitor.addKeyListener;
-import java.awt.Image;
-import java.awt.Toolkit;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyListener;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.Collections;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.embed.swing.JFXPanel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -45,13 +34,12 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
-import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -180,9 +168,14 @@ public class MyTunesViewController implements Initializable
         cpcontroller.initializeModel(pm);
         Stage stage = new Stage();
 
+        Image icon = new Image(getClass().getResourceAsStream("/mytunes/GUI/newicon.png"));
+        stage.getIcons().add(icon);
+        stage.setTitle("MyTunes");
+        
         stage.setScene(new Scene(root));
         stage.show();
     }
+    
 
     @FXML
     private void editPlaylist(ActionEvent event) throws IOException
@@ -201,6 +194,11 @@ public class MyTunesViewController implements Initializable
             epcontroller.initializeModel(pm);
             epcontroller.initializePlaylist(playlist, index);
             Stage stage = new Stage();
+            
+            Image icon = new Image(getClass().getResourceAsStream("/mytunes/GUI/newicon.png"));
+            stage.getIcons().add(icon);
+            stage.setTitle("MyTunes");
+            
             stage.setScene(new Scene(root));
             stage.show();
         }
@@ -306,6 +304,10 @@ public class MyTunesViewController implements Initializable
             CreateSongController cscontroller = loader.getController();
             cscontroller.initializeModel(sm);
             Stage stage = new Stage();
+            
+            Image icon = new Image(getClass().getResourceAsStream("/mytunes/GUI/newicon.png"));
+            stage.getIcons().add(icon);
+            stage.setTitle("MyTunes");
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException ex)
@@ -334,6 +336,11 @@ public class MyTunesViewController implements Initializable
                 escontroller.initializeModel(sm);
                 escontroller.initializeSong(song, index);
                 Stage stage = new Stage();
+                
+                Image icon = new Image(getClass().getResourceAsStream("/mytunes/GUI/newicon.png"));
+                stage.getIcons().add(icon);
+                stage.setTitle("MyTunes");
+        
                 stage.setScene(new Scene(root));
                 stage.show();
             } catch (IOException ex)

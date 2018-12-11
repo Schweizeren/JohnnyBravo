@@ -1,17 +1,14 @@
 
-import java.awt.Image;
-import java.awt.image.BufferedImage;
+
 import java.io.IOException;
-import java.io.InputStream;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import mytunes.GUI.Controller.EditSongController;
-import mytunes.GUI.Controller.MyTunesViewController;
+import javafx.stage.StageStyle;
+
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -34,9 +31,14 @@ public class MyTunesMain extends Application
     {
         Parent root = FXMLLoader.load(getClass().getResource("mytunes/GUI/MyTunesView.fxml"));
         
+        Image icon = new Image(getClass().getResourceAsStream("/mytunes/GUI/newicon.png"));
+        stage.getIcons().add(icon);
+        stage.setTitle("MyTunes");
+        
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+
     }
 
     /**

@@ -9,10 +9,10 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="rootPane" prefHeight="762.0" prefWidth="1118.0" styleClass="background" stylesheets="@MyTunes.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.GUI.Controller.MyTunesViewController">
+<AnchorPane id="AnchorPane" fx:id="rootPane" prefHeight="762.0" prefWidth="1118.0" styleClass="background" stylesheets="@MyTunes.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.GUI.Controller.MyTunesViewController">
    <children>
+               
     <ImageView fx:id="arrowView" fitHeight="31.0" fitWidth="30.0" layoutX="565.0" layoutY="135.0" onMouseClicked="#mouseClickedArrow" rotate="-90.0" styleClass="button">
     <image>
         <Image url="@whiteArrow.png">
@@ -38,11 +38,6 @@
       <Label layoutX="28.0" layoutY="83.0" styleClass="label-bright" text="Playlists" />
       <Label layoutX="281.0" layoutY="83.0" styleClass="label-bright" text="Songs on playlist " />
       <Label layoutX="684.0" layoutY="83.0" styleClass="label-bright" text="Songs" />
-      <Label fx:id="lblMusicPlaying" layoutX="39.0" layoutY="16.0" prefHeight="60.0" prefWidth="684.0" styleClass="label-header" stylesheets="@MyTunes.css" text="Nothing is playing">
-         <font>
-            <Font size="33.0" />
-         </font>
-      </Label>
       <Label layoutX="776.0" layoutY="26.0" styleClass="label-bright" text="Filter:" />
       <TextField fx:id="writeSearch" layoutX="820.0" layoutY="24.0" onKeyPressed="#writeSearch" styleClass="text-field" />
       <Button layoutX="455.0" layoutY="706.0" mnemonicParsing="false" onAction="#previousSong" prefHeight="31.0" prefWidth="52.0" stylesheets="@MyTunes.css" text="&lt;&lt;" />
