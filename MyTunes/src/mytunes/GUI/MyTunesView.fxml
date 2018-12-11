@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="rootPane" prefHeight="762.0" prefWidth="1118.0" styleClass="background" stylesheets="@MyTunes.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.GUI.Controller.MyTunesViewController">
+<AnchorPane id="AnchorPane" fx:id="rootPane" prefHeight="762.0" prefWidth="1118.0" styleClass="background" stylesheets="@MyTunes.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.GUI.Controller.MyTunesViewController">
    <children>
        <ImageView fx:id="searchView" fitHeight="31.0" fitWidth="30.0" layoutX="982.0" layoutY="22.0" onMouseClicked="#mouseClickedSearch" styleClass="button">
     <image>
@@ -44,7 +44,7 @@
       <Label layoutX="28.0" layoutY="83.0" styleClass="label-bright" text="Playlists" />
       <Label layoutX="281.0" layoutY="83.0" styleClass="label-bright" text="Songs on playlist " />
       <Label layoutX="684.0" layoutY="83.0" styleClass="label-bright" text="Songs" />
-      <Label fx:id="lblMusicPlaying" layoutX="39.0" layoutY="16.0" prefHeight="60.0" prefWidth="684.0" styleClass="label-header" stylesheets="@MyTunes.css" text="Nothin is playing">
+      <Label fx:id="lblMusicPlaying" layoutX="39.0" layoutY="16.0" prefHeight="60.0" prefWidth="684.0" styleClass="label-header" stylesheets="@MyTunes.css" text="Nothing is playing">
          <font>
             <Font size="33.0" />
          </font>
