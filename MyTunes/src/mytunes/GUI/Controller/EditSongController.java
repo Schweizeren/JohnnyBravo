@@ -15,6 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import mytunes.BLL.exception.MTBllException;
@@ -117,19 +118,23 @@ public class EditSongController implements Initializable
     @FXML
     private void handleSaveBtn(ActionEvent event)
     {
+
         try
         {
-            oldSong.setArtist(txtArtistInput.getText());
-            oldSong.setTitle(txtTitleInput.getText());
-            oldSong.setFilepath(txtFile.getText());
-            if (comboEditSong.getSelectionModel().getSelectedItem().equals("Other")) {
+                oldSong.setArtist(txtArtistInput.getText());
+                oldSong.setTitle(txtTitleInput.getText());
+                oldSong.setFilepath(txtFile.getText());
+                if (comboEditSong.getSelectionModel().getSelectedItem().equals("Other")) 
+                {
                 oldSong.setGenre(txtOtherCategory.getText());
-            } else {
+                } else
+                {
                 oldSong.setGenre(comboEditSong.getSelectionModel().getSelectedItem());
-            }
-            sm.updateSong(oldSong, index);
-            Stage stage = (Stage) rootPane.getScene().getWindow();
-            stage.close();
+                }
+                sm.updateSong(oldSong, index);
+                Stage stage = (Stage) rootPane.getScene().getWindow();
+                stage.close();
+           
         } catch (MTBllException ex)
         {
             displayError(ex);

@@ -21,6 +21,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import mytunes.BLL.exception.MTBllException;
@@ -62,18 +63,21 @@ public class CreatePlaylistController implements Initializable
     @FXML
     private void handleCreateBtn(ActionEvent event)
     {
+
         try
         {
-            String name = txtNameInput.getText();
-            pm.createPlaylist(name);
+
+
+                String name = txtNameInput.getText();
+                pm.createPlaylist(name);
             
-            Stage stage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
-            stage.close();
+                Stage stage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
+                stage.close();
+
         } catch (MTBllException ex)
         {
-            displayError(ex);
+        displayError(ex);
         }
-        
     }
 
     @FXML

@@ -19,8 +19,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -97,16 +100,18 @@ public class CreateSongController implements Initializable
         String artist;
         try
         {
-            title = txtTitleInput.getText();
-            duration = sm.getDurationInSec();
-            filepath = txtFile.getText();
-            if (comboCategoryBox.getSelectionModel().getSelectedItem().equals("Other")) {
+            
+                title = txtTitleInput.getText();
+                duration = sm.getDurationInSec();
+                filepath = txtFile.getText();
+                if (comboCategoryBox.getSelectionModel().getSelectedItem().equals("Other")) {
                 genre = txtOtherCategory.getText();
-            } else {
+                } else {
                 genre = comboCategoryBox.getSelectionModel().getSelectedItem();
-            }
-            artist = txtArtistInput.getText();
-            sm.createSong(title, duration, artist, genre, filepath);
+                }
+                artist = txtArtistInput.getText();
+                sm.createSong(title, duration, artist, genre, filepath);
+            
 
             Stage stage = (Stage) ((Node) ((EventObject) event).getSource()).getScene().getWindow();
             stage.close();
@@ -114,6 +119,7 @@ public class CreateSongController implements Initializable
         {
             displayError(ex);
         }
+
     }
 
     @FXML

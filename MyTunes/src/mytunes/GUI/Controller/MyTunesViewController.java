@@ -216,10 +216,14 @@ public class MyTunesViewController implements Initializable
             Alert alert = new Alert(AlertType.CONFIRMATION);
             alert.setTitle("Confirmation dialog");
             alert.setContentText("Are you sure you want to delete: " + playlist);
-
+            
+            Image icon = new Image(this.getClass().getResourceAsStream("/mytunes/GUI/newicon.png"));
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(icon);
+            
             ButtonType buttonTypeYes = new ButtonType("Yes");
             ButtonType buttonTypeNo = new ButtonType("No", ButtonData.CANCEL_CLOSE);
-
+            
             alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
 
             Optional<ButtonType> result = alert.showAndWait();
@@ -362,6 +366,10 @@ public class MyTunesViewController implements Initializable
             Alert alert = new Alert(AlertType.CONFIRMATION);
             alert.setTitle("Confirmation dialog");
             alert.setContentText("Are you sure you want to delete: " + song.getTitle());
+            
+            Image icon = new Image(this.getClass().getResourceAsStream("/mytunes/GUI/newicon.png"));
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(icon);
 
             ButtonType buttonTypeYes = new ButtonType("Yes");
             ButtonType buttonTypeNo = new ButtonType("No", ButtonData.CANCEL_CLOSE);
@@ -609,6 +617,10 @@ public class MyTunesViewController implements Initializable
         alert.setTitle("Information dialog");
         alert.setHeaderText("You have not chosen a song to delete");
         alert.setContentText("Please select a song");
+        
+        Image icon = new Image(this.getClass().getResourceAsStream("/mytunes/GUI/newicon.png"));
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(icon);
 
         alert.showAndWait();
     }
@@ -616,8 +628,12 @@ public class MyTunesViewController implements Initializable
     private void displayNoEditWindow() {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Information dialog");
-        alert.setHeaderText("You have not chosen a song to delete");
+        alert.setHeaderText("You have not chosen a song to edit");
         alert.setContentText("Please select a song");
+        
+        Image icon = new Image(this.getClass().getResourceAsStream("/mytunes/GUI/newicon.png"));
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(icon);
 
         alert.showAndWait();
     }
@@ -627,7 +643,12 @@ public class MyTunesViewController implements Initializable
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Information dialog");
         alert.setHeaderText("You have not selected a playlist");
-        alert.setContentText("Please select a playlist to delete");
+        alert.setContentText("Please select a playlist");
+        
+        Image icon = new Image(this.getClass().getResourceAsStream("/mytunes/GUI/newicon.png"));
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(icon);
+            
 
         alert.showAndWait();
     }
