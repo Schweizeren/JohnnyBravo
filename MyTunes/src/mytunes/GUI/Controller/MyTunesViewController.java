@@ -98,7 +98,7 @@ public class MyTunesViewController implements Initializable
     @FXML
     private TableView<Playlist> tablePlaylist;
     @FXML
-    private TableColumn<Playlist, String> cellPlaylistTitle;
+        private TableColumn<Playlist, String> cellPlaylistTitle;
 
     public MyTunesViewController()
     {
@@ -545,7 +545,6 @@ public class MyTunesViewController implements Initializable
 
     private void songPressed(MouseEvent event)
     {
-
         paused = false;
         tableSongOnPlaylist.getSelectionModel().clearSelection();
     }
@@ -567,7 +566,7 @@ public class MyTunesViewController implements Initializable
     {
     }
 
-    private void removeSongFromPlaylist(ActionEvent event)
+        private void removeSongFromPlaylist(ActionEvent event)
     {
     }
 
