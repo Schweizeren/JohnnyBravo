@@ -93,7 +93,6 @@ public class MyTunesViewController implements Initializable
     private Button btnDeleteSong;
     @FXML
     private Button btnClose;
-    @FXML
     private Label lblMusicPlaying;
     @FXML
     private AnchorPane rootPane;
@@ -571,6 +570,7 @@ public class MyTunesViewController implements Initializable
 
     private void songPressed(MouseEvent event)
     {
+
         paused = false;
         tableSongOnPlaylist.getSelectionModel().clearSelection();
     }
@@ -610,6 +610,7 @@ public class MyTunesViewController implements Initializable
 
         alert.showAndWait();
     }
+    
 
     private void displayNoSongWindow()
     {
@@ -655,7 +656,6 @@ public class MyTunesViewController implements Initializable
 
 
 
-    @FXML
     private void mouseClickedSearch(MouseEvent event)
     {
         try
@@ -815,6 +815,5 @@ public class MyTunesViewController implements Initializable
             displayError(ex);
         }
     }
-     
-    
+
 }
