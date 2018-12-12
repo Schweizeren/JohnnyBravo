@@ -13,8 +13,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import mytunes.DAL.exception.MTDalException;
 import mytunes.be.Playlist;
 
@@ -24,14 +22,14 @@ import mytunes.be.Playlist;
  */
 public class PlaylistSongDAO {
 
-    private final ConnectionDAO cb;
+    private final ConnectionDAO CB;
 
     /**
      * The constructor of the PlaylistSongDAO class. Initialize the connection to the database
      */
     public PlaylistSongDAO() 
     {
-        cb = new ConnectionDAO();
+        CB = new ConnectionDAO();
     }
 
     /**
@@ -49,7 +47,7 @@ public class PlaylistSongDAO {
     public List<Song> getPlaylistSongs(int id) throws MTDalException
     {
         List<Song> playlistsongs = new ArrayList<>();
-        try (Connection con = cb.getConnection()) {
+        try (Connection con = CB.getConnection()) {
             String query = "SELECT * FROM PlaylistSong INNER JOIN Song ON SongID = Song.id WHERE PlaylistSong.PlaylistID = ? ORDER by LocationInListID asc";
             PreparedStatement preparedSt = con.prepareStatement(query);
             preparedSt.setInt(1, id);
@@ -81,7 +79,7 @@ public class PlaylistSongDAO {
     {
         String sql = "INSERT INTO PlaylistSong(PlaylistID,SongID,LocationInListID) VALUES (?,?,?)";
         int Id;
-        try (Connection con = cb.getConnection()) {
+        try (Connection con = CB.getConnection()) {
             PreparedStatement preparedst = con.prepareStatement(sql);
             Id = getNewestIdInPlaylist(playlist.getId());
             preparedst.setInt(1, playlist.getId());
@@ -107,7 +105,7 @@ public class PlaylistSongDAO {
     public int getNewestIdInPlaylist(int id) throws MTDalException
     {
         int newestID = 0;
-        try (Connection con = cb.getConnection()) {
+        try (Connection con = CB.getConnection()) {
             String query = "SELECT TOP(1) * FROM PlaylistSong WHERE PlaylistID = ? ORDER by locationInListID desc";
             PreparedStatement preparedStmt = con.prepareStatement(query);
             preparedStmt.setInt(1, id);
@@ -127,7 +125,7 @@ public class PlaylistSongDAO {
     
     public void deleteFromPlaylist(Playlist playlist) throws MTDalException
     {
-        try (Connection con = cb.getConnection())
+        try (Connection con = CB.getConnection())
         {
             String query = "DELETE from PlaylistSong WHERE PlaylistID = ?";
             PreparedStatement preparedSt = con.prepareStatement(query);
@@ -142,7 +140,7 @@ public class PlaylistSongDAO {
 
     public void removeSongFromPlaylist(Playlist selectedItem, Song selectedSong) throws MTDalException
     {
-        try (Connection con = cb.getConnection()) {
+        try (Connection con = CB.getConnection()) {
             String query = "DELETE from PlaylistSong WHERE PlaylistID = ? AND SongID = ? AND locationInListID = ?";
             PreparedStatement preparedSt = con.prepareStatement(query);
             preparedSt.setInt(1, selectedItem.getId());
@@ -158,7 +156,7 @@ public class PlaylistSongDAO {
     }
     
     public void deleteSongFromTable(Song song) throws MTDalException {
-        try (Connection con = cb.getConnection()) {
+        try (Connection con = CB.getConnection()) {
             String query = "DELETE FROM PlaylistSong WHERE SongID = ?;";
             PreparedStatement pst = con.prepareStatement(query);
             pst.setInt(1, song.getId());
@@ -172,7 +170,7 @@ public class PlaylistSongDAO {
     
     public void moveSong(int locationGettingMoved, int locationAffected, int playlistId) throws MTDalException 
     {
-        try (Connection con = cb.getConnection()){
+        try (Connection con = CB.getConnection()){
             String query = "UPDATE PlaylistSong Set LocationInListID = "
                     + " CASE LocationInListID"
                     + " WHEN ? THEN ?"
