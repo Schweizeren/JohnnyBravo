@@ -93,6 +93,7 @@ public class MyTunesViewController implements Initializable
     private Button btnDeleteSong;
     @FXML
     private Button btnClose;
+    @FXML
     private Label lblMusicPlaying;
     @FXML
     private AnchorPane rootPane;

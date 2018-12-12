@@ -31,7 +31,7 @@ public class MyTunesMain extends Application
     {
         Parent root = FXMLLoader.load(getClass().getResource("mytunes/GUI/MyTunesView.fxml"));
         
-        Image icon = new Image(getClass().getResourceAsStream("/mytunes/GUI/newicon.png"));
+        Image icon = new Image(getClass().getResourceAsStream("mytunes/GUI/newicon.png"));
         stage.getIcons().add(icon);
         stage.setTitle("MyTunes");
         
