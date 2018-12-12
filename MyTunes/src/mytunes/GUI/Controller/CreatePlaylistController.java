@@ -5,23 +5,15 @@
  */
 package mytunes.GUI.Controller;
 
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.EventObject;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import mytunes.BLL.exception.MTBllException;

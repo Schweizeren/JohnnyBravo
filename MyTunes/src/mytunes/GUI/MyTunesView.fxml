@@ -11,31 +11,31 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="rootPane" prefHeight="762.0" prefWidth="1118.0" styleClass="background" stylesheets="@MyTunes.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.GUI.Controller.MyTunesViewController">
+<AnchorPane id="AnchorPane" prefHeight="762.0" prefWidth="1118.0" styleClass="background" stylesheets="@MyTunes.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.GUI.Controller.MyTunesViewController">
    <children>
                
-    <ImageView fx:id="arrowView" fitHeight="31.0" fitWidth="30.0" layoutX="565.0" layoutY="135.0" onMouseClicked="#mouseClickedArrow" rotate="-90.0" styleClass="button">
+    <ImageView fitHeight="31.0" fitWidth="30.0" layoutX="565.0" layoutY="135.0" onMouseClicked="#mouseClickedArrow" rotate="-90.0" styleClass="button">
     <image>
         <Image url="@whiteArrow.png">
             </Image>
             </image>
             </ImageView>
-            <ImageView fx:id="volumeView" fitHeight="25.0" fitWidth="30.0" layoutX="565.0" layoutY="647.0" styleClass="button-sliders">
+            <ImageView fitHeight="25.0" fitWidth="30.0" layoutX="565.0" layoutY="647.0" styleClass="button-sliders">
                 <image>
                     <Image url="@soundWhite.png">
                     </Image>
                 </image>
             </ImageView>
-      <Button fx:id="btnNewPlaylist" layoutX="28.0" layoutY="659.0" mnemonicParsing="false" onAction="#createPlaylist" prefHeight="31.0" prefWidth="69.0" stylesheets="@MyTunes.css" text="New..." />
-      <Button fx:id="btnEditPlaylist" layoutX="103.0" layoutY="659.0" mnemonicParsing="false" onAction="#editPlaylist" prefHeight="31.0" prefWidth="63.0" stylesheets="@MyTunes.css" text="Edit..." />
-      <Button fx:id="btnDeletePlaylist" layoutX="201.0" layoutY="659.0" mnemonicParsing="false" onAction="#deletePlaylist" stylesheets="@MyTunes.css" text="Delete" />
-      <Button fx:id="btnMoveSongUp" layoutX="281.0" layoutY="659.0" mnemonicParsing="false" onAction="#moveUp" prefHeight="31.0" prefWidth="52.0" stylesheets="@MyTunes.css" text="▲" />
-      <Button fx:id="btnMoveSongDown" layoutX="329.0" layoutY="659.0" mnemonicParsing="false" onAction="#moveDown" prefHeight="31.0" prefWidth="52.0" stylesheets="@MyTunes.css" text="▼" />
-      <Button fx:id="btnDeleteSongsOnPlaylist" layoutX="407.0" layoutY="659.0" mnemonicParsing="false" onAction="#deleteSongOnPlaylist" stylesheets="@MyTunes.css" text="Delete" />
-      <Button fx:id="btnNewSong" layoutX="681.0" layoutY="659.0" mnemonicParsing="false" onAction="#newSong" prefHeight="31.0" prefWidth="69.0" text="New..." />
-      <Button fx:id="btnEditSong" layoutX="762.0" layoutY="659.0" mnemonicParsing="false" onAction="#editSong" prefHeight="31.0" prefWidth="65.0" text="Edit..." />
-      <Button fx:id="btnDeleteSong" layoutX="842.0" layoutY="659.0" mnemonicParsing="false" onAction="#deleteSong" text="Delete" />
-      <Button fx:id="btnClose" layoutX="1031.0" layoutY="659.0" mnemonicParsing="false" onAction="#endApplication" text="Close" />
+      <Button layoutX="28.0" layoutY="659.0" mnemonicParsing="false" onAction="#createPlaylist" prefHeight="31.0" prefWidth="69.0" stylesheets="@MyTunes.css" text="New..." />
+      <Button layoutX="103.0" layoutY="659.0" mnemonicParsing="false" onAction="#editPlaylist" prefHeight="31.0" prefWidth="63.0" stylesheets="@MyTunes.css" text="Edit..." />
+      <Button layoutX="201.0" layoutY="659.0" mnemonicParsing="false" onAction="#deletePlaylist" stylesheets="@MyTunes.css" text="Delete" />
+      <Button layoutX="281.0" layoutY="659.0" mnemonicParsing="false" onAction="#moveUp" prefHeight="31.0" prefWidth="52.0" stylesheets="@MyTunes.css" text="▲" />
+      <Button layoutX="329.0" layoutY="659.0" mnemonicParsing="false" onAction="#moveDown" prefHeight="31.0" prefWidth="52.0" stylesheets="@MyTunes.css" text="▼" />
+      <Button layoutX="407.0" layoutY="659.0" mnemonicParsing="false" onAction="#deleteSongOnPlaylist" stylesheets="@MyTunes.css" text="Delete" />
+      <Button layoutX="681.0" layoutY="659.0" mnemonicParsing="false" onAction="#newSong" prefHeight="31.0" prefWidth="69.0" text="New..." />
+      <Button layoutX="762.0" layoutY="659.0" mnemonicParsing="false" onAction="#editSong" prefHeight="31.0" prefWidth="65.0" text="Edit..." />
+      <Button layoutX="842.0" layoutY="659.0" mnemonicParsing="false" onAction="#deleteSong" text="Delete" />
+      <Button layoutX="1031.0" layoutY="659.0" mnemonicParsing="false" onAction="#endApplication" text="Close" />
       <Label layoutX="28.0" layoutY="83.0" styleClass="label-bright" text="Playlists" />
       <Label layoutX="281.0" layoutY="83.0" styleClass="label-bright" text="Songs on playlist " />
       <Label layoutX="684.0" layoutY="83.0" styleClass="label-bright" text="Songs" />

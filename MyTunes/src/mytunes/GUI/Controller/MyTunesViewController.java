@@ -74,39 +74,13 @@ public class MyTunesViewController implements Initializable
     private int currentSongSelected;
 
     @FXML
-    private Button btnNewPlaylist;
-    @FXML
-    private Button btnEditPlaylist;
-    @FXML
-    private Button btnDeletePlaylist;
-    @FXML
-    private Button btnMoveSongUp;
-    @FXML
-    private Button btnMoveSongDown;
-    @FXML
-    private Button btnDeleteSongsOnPlaylist;
-    @FXML
-    private Button btnNewSong;
-    @FXML
-    private Button btnEditSong;
-    @FXML
-    private Button btnDeleteSong;
-    @FXML
-    private Button btnClose;
-    @FXML
     private Label lblMusicPlaying;
-    @FXML
-    private AnchorPane rootPane;
     @FXML
     private TextField writeSearch;
     @FXML
     private Slider sliderDuration;
     @FXML
     private Slider sliderVolume;
-    @FXML
-    private ImageView arrowView;
-    @FXML
-    private ImageView volumeView;
     @FXML
     private TableColumn<Song, String> cellTitle;
     @FXML

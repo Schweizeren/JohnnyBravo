@@ -15,7 +15,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import mytunes.BLL.exception.MTBllException;
@@ -164,11 +163,5 @@ public class EditSongController implements Initializable
     public void initializeModel(SongModel songmodel)
     {
         this.sm = songmodel;
-    }
-    
-    private void setImageIcon() throws IOException
-    {
-        
-        
     }
 }
