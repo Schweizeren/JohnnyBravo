@@ -817,4 +817,16 @@ public class MyTunesViewController implements Initializable
         }
     }
 
+    @FXML
+    private void pressedOnSongs(MouseEvent event)
+    {
+        Song song = tableSongList.getSelectionModel().getSelectedItem();
+        if(event.getClickCount()==2 && song != null)
+        {
+            playing = true;
+            currentSongSelected = tableSongList.getSelectionModel().getSelectedIndex();
+            play();
+        }
+    }
+
 }
