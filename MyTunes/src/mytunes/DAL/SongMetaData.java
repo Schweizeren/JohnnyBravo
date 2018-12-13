@@ -26,6 +26,14 @@ import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
  */
 public class SongMetaData
 {
+    /**
+     * Takes an mp3 file and checks if the file either has an ID3v1 tag or
+     * an ID3v2 tag. It then gets the title of the song from the files metadata
+     * 
+     * @param filepath the filepath of the mp3 file
+     * @return a string containing the title of the song
+     * @throws MTDalException 
+     */
     public String getSongTitle(String filepath) throws MTDalException
     {
         File file = new File(filepath);
@@ -52,6 +60,14 @@ public class SongMetaData
         return null;
     }
     
+    /**
+     * Checks if the mp3 file has an ID3v1 or ID3v2 tag. Then gets the artist
+     * of the song from the files metadata
+     * 
+     * @param filepath the filepath of the mp3 file
+     * @return a string containing the artist of the song
+     * @throws MTDalException 
+     */
     public String getAuthor(String filepath) throws MTDalException{
         File file = new File(filepath);
         MP3File mp3;
@@ -77,6 +93,14 @@ public class SongMetaData
         return null;
     }
     
+    /**
+     * Checks if the mp3 file has an ID3v1 or ID3v2 tag. Then gets the genre
+     * of the song from the files metadata
+     * 
+     * @param filepath the filepath of the mp3 file
+     * @return a string containing the genre of the song
+     * @throws MTDalException 
+     */
     public String getGenre(String filepath) throws MTDalException
     {
         File file = new File(filepath);
@@ -107,10 +131,18 @@ public class SongMetaData
         }
         return null;
     }
+    
+    /**
+     * Takes an mp3 file and gets its duration in seconds
+     * 
+     * @param filepath the filepath of the mp3 file
+     * @return an integer containing the mp3 files duration in seconds
+     * @throws MTDalException 
+     */
     public int getDurationInSec(String filepath) throws MTDalException
     {
         File file = new File(filepath);
-        AudioFile audiofile = null;
+        AudioFile audiofile;
         try
         {
             audiofile = AudioFileIO.read(file);

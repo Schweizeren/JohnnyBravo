@@ -26,12 +26,33 @@ public class PlaylistSongModel {
     private MyTunesManager mtmanager;
     private ObservableList<Song> playlistSongList;
     
+    /**
+     * The constructor of the PlaylistSongModel class
+     * Initializes an instance of the MyTunesManager class thats in the BLL
+     * layer
+     * Also initialize and ObersableArrayList of the songs on the different
+     * playlist
+     * @throws MTBllException 
+     */
     public PlaylistSongModel() throws MTBllException
     {
         playlistSongList = FXCollections.observableArrayList();
         mtmanager = new MyTunesManager();
     }
     
+    /**
+     * Calls the method getPlaylistSongs from the MyTunesManager class and puts
+     * all the songs from a specific playlist into a new list of songs. It does
+     * this by using the id of the playlist. Then it goes through a for loop to
+     * add all the songs in the new list into the Observable Arraylist which was
+     * initialized in the contrusctor of this class. Then it returns this
+     * Observable Arraylist. 
+     * Everytime this method is called it also clears the
+     * Observable Arraylist before it adds new songs from another playlist
+     * @param id the id of playlist selected
+     * @return a list of songs from the selected playlist
+     * @throws MTBllException 
+     */
     public ObservableList<Song> getPlaylistSongs(int id) throws MTBllException
     {
         try {
@@ -44,10 +65,20 @@ public class PlaylistSongModel {
             
             return playlistSongList;
         } catch (MTBllException ex) {
-            throw new MTBllException("Could not get songs in playl");
+            throw new MTBllException("Could not get songs in playlist");
         }
     }
     
+    /**
+     * Calls the method addToPlaylist from the MyTunesManagerClass
+     * Takes a selected song and adds it to a selected playlist. Also adds the
+     * song to the Observable Arraylist since it shows the songs of the current
+     * selected playlist
+     * @param playlist the selected playlist getting added to
+     * @param song the selected song getting added to the selected playlist
+     * @return the song which had been added to the playlist
+     * @throws MTBllException 
+     */
     public Song addToPlaylist(Playlist playlist, Song song) throws MTBllException
     {
         try {
@@ -58,36 +89,45 @@ public class PlaylistSongModel {
         }
     }
     
-    public int getNewestSongInPlaylist(int id) throws MTBllException
-    {
-        try {
-            return mtmanager.getNewestSongInPlaylist(id);
-        } catch (MTBllException ex) {
-            throw new MTBllException("Could not get newest ID in playlist");
-        }
-    }
-    
-    
+    /**
+     * Calls the method deleteFromPlaylist from the MyTunesManager class
+     * Also clears the observable Arraylist from the songs of the selected
+     * playlist since that playlist has just been deleted
+     * @param playlist the playlist getting deleted from the PlaylistSong table
+     * @throws MTBllException 
+     */
     public void deleteFromPlaylist(Playlist playlist) throws MTBllException
     {
         try {
             playlistSongList.clear();
             mtmanager.deleteFromPlaylist(playlist);
         } catch (MTBllException ex) {
-            throw new MTBllException("Could not delete all songs from SQL database");
+            throw new MTBllException("Could not delete playlist from PlaylistSongTable");
         }
     }
     
-    public void removeSongFromPlaylist(Playlist selectedItem, Song selectedSong) throws MTBllException
+    /**
+     * Calls the method removeSongFromPlaylist from the MyTunesManager class
+     * Also removes the currently selected song from the Observable Arraylist
+     * @param selectedPlaylist The playlist selected
+     * @param selectedSong the song getting removed from the selected playlist
+     * @throws MTBllException 
+     */
+    public void removeSongFromPlaylist(Playlist selectedPlaylist, Song selectedSong) throws MTBllException
     {
         try {
             playlistSongList.remove(selectedSong);
-            mtmanager.removeSongFromPlaylist(selectedItem, selectedSong);
+            mtmanager.removeSongFromPlaylist(selectedPlaylist, selectedSong);
         } catch (MTBllException ex) {
             throw new MTBllException("Could not delete song from playlist");
         }
     }
     
+    /**
+     * Calls the method deleteSongFromTable from the MyTunesManager class
+     * @param song the song getting deleted from the Song table
+     * @throws MTBllException 
+     */
     public void deleteSongFromTable(Song song) throws MTBllException {
         try {
             mtmanager.deleteSongFromTable(song);
@@ -96,6 +136,16 @@ public class PlaylistSongModel {
         }
     }
     
+    /**
+     * Calls the method moveSong from the MyTunesManager class
+     * It also swaps the two songs position in the Observable Arraylist so the
+     * swapping of songs both happens in the list and database
+     * 
+     * @param locationGettingMoved the song getting moved in the playlist
+     * @param locationAffected the song affected by the other songs movement
+     * @param playlistId the id of the playlist in which the movement occures
+     * @throws MTBllException 
+     */
     public void moveSong(int locationGettingMoved, int locationAffected, int playlistId) throws MTBllException {
         try
         {

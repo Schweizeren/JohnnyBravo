@@ -124,7 +124,11 @@ public class PlaylistSongDAO {
         }
     }
 
-    
+    /**
+     * Deletes a playlist from the PlaylistSong table
+     * @param playlist The playlist getting deleted
+     * @throws MTDalException 
+     */
     public void deleteFromPlaylist(Playlist playlist) throws MTDalException
     {
         try (Connection con = cb.getConnection())
@@ -140,6 +144,12 @@ public class PlaylistSongDAO {
         }
     }
 
+    /**
+     * Deletes a song from a selected playlist
+     * @param selectedItem The playlist getting deleted from
+     * @param selectedSong The song getting deleted
+     * @throws MTDalException 
+     */
     public void removeSongFromPlaylist(Playlist selectedItem, Song selectedSong) throws MTDalException
     {
         try (Connection con = cb.getConnection()) {
@@ -157,6 +167,13 @@ public class PlaylistSongDAO {
         
     }
     
+    /**
+     * If a song has been deleted in the Song table then every occurence of that
+     * song in the playlistSong table will also be deleted
+     * 
+     * @param song The song which has been deleted from the song table
+     * @throws MTDalException 
+     */
     public void deleteSongFromTable(Song song) throws MTDalException {
         try (Connection con = cb.getConnection()) {
             String query = "DELETE FROM PlaylistSong WHERE SongID = ?;";
@@ -170,6 +187,17 @@ public class PlaylistSongDAO {
         }
     }
     
+    /**
+     * Takes a song and exchange its LocationInListID with another song to change
+     * its position in a specific playlist
+     * 
+     * @param locationGettingMoved The location Id of the song getting moved
+     * @param locationAffected The location Id of the song affected 
+     * by the movement of the other song
+     * @param playlistId The id of the playlist in which the exchange 
+     * of location occures
+     * @throws MTDalException 
+     */
     public void moveSong(int locationGettingMoved, int locationAffected, int playlistId) throws MTDalException 
     {
         try (Connection con = cb.getConnection()){

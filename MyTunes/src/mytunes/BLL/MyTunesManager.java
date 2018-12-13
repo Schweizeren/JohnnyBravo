@@ -30,6 +30,11 @@ public class MyTunesManager
     private SongDAO sdao;
     private PlaylistDAO pdao;
 
+    /**
+     * The constructor of the MyTunesManager class. Instanciates the different
+     * DAL layer classes as objects
+     * @throws MTBllException 
+     */
     public MyTunesManager() throws MTBllException
     {
         try {
@@ -42,6 +47,13 @@ public class MyTunesManager
         }
     }
 
+    /**
+     * Uses the getSongTitle method from the SongMetaData class to get the title
+     * of a song
+     * @param filepath the filepath of the mp3 file
+     * @return a string containing the songs title
+     * @throws MTBllException 
+     */
     public String getSongTitle(String filepath) throws MTBllException
     {
         try
@@ -53,6 +65,12 @@ public class MyTunesManager
         }
     }
 
+    /**
+     * Uses the getGenre method from the SongMetaData class
+     * @param filepath filepath of the mp3 file
+     * @return a string containing the genre of a song
+     * @throws MTBllException 
+     */
     public String getGenre(String filepath) throws MTBllException
     {
         try
@@ -64,6 +82,14 @@ public class MyTunesManager
         }
     }
 
+    /**
+     * Uses the getAuthor method in the SongMetaData class to get the artist
+     * of a song
+     * 
+     * @param filepath the filepath of the mp3 file
+     * @return a string containing the artist of the song
+     * @throws MTBllException 
+     */
     public String getAuthor(String filepath) throws MTBllException
     {
         try
@@ -76,6 +102,12 @@ public class MyTunesManager
         
     }
 
+    /**
+     * Uses the getDurationInSec method from the SongMetaData class
+     * @param filepath the filepath of the mp3 file
+     * @return returns an integer containing the songs duration in seconds
+     * @throws MTBllException 
+     */
     public int getDurationInSec(String filepath) throws MTBllException
     {
         try
@@ -87,6 +119,16 @@ public class MyTunesManager
         }
     }
 
+    /**
+     * Uses the createSong method from the SongDAO class
+     * @param title the title of the song
+     * @param duration the duration of the song in seconds
+     * @param author the artist of the song
+     * @param genre the genre of the song
+     * @param filepath the filepath of the song
+     * @return a song ojbect
+     * @throws MTBllException 
+     */
     public Song createSong(String title, int duration, String author, String genre, String filepath) throws MTBllException
     {
         try
@@ -98,6 +140,11 @@ public class MyTunesManager
         }
     }
 
+    /**
+     * Uses the getAllSongs method from the SongDAO class
+     * @return a list containing all songs from the Song table
+     * @throws MTBllException 
+     */
     public List<Song> getAllSongs() throws MTBllException
     {
         try
@@ -110,6 +157,12 @@ public class MyTunesManager
 
     }
 
+    
+    /**
+     * Uses the deleteSong method from the SongDAO class
+     * @param song The song getting deleted
+     * @throws MTBllException 
+     */
     public void deleteSong(Song song) throws MTBllException
     {
         try
@@ -121,7 +174,12 @@ public class MyTunesManager
             throw new MTBllException("Could not delete song." + ex.getMessage());
         }
     }
-
+    
+    /**
+     * Calls the updateSong method from the SongDAO Class
+     * @param song the song being updated
+     * @throws MTBllException 
+     */
     public void updateSong(Song song) throws MTBllException
     {
         try
@@ -133,6 +191,12 @@ public class MyTunesManager
         }
     }
 
+    /**
+     * Calls the createPlaylist methods from the PlaylistDAO class
+     * @param name the title of the playlist created
+     * @return the created playlist
+     * @throws MTBllException 
+     */
     public Playlist createPlaylist(String name) throws MTBllException
     {
         try
@@ -144,6 +208,11 @@ public class MyTunesManager
         }
     }
 
+    /**
+     * Calls the getAllPlaylist method from the PlaylistDAO class
+     * @return a list containing all playlists
+     * @throws MTBllException 
+     */
     public List<Playlist> getAllPlaylist() throws MTBllException
     {
         try
@@ -155,6 +224,11 @@ public class MyTunesManager
         }
     }
 
+    /**
+     * Calls the deletePlaylist method from the PlaylistDAO class
+     * @param playlist the playlist getting deleted
+     * @throws MTBllException 
+     */
     public void deletePlaylist(Playlist playlist) throws MTBllException
     {
         try
@@ -166,6 +240,12 @@ public class MyTunesManager
         }
     }
 
+    /**
+     * Calls the method
+     * @param id
+     * @return
+     * @throws MTBllException 
+     */
     public Playlist getPlaylist(int id) throws MTBllException
     {
         try
@@ -177,6 +257,11 @@ public class MyTunesManager
         }
     }
 
+    /**
+     * Calls the method updatePlaylist method from the PlaylistDAO class
+     * @param playlist the playlist getting updated
+     * @throws MTBllException 
+     */
     public void updatePlaylist(Playlist playlist) throws MTBllException
     {
         try
@@ -187,7 +272,13 @@ public class MyTunesManager
             throw new MTBllException("Could not update playlist");
         }
     }
-    
+   
+    /**
+     * Calls the getPlaylistSongs method in the PlaylistSongDAO class
+     * @param id the Id of a playlist
+     * @return a list of songs in a specific playlist
+     * @throws MTBllException 
+     */
     public List<Song> getPlaylistSongs(int id) throws MTBllException
     {
         try {
@@ -197,6 +288,13 @@ public class MyTunesManager
         }
     }
     
+    /**
+     * Calls the addToPlaylist method in the PlaylistSongDAO class
+     * @param playlist the playlist getting added to
+     * @param song the song getting added to the playlist
+     * @return an object of the song which have been added to the playlist
+     * @throws MTBllException 
+     */
     public Song addToPlaylist(Playlist playlist, Song song) throws MTBllException
     {
         try {
@@ -206,24 +304,26 @@ public class MyTunesManager
         }
     }
     
-    public int getNewestSongInPlaylist(int id) throws MTBllException
+    /**
+     * Calls the removeSongFromPlaylist method in the PlaylistSongDAO class
+     * @param selectedPlaylist the selected playlist
+     * @param selectedSong the song getting removed from the playlist
+     * @throws MTBllException 
+     */
+    public void removeSongFromPlaylist(Playlist selectedPlaylist, Song selectedSong) throws MTBllException
     {
         try {
-            return psd.getNewestIdInPlaylist(id);
-        } catch (MTDalException ex) {
-            throw new MTBllException("Could not get newest ID in playlist");
-        }
-    }
-    
-    public void removeSongFromPlaylist(Playlist selectedItem, Song selectedSong) throws MTBllException
-    {
-        try {
-            psd.removeSongFromPlaylist(selectedItem, selectedSong);
+            psd.removeSongFromPlaylist(selectedPlaylist, selectedSong);
         } catch (MTDalException ex) {
             throw new MTBllException("Could not delete song from playlist");
         }
     }
     
+    /**
+     * Calls the deleteFromPlaylist method in the PlaylistSongDAO class
+     * @param playlist the playlist getting deleted from the playlistSong table
+     * @throws MTBllException 
+     */
     public void deleteFromPlaylist(Playlist playlist) throws MTBllException
     {
         try {
@@ -233,11 +333,13 @@ public class MyTunesManager
         }
     }
     
-    public void insertSongToPlaylist ()
-    {
-        
-    }
-    
+    /**
+     * calls the deleteSongFromTable method in the PlaylistSongDAO class
+     * 
+     * @param song the song which has been deleted from the Song table and now
+     * getting deleted from the PlaylistSong table
+     * @throws MTBllException 
+     */
     public void deleteSongFromTable(Song song) throws MTBllException{
         try {
             psd.deleteSongFromTable(song);
@@ -246,6 +348,16 @@ public class MyTunesManager
         }
     }
     
+    /**
+     * Calls the moveSong method from the PlaylistSongDAO class
+     * @param locationGettingMoved The location of a song in a playlist getting 
+     * moved
+     * @param locationAffected a song which location is getting affected by the
+     * other songs movement
+     * @param playlistId the Id of the playlist where changes of a songs
+     * locations occures
+     * @throws MTBllException 
+     */
     public void moveSong(int locationGettingMoved, int locationAffected, int playlistId) throws MTBllException {
         try
         {

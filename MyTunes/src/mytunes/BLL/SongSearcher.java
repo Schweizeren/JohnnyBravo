@@ -19,7 +19,16 @@ import mytunes.be.Song;
  */
 public class SongSearcher
 {
-
+    /**
+     * Takes a list containing  all songs and checks each song 
+     * if their title or artist matches a search word. If a song does match 
+     * with the search then they get added to a new list
+     * @param searchBase the list of songs getting searched
+     * @param query the searched word which get matched with each of every songs
+     * title and artist
+     * @return a list of songs that has matched with the searched word
+     * @throws MTBllException 
+     */
     public List<Song> searchSongs(List<Song> searchBase, String query) throws MTBllException
     {
         SongDAO songdao;
