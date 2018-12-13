@@ -25,9 +25,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TableColumn;
@@ -35,10 +35,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
@@ -191,6 +189,10 @@ public class MyTunesViewController implements Initializable
             alert.setTitle("Confirmation dialog");
             alert.setContentText("Are you sure you want to delete: " + playlist);
             
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add(getClass().getResource("/mytunes/GUI/Dialogs.css").toExternalForm());
+            dialogPane.getStyleClass().add("dialog-pane");
+            
             Image icon = new Image(this.getClass().getResourceAsStream("/mytunes/GUI/newicon.png"));
             Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
             stage.getIcons().add(icon);
@@ -341,6 +343,10 @@ public class MyTunesViewController implements Initializable
             alert.setTitle("Confirmation dialog");
             alert.setContentText("Are you sure you want to delete: " + song.getTitle());
             
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add(getClass().getResource("/mytunes/GUI/Dialogs.css").toExternalForm());
+            dialogPane.getStyleClass().add("dialog-pane");
+            
             Image icon = new Image(this.getClass().getResourceAsStream("/mytunes/GUI/newicon.png"));
             Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
             stage.getIcons().add(icon);
@@ -456,6 +462,14 @@ public class MyTunesViewController implements Initializable
             alert.setTitle("Information dialog");
             alert.setHeaderText("You have not chosen a song to play");
             alert.setContentText("Please select a song");
+            
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add(getClass().getResource("/mytunes/GUI/Dialogs.css").toExternalForm());
+            dialogPane.getStyleClass().add("dialog-pane");
+            
+            Image icon = new Image(this.getClass().getResourceAsStream("/mytunes/GUI/newicon.png"));
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(icon);
 
             alert.showAndWait();
         } else
@@ -593,6 +607,10 @@ public class MyTunesViewController implements Initializable
         alert.setHeaderText("You have not chosen a song to delete");
         alert.setContentText("Please select a song");
         
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.getStylesheets().add(getClass().getResource("/mytunes/GUI/Dialogs.css").toExternalForm());
+        dialogPane.getStyleClass().add("dialog-pane");
+        
         Image icon = new Image(this.getClass().getResourceAsStream("/mytunes/GUI/newicon.png"));
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
         stage.getIcons().add(icon);
@@ -605,6 +623,10 @@ public class MyTunesViewController implements Initializable
         alert.setTitle("Information dialog");
         alert.setHeaderText("You have not chosen a song to edit");
         alert.setContentText("Please select a song");
+        
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.getStylesheets().add(getClass().getResource("/mytunes/GUI/Dialogs.css").toExternalForm());
+        dialogPane.getStyleClass().add("dialog-pane");
         
         Image icon = new Image(this.getClass().getResourceAsStream("/mytunes/GUI/newicon.png"));
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
@@ -619,6 +641,10 @@ public class MyTunesViewController implements Initializable
         alert.setTitle("Information dialog");
         alert.setHeaderText("You have not selected a playlist");
         alert.setContentText("Please select a playlist");
+        
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.getStylesheets().add(getClass().getResource("/mytunes/GUI/Dialogs.css").toExternalForm());
+        dialogPane.getStyleClass().add("dialog-pane");
         
         Image icon = new Image(this.getClass().getResourceAsStream("/mytunes/GUI/newicon.png"));
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
