@@ -5,27 +5,18 @@
  */
 package mytunes.GUI.Controller;
 
-import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javax.imageio.ImageIO;
 import mytunes.BLL.exception.MTBllException;
 import mytunes.GUI.Model.SongModel;
 import mytunes.be.Song;
@@ -126,19 +117,23 @@ public class EditSongController implements Initializable
     @FXML
     private void handleSaveBtn(ActionEvent event)
     {
+
         try
         {
-            oldSong.setArtist(txtArtistInput.getText());
-            oldSong.setTitle(txtTitleInput.getText());
-            oldSong.setFilepath(txtFile.getText());
-            if (comboEditSong.getSelectionModel().getSelectedItem().equals("Other")) {
+                oldSong.setArtist(txtArtistInput.getText());
+                oldSong.setTitle(txtTitleInput.getText());
+                oldSong.setFilepath(txtFile.getText());
+                if (comboEditSong.getSelectionModel().getSelectedItem().equals("Other")) 
+                {
                 oldSong.setGenre(txtOtherCategory.getText());
-            } else {
+                } else
+                {
                 oldSong.setGenre(comboEditSong.getSelectionModel().getSelectedItem());
-            }
-            sm.updateSong(oldSong, index);
-            Stage stage = (Stage) rootPane.getScene().getWindow();
-            stage.close();
+                }
+                sm.updateSong(oldSong, index);
+                Stage stage = (Stage) rootPane.getScene().getWindow();
+                stage.close();
+           
         } catch (MTBllException ex)
         {
             displayError(ex);
@@ -168,11 +163,5 @@ public class EditSongController implements Initializable
     public void initializeModel(SongModel songmodel)
     {
         this.sm = songmodel;
-    }
-    
-    private void setImageIcon() throws IOException
-    {
-        
-        
     }
 }

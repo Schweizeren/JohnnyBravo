@@ -6,13 +6,10 @@
 package mytunes.GUI.Controller;
 
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.util.EventObject;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -97,16 +94,18 @@ public class CreateSongController implements Initializable
         String artist;
         try
         {
-            title = txtTitleInput.getText();
-            duration = sm.getDurationInSec();
-            filepath = txtFile.getText();
-            if (comboCategoryBox.getSelectionModel().getSelectedItem().equals("Other")) {
+            
+                title = txtTitleInput.getText();
+                duration = sm.getDurationInSec();
+                filepath = txtFile.getText();
+                if (comboCategoryBox.getSelectionModel().getSelectedItem().equals("Other")) {
                 genre = txtOtherCategory.getText();
-            } else {
+                } else {
                 genre = comboCategoryBox.getSelectionModel().getSelectedItem();
-            }
-            artist = txtArtistInput.getText();
-            sm.createSong(title, duration, artist, genre, filepath);
+                }
+                artist = txtArtistInput.getText();
+                sm.createSong(title, duration, artist, genre, filepath);
+            
 
             Stage stage = (Stage) ((Node) ((EventObject) event).getSource()).getScene().getWindow();
             stage.close();
@@ -114,6 +113,7 @@ public class CreateSongController implements Initializable
         {
             displayError(ex);
         }
+
     }
 
     @FXML

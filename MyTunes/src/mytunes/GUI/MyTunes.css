@@ -8,6 +8,7 @@ and open the template in the editor.
     Author     : KristianUrup
 */
 
+
 .background {
     -fx-background-color: #1d1d1d;
 }
@@ -40,6 +41,7 @@ and open the template in the editor.
     -fx-table-cell-border-color: transparent;
     -fx-table-header-border-color: transparent;
     -fx-padding: 5;
+    -fx-cursor:hand;
 }
 
 .table-view .column-header-background {
@@ -121,6 +123,7 @@ and open the template in the editor.
     -fx-text-fill: #d8d8d8;
     -fx-background-insets: 0 0 0 0, 0, 1, 2;
     -fx-opacity: 0.6;
+    -fx-cursor:hand;
 }
 
 .button-sliders

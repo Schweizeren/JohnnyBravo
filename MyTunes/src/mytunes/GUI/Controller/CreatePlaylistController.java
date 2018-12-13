@@ -5,20 +5,13 @@
  */
 package mytunes.GUI.Controller;
 
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.EventObject;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -62,18 +55,21 @@ public class CreatePlaylistController implements Initializable
     @FXML
     private void handleCreateBtn(ActionEvent event)
     {
+
         try
         {
-            String name = txtNameInput.getText();
-            pm.createPlaylist(name);
+
+
+                String name = txtNameInput.getText();
+                pm.createPlaylist(name);
             
-            Stage stage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
-            stage.close();
+                Stage stage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
+                stage.close();
+
         } catch (MTBllException ex)
         {
-            displayError(ex);
+        displayError(ex);
         }
-        
     }
 
     @FXML

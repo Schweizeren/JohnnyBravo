@@ -6,27 +6,16 @@
 package mytunes.GUI.Controller;
 
 
-import static com.sun.java.accessibility.util.AWTEventMonitor.addKeyListener;
-import java.awt.Image;
-import java.awt.Toolkit;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyListener;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.Collections;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.embed.swing.JFXPanel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -36,22 +25,19 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
-import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -86,39 +72,13 @@ public class MyTunesViewController implements Initializable
     private int currentSongSelected;
 
     @FXML
-    private Button btnNewPlaylist;
-    @FXML
-    private Button btnEditPlaylist;
-    @FXML
-    private Button btnDeletePlaylist;
-    @FXML
-    private Button btnMoveSongUp;
-    @FXML
-    private Button btnMoveSongDown;
-    @FXML
-    private Button btnDeleteSongsOnPlaylist;
-    @FXML
-    private Button btnNewSong;
-    @FXML
-    private Button btnEditSong;
-    @FXML
-    private Button btnDeleteSong;
-    @FXML
-    private Button btnClose;
-    @FXML
     private Label lblMusicPlaying;
-    @FXML
-    private AnchorPane rootPane;
     @FXML
     private TextField writeSearch;
     @FXML
     private Slider sliderDuration;
     @FXML
     private Slider sliderVolume;
-    @FXML
-    private ImageView arrowView;
-    @FXML
-    private ImageView volumeView;
     @FXML
     private TableColumn<Song, String> cellTitle;
     @FXML
@@ -136,7 +96,7 @@ public class MyTunesViewController implements Initializable
     @FXML
     private TableView<Playlist> tablePlaylist;
     @FXML
-    private TableColumn<Playlist, String> cellPlaylistTitle;
+        private TableColumn<Playlist, String> cellPlaylistTitle;
 
     public MyTunesViewController()
     {
@@ -180,9 +140,14 @@ public class MyTunesViewController implements Initializable
         cpcontroller.initializeModel(pm);
         Stage stage = new Stage();
 
+        Image icon = new Image(getClass().getResourceAsStream("/mytunes/GUI/newicon.png"));
+        stage.getIcons().add(icon);
+        stage.setTitle("MyTunes");
+        
         stage.setScene(new Scene(root));
         stage.show();
     }
+    
 
     @FXML
     private void editPlaylist(ActionEvent event) throws IOException
@@ -201,6 +166,11 @@ public class MyTunesViewController implements Initializable
             epcontroller.initializeModel(pm);
             epcontroller.initializePlaylist(playlist, index);
             Stage stage = new Stage();
+            
+            Image icon = new Image(getClass().getResourceAsStream("/mytunes/GUI/newicon.png"));
+            stage.getIcons().add(icon);
+            stage.setTitle("MyTunes");
+            
             stage.setScene(new Scene(root));
             stage.show();
         }
@@ -218,10 +188,18 @@ public class MyTunesViewController implements Initializable
             Alert alert = new Alert(AlertType.CONFIRMATION);
             alert.setTitle("Confirmation dialog");
             alert.setContentText("Are you sure you want to delete: " + playlist);
-
+            
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add(getClass().getResource("/mytunes/GUI/Dialogs.css").toExternalForm());
+            dialogPane.getStyleClass().add("dialog-pane");
+            
+            Image icon = new Image(this.getClass().getResourceAsStream("/mytunes/GUI/newicon.png"));
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(icon);
+            
             ButtonType buttonTypeYes = new ButtonType("Yes");
             ButtonType buttonTypeNo = new ButtonType("No", ButtonData.CANCEL_CLOSE);
-
+            
             alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
 
             Optional<ButtonType> result = alert.showAndWait();
@@ -306,6 +284,10 @@ public class MyTunesViewController implements Initializable
             CreateSongController cscontroller = loader.getController();
             cscontroller.initializeModel(sm);
             Stage stage = new Stage();
+            
+            Image icon = new Image(getClass().getResourceAsStream("/mytunes/GUI/newicon.png"));
+            stage.getIcons().add(icon);
+            stage.setTitle("MyTunes");
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException ex)
@@ -334,6 +316,11 @@ public class MyTunesViewController implements Initializable
                 escontroller.initializeModel(sm);
                 escontroller.initializeSong(song, index);
                 Stage stage = new Stage();
+                
+                Image icon = new Image(getClass().getResourceAsStream("/mytunes/GUI/newicon.png"));
+                stage.getIcons().add(icon);
+                stage.setTitle("MyTunes");
+        
                 stage.setScene(new Scene(root));
                 stage.show();
             } catch (IOException ex)
@@ -355,6 +342,14 @@ public class MyTunesViewController implements Initializable
             Alert alert = new Alert(AlertType.CONFIRMATION);
             alert.setTitle("Confirmation dialog");
             alert.setContentText("Are you sure you want to delete: " + song.getTitle());
+            
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add(getClass().getResource("/mytunes/GUI/Dialogs.css").toExternalForm());
+            dialogPane.getStyleClass().add("dialog-pane");
+            
+            Image icon = new Image(this.getClass().getResourceAsStream("/mytunes/GUI/newicon.png"));
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(icon);
 
             ButtonType buttonTypeYes = new ButtonType("Yes");
             ButtonType buttonTypeNo = new ButtonType("No", ButtonData.CANCEL_CLOSE);
@@ -467,6 +462,14 @@ public class MyTunesViewController implements Initializable
             alert.setTitle("Information dialog");
             alert.setHeaderText("You have not chosen a song to play");
             alert.setContentText("Please select a song");
+            
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add(getClass().getResource("/mytunes/GUI/Dialogs.css").toExternalForm());
+            dialogPane.getStyleClass().add("dialog-pane");
+            
+            Image icon = new Image(this.getClass().getResourceAsStream("/mytunes/GUI/newicon.png"));
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(icon);
 
             alert.showAndWait();
         } else
@@ -577,7 +580,7 @@ public class MyTunesViewController implements Initializable
     {
     }
 
-    private void removeSongFromPlaylist(ActionEvent event)
+        private void removeSongFromPlaylist(ActionEvent event)
     {
     }
 
@@ -595,6 +598,7 @@ public class MyTunesViewController implements Initializable
 
         alert.showAndWait();
     }
+    
 
     private void displayNoSongWindow()
     {
@@ -602,6 +606,14 @@ public class MyTunesViewController implements Initializable
         alert.setTitle("Information dialog");
         alert.setHeaderText("You have not chosen a song to delete");
         alert.setContentText("Please select a song");
+        
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.getStylesheets().add(getClass().getResource("/mytunes/GUI/Dialogs.css").toExternalForm());
+        dialogPane.getStyleClass().add("dialog-pane");
+        
+        Image icon = new Image(this.getClass().getResourceAsStream("/mytunes/GUI/newicon.png"));
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(icon);
 
         alert.showAndWait();
     }
@@ -609,8 +621,16 @@ public class MyTunesViewController implements Initializable
     private void displayNoEditWindow() {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Information dialog");
-        alert.setHeaderText("You have not chosen a song to delete");
+        alert.setHeaderText("You have not chosen a song to edit");
         alert.setContentText("Please select a song");
+        
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.getStylesheets().add(getClass().getResource("/mytunes/GUI/Dialogs.css").toExternalForm());
+        dialogPane.getStyleClass().add("dialog-pane");
+        
+        Image icon = new Image(this.getClass().getResourceAsStream("/mytunes/GUI/newicon.png"));
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(icon);
 
         alert.showAndWait();
     }
@@ -620,14 +640,22 @@ public class MyTunesViewController implements Initializable
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Information dialog");
         alert.setHeaderText("You have not selected a playlist");
-        alert.setContentText("Please select a playlist to delete");
+        alert.setContentText("Please select a playlist");
+        
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.getStylesheets().add(getClass().getResource("/mytunes/GUI/Dialogs.css").toExternalForm());
+        dialogPane.getStyleClass().add("dialog-pane");
+        
+        Image icon = new Image(this.getClass().getResourceAsStream("/mytunes/GUI/newicon.png"));
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(icon);
+            
 
         alert.showAndWait();
     }
 
 
 
-    @FXML
     private void mouseClickedSearch(MouseEvent event)
     {
         try
@@ -787,6 +815,17 @@ public class MyTunesViewController implements Initializable
             displayError(ex);
         }
     }
-     
-    
+
+    @FXML
+    private void pressedOnSongs(MouseEvent event)
+    {
+        Song song = tableSongList.getSelectionModel().getSelectedItem();
+        if(event.getClickCount()==2 && song != null)
+        {
+            playing = true;
+            currentSongSelected = tableSongList.getSelectionModel().getSelectedIndex();
+            play();
+        }
+    }
+
 }
