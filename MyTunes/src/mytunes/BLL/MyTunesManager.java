@@ -347,18 +347,17 @@ public class MyTunesManager
     
     /**
      * Calls the moveSong method from the PlaylistSongDAO class
-     * @param locationGettingMoved The location of a song in a playlist getting 
+     * @param songGettingMoved the song getting moved 
      * moved
-     * @param locationAffected a song which location is getting affected by the
-     * other songs movement
+     * @param songAffected the song affected by the other songs movement
      * @param playlistId the Id of the playlist where changes of a songs
      * locations occures
      * @throws MTBllException 
      */
-    public void moveSong(int locationGettingMoved, int locationAffected, int playlistId) throws MTBllException {
+    public void moveSong(Song songGettingMoved, Song songAffected, int playlistId) throws MTBllException {
         try
         {
-            psd.moveSong(locationGettingMoved, locationAffected, playlistId);
+            psd.moveSong(songGettingMoved, songAffected, playlistId);
         } catch (MTDalException ex)
         {
             throw new MTBllException("Could not move song");

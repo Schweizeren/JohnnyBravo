@@ -92,7 +92,7 @@ public class PlaylistDAO
             return playlist;
         } catch (SQLServerException ex)
         {
-            throw new MTDalException("Could not connect to server");
+            throw new MTDalException("Could not connect to server", ex);
         } catch (SQLException ex)
         {
             throw new MTDalException("Could not create playlist.", ex);

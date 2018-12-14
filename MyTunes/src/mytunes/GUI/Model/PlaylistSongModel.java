@@ -138,16 +138,19 @@ public class PlaylistSongModel {
      * It also swaps the two songs position in the Observable Arraylist so the
      * swapping of songs both happens in the list and database
      * 
-     * @param locationGettingMoved the song getting moved in the playlist
-     * @param locationAffected the song affected by the other songs movement
+     * @param songGettingMoved the song getting moved in the playlist
+     * @param songAffected the song affected by the other songs movement
+     * @param songGettingMovedLocation the index of the song getting moved in
+     * the list
+     * @param songAffectedLocation the index of the song affected in the list
      * @param playlistId the id of the playlist in which the movement occures
      * @throws MTBllException 
      */
-    public void moveSong(int locationGettingMoved, int locationAffected, int playlistId) throws MTBllException {
+    public void moveSong(Song songGettingMoved, Song songAffected, int songGettingMovedLocation, int songAffectedLocation, int playlistId) throws MTBllException {
         try
         {
-            mtmanager.moveSong(locationGettingMoved, locationAffected, playlistId);
-            Collections.swap(playlistSongList, locationGettingMoved - 1, locationAffected - 1);
+            mtmanager.moveSong(songGettingMoved, songAffected, playlistId);
+            Collections.swap(playlistSongList, songGettingMovedLocation, songAffectedLocation);
         } catch (MTBllException ex)
         {
             throw new MTBllException("Could not move song");

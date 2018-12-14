@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import mytunes.DAL.exception.MTDalException;
 import mytunes.be.Playlist;
@@ -189,29 +190,29 @@ public class PlaylistSongDAO {
      * Takes a song and exchange its LocationInListID with another song to change
      * its position in a specific playlist
      * 
-     * @param locationGettingMoved The location Id of the song getting moved
-     * @param locationAffected The location Id of the song affected 
-     * by the movement of the other song
+     * @param songGettingMoved the song getting moved
+     * @param songAffected the song affected by the other songs movement
      * @param playlistId The id of the playlist in which the exchange 
      * of location occures
      * @throws MTDalException 
      */
-    public void moveSong(int locationGettingMoved, int locationAffected, int playlistId) throws MTDalException 
+    public void moveSong(Song songGettingMoved, Song songAffected, int playlistId) throws MTDalException 
     {
         try (Connection con = CB.getConnection()){
-            String query = "UPDATE PlaylistSong Set LocationInListID = "
-                    + " CASE LocationInListID"
-                    + " WHEN ? THEN ?"
-                    + " WHEN ? THEN ?"
-                    + " END"
-                    + " WHERE playlistID = ?;";
+            String query = "UPDATE PlaylistSong set locationInListID = ? WHERE PlaylistID = ? AND SongID = ? AND locationInListID = ?;"; 
             PreparedStatement pst = con.prepareStatement(query);
-            pst.setInt(1, locationGettingMoved);
-            pst.setInt(2, locationAffected);
-            pst.setInt(3, locationAffected);
-            pst.setInt(4, locationGettingMoved);
-            pst.setInt(5, playlistId);
-            pst.execute();
+            pst.setInt(1, songAffected.getLocationInList());
+            pst.setInt(2, playlistId);
+            pst.setInt(3, songGettingMoved.getId());
+            pst.setInt(4, songGettingMoved.getLocationInList());
+            pst.addBatch();
+            pst.setInt(1, songGettingMoved.getLocationInList());
+            pst.setInt(2, playlistId);
+            pst.setInt(3, songAffected.getId());
+            pst.setInt(4, songAffected.getLocationInList());
+            pst.addBatch();
+            pst.executeBatch();
+            
         } catch (SQLServerException ex)
         {
             throw new MTDalException("Could not connect to SQL server.", ex);
