@@ -58,8 +58,6 @@ public class CreatePlaylistController implements Initializable
 
         try
         {
-
-
                 String name = txtNameInput.getText();
                 pm.createPlaylist(name);
             

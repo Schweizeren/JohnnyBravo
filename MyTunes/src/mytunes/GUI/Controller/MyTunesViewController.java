@@ -132,7 +132,7 @@ public class MyTunesViewController implements Initializable
     /**
      * When the button labelled "new..." over at the table view with playlist
      * is pressed this will with then run this method. This opens up a new
-     * vew where the user then can create a new playlist. This method also calls
+     * view where the user then can create a new playlist. This method also calls
      * the method initializeModel from inside the CreatePlaylistController.
      * This will make it so the PlaylistModel this class calls will also be
      * called in the CreatePlaylistController
