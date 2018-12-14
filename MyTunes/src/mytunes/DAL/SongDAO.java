@@ -5,7 +5,6 @@
  */
 package mytunes.DAL;
 
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.io.IOException;
 import java.util.List;
 import mytunes.be.Song;
@@ -15,8 +14,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import mytunes.DAL.exception.MTDalException;
 
 /**
