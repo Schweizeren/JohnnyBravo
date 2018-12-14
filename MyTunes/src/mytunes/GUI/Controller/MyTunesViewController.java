@@ -276,6 +276,7 @@ public class MyTunesViewController implements Initializable
         } catch (MTBllException ex)
         {
             displayError(ex);
+            ex.printStackTrace();
         }
 
     }
@@ -297,6 +298,7 @@ public class MyTunesViewController implements Initializable
         } catch (MTBllException ex)
         {
             displayError(ex);
+            ex.printStackTrace();
         }
     }
 
