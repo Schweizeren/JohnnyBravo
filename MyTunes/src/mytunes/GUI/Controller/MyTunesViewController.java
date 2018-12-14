@@ -64,8 +64,6 @@ public class MyTunesViewController implements Initializable
     private PlaylistSongModel psm;
     private PlaylistModel pm;
     private SongModel sm;
-    private SongSearcher ss;
-    private JFXPanel fxPanel;
     private MediaPlayer mediaPlayer;
     private boolean playing;
     private boolean paused;
@@ -105,8 +103,6 @@ public class MyTunesViewController implements Initializable
             psm = new PlaylistSongModel();
             pm = new PlaylistModel();
             sm = new SongModel();
-            ss = new SongSearcher();
-            fxPanel = new JFXPanel();
         } catch (MTBllException ex)
         {
             displayError(ex);
