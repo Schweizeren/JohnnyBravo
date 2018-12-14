@@ -5,8 +5,6 @@
  */
 package mytunes.GUI.Model;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import mytunes.BLL.MyTunesManager;

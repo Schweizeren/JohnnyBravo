@@ -7,8 +7,6 @@ package mytunes.DAL;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import mytunes.DAL.exception.MTDalException;
 import org.farng.mp3.MP3File;
 import org.farng.mp3.TagException;
