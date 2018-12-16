@@ -23,7 +23,7 @@ public class MTDalException extends Exception
     
     /**
      * A cunstructor of the exception class MTDalException class. 
-     * Throws a message if the an exception has been catched
+     * Throws a message if an exception has been catched
      * @param message the message getting thrown
      */
     public MTDalException(String message)

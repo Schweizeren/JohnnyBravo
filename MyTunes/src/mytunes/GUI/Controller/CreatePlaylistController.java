@@ -32,6 +32,9 @@ public class CreatePlaylistController implements Initializable
     @FXML
     private TextField txtNameInput;
 
+    /**
+     * The constructor of the CreatePlaylistController class
+     */
     public CreatePlaylistController()
     {
         try
@@ -52,6 +55,11 @@ public class CreatePlaylistController implements Initializable
         
     }    
 
+    /**
+     * Takes the text from the textfield and creates a playlist
+     * Then closes the view
+     * @param event when the save button is pressed
+     */
     @FXML
     private void handleCreateBtn(ActionEvent event)
     {
@@ -70,6 +78,10 @@ public class CreatePlaylistController implements Initializable
         }
     }
 
+    /**
+     * Closses the view of this controller
+     * @param event 
+     */
     @FXML
     private void handleCancelBtn(ActionEvent event) 
     {
@@ -85,7 +97,10 @@ public class CreatePlaylistController implements Initializable
         alert.setContentText(ex.getMessage());
         alert.showAndWait();
     }
-    
+    /**
+     * Initializes this class' model object
+     * @param playlistmodel the ojbect this class' model is initialized with
+     */
     public void initializeModel(PlaylistModel playlistmodel) {
         this.pm = playlistmodel;
     }
