@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="762.0" prefWidth="1118.0" styleClass="background" stylesheets="@MyTunes.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.GUI.Controller.MyTunesViewController">
+<AnchorPane id="AnchorPane" prefHeight="762.0" prefWidth="1118.0" styleClass="background" stylesheets="@MyTunes.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.GUI.Controller.MyTunesViewController">
    <children>
                
     <ImageView fitHeight="31.0" fitWidth="30.0" layoutX="565.0" layoutY="135.0" onMouseClicked="#mouseClickedArrow" rotate="-90.0" styleClass="button">
@@ -36,9 +36,6 @@
       <Button layoutX="762.0" layoutY="659.0" mnemonicParsing="false" onAction="#editSong" prefHeight="31.0" prefWidth="65.0" text="Edit..." />
       <Button layoutX="842.0" layoutY="659.0" mnemonicParsing="false" onAction="#deleteSong" text="Delete" />
       <Button layoutX="1031.0" layoutY="659.0" mnemonicParsing="false" onAction="#endApplication" text="Close" />
-      <Label layoutX="28.0" layoutY="83.0" styleClass="label-bright" text="Playlists" />
-      <Label layoutX="281.0" layoutY="83.0" styleClass="label-bright" text="Songs on playlist " />
-      <Label layoutX="684.0" layoutY="83.0" styleClass="label-bright" text="Songs" />
       <Label layoutX="776.0" layoutY="26.0" styleClass="label-bright" text="Filter:" />
       <Label fx:id="lblMusicPlaying" layoutX="39.0" layoutY="16.0" prefHeight="60.0" prefWidth="684.0" styleClass="label-header" stylesheets="@MyTunes.css" text="Nothing is playing">
         <font>
@@ -61,14 +58,14 @@
             <TableColumn fx:id="cellTime" prefWidth="71.0" sortable="false" text="Time" />
         </columns>
       </TableView>
-      <TableView fx:id="tableSongOnPlaylist" layoutX="281.0" layoutY="104.0" onMousePressed="#clickedOnSongPlaylist" prefHeight="539.0" prefWidth="205.0">
+      <TableView fx:id="tableSongOnPlaylist" layoutX="281.0" layoutY="104.0" onMousePressed="#clickedOnSongPlaylist" prefHeight="539.0" prefWidth="200.0">
         <columns>
-          <TableColumn fx:id="cellSongPlaylistTitle" editable="false" prefWidth="195.0" sortable="false" text="Title" />
+          <TableColumn fx:id="cellSongPlaylistTitle" editable="false" prefWidth="221.0" sortable="false" text="Songs on playlist" />
         </columns>
       </TableView>
       <TableView fx:id="tablePlaylist" layoutX="28.0" layoutY="104.0" onMousePressed="#tablePlaylistClicked" prefHeight="539.0" prefWidth="244.0">
         <columns>
-          <TableColumn fx:id="cellPlaylistTitle" editable="false" prefWidth="231.0" sortable="false" text="Title" />
+          <TableColumn fx:id="cellPlaylistTitle" editable="false" prefWidth="231.0" sortable="false" text="Playlists" />
         </columns>
       </TableView>
    </children>
