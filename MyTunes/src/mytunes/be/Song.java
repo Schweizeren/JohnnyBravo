@@ -20,6 +20,15 @@ public class Song
     private int locationInList;
     private String formattedLength;
     
+    /**
+     * The constructor of the Song class
+     * @param id
+     * @param title
+     * @param duration
+     * @param author
+     * @param genre
+     * @param filepath 
+     */
     public Song (int id, String title, int duration, String author, String genre, String filepath) {
         this.id = id;
         this.title = title;

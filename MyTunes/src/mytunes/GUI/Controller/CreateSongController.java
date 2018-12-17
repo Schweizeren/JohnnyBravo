@@ -48,15 +48,10 @@ public class CreateSongController implements Initializable
     private TextField txtFile;
     @FXML
     private TextField txtOtherCategory;
-
+    
     /**
      * Initializes the controller class.
      */
-    public CreateSongController()
-    {
-        
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
@@ -68,6 +63,12 @@ public class CreateSongController implements Initializable
         txtOtherCategory.setVisible(false);
     }
 
+    /**
+     * Opens up a filechooser. And when an mp3 file is chosen the different
+     * textfields will get filled out with the mp3 files metadata or nothing
+     * it it doesnt have some specific data
+     * @param event when the choose button is pressed
+     */
     @FXML
     private void handleChooseBtn(ActionEvent event)
     {
@@ -84,6 +85,11 @@ public class CreateSongController implements Initializable
         }
     }
 
+    /**
+     * Takes the information in the different textfields and also the combobox
+     * and then creates a song. Afteer this the view is closed
+     * @param event when the save button is pressed
+     */
     @FXML
     private void handleSaveBtn(ActionEvent event)
     {
@@ -116,13 +122,23 @@ public class CreateSongController implements Initializable
 
     }
 
+    /**
+     * Closes the view of this controller
+     * @param event when the cancel button is pressed
+     */
     @FXML
-    private void handleCancelBtn(ActionEvent event) throws IOException
+    private void handleCancelBtn(ActionEvent event)
     {
         Stage stage = (Stage) rootPane.getScene().getWindow();
         stage.close();
     }
 
+    /**
+     * A combobox with different music genres as selections. If category 6 is
+     * chosen a textfield will appear where the user can type a music genre
+     * @param event when a category is chosen on the combobox
+     * @return a string containing the category chosen
+     */
     @FXML
     private String handleComboCategory(ActionEvent event)
     {
@@ -160,6 +176,10 @@ public class CreateSongController implements Initializable
         return category;
     }
 
+    /**
+     * A popup window that displays the error that occured
+     * @param ex the exception getting showened to the user
+     */
     private void displayError(Exception ex)
     {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -170,143 +190,13 @@ public class CreateSongController implements Initializable
         alert.showAndWait();
     }
 
+    /**
+     * Initializes this class' songmodel object
+     * @param songmodel the songmodel this class' songmodel is getting
+     * initialized with
+     */
     public void initializeModel(SongModel songmodel)
     {
         this.sm = songmodel;
-    }
-
-    @FXML
-    private void titleEnterPressed(KeyEvent event)
-    {
-        
-        if(event.getCode()==KeyCode.ENTER)
-        {
-        String title;
-        int duration;
-        String filepath;
-        String genre;
-        String artist;
-        try
-        {
-            title = txtTitleInput.getText();
-            duration = sm.getDurationInSec();
-            filepath = txtFile.getText();
-            if (comboCategoryBox.getSelectionModel().getSelectedItem().equals("Other")) {
-                genre = txtOtherCategory.getText();
-            } else {
-                genre = comboCategoryBox.getSelectionModel().getSelectedItem();
-            }
-            artist = txtArtistInput.getText();
-            sm.createSong(title, duration, artist, genre, filepath);
-
-            Stage stage = (Stage) ((Node) ((EventObject) event).getSource()).getScene().getWindow();
-            stage.close();
-        } catch (MTBllException ex)
-        {
-            displayError(ex);
-        }
-        }
-    }
-
-    @FXML
-    private void artistEnterPressed(KeyEvent event)
-    {
-        
-        
-        if(event.getCode()==KeyCode.ENTER)
-        {
-        String title;
-        int duration;
-        String filepath;
-        String genre;
-        String artist;
-        try
-        {
-            title = txtTitleInput.getText();
-            duration = sm.getDurationInSec();
-            filepath = txtFile.getText();
-            if (comboCategoryBox.getSelectionModel().getSelectedItem().equals("Other")) {
-                genre = txtOtherCategory.getText();
-            } else {
-                genre = comboCategoryBox.getSelectionModel().getSelectedItem();
-            }
-            artist = txtArtistInput.getText();
-            sm.createSong(title, duration, artist, genre, filepath);
-
-            Stage stage = (Stage) ((Node) ((EventObject) event).getSource()).getScene().getWindow();
-            stage.close();
-        } catch (MTBllException ex)
-        {
-            displayError(ex);
-        }
-        }
-    }
-
-    @FXML
-    private void comboBoxEnterPressed(KeyEvent event)
-    {
-        
-        
-        if(event.getCode()==KeyCode.ENTER)
-        {
-        String title;
-        int duration;
-        String filepath;
-        String genre;
-        String artist;
-        try
-        {
-            title = txtTitleInput.getText();
-            duration = sm.getDurationInSec();
-            filepath = txtFile.getText();
-            if (comboCategoryBox.getSelectionModel().getSelectedItem().equals("Other")) {
-                genre = txtOtherCategory.getText();
-            } else {
-                genre = comboCategoryBox.getSelectionModel().getSelectedItem();
-            }
-            artist = txtArtistInput.getText();
-            sm.createSong(title, duration, artist, genre, filepath);
-
-            Stage stage = (Stage) ((Node) ((EventObject) event).getSource()).getScene().getWindow();
-            stage.close();
-        } catch (MTBllException ex)
-        {
-            displayError(ex);
-        }
-        }
-    }
-
-    @FXML
-    private void otherCategoryEnterPressed(KeyEvent event)
-    {
-        
-        
-        if(event.getCode()==KeyCode.ENTER)
-        {
-        String title;
-        int duration;
-        String filepath;
-        String genre;
-        String artist;
-        try
-        {
-            title = txtTitleInput.getText();
-            duration = sm.getDurationInSec();
-            filepath = txtFile.getText();
-            if (comboCategoryBox.getSelectionModel().getSelectedItem().equals("Other")) {
-                genre = txtOtherCategory.getText();
-            } else {
-                genre = comboCategoryBox.getSelectionModel().getSelectedItem();
-            }
-            artist = txtArtistInput.getText();
-            sm.createSong(title, duration, artist, genre, filepath);
-
-            Stage stage = (Stage) ((Node) ((EventObject) event).getSource()).getScene().getWindow();
-            stage.close();
-        } catch (MTBllException ex)
-        {
-            displayError(ex);
-        }
-        }
     }
 }

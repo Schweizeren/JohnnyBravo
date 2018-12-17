@@ -49,11 +49,6 @@ public class EditSongController implements Initializable
     @FXML
     private TextField txtOtherCategory;
 
-    public EditSongController()
-    {
-
-    }
-
     /**
      * Initializes the controller class.
      */
@@ -69,6 +64,12 @@ public class EditSongController implements Initializable
 
     }
 
+    /**
+     * A combobox with different music genres as selections. If category 6 is
+     * chosen a textfield will appear where the user can type a music genre
+     * @param event when a category is chosen on the combobox
+     * @return a string containing the category chosen
+     */
     @FXML
     private String handleComboES(ActionEvent event)
     {
@@ -106,6 +107,10 @@ public class EditSongController implements Initializable
         return category;
     }
 
+    /**
+     * Closes the view of this controller
+     * @param event when the cancel button is pressed
+     */
     @FXML
     private void handleCancelBtn(ActionEvent event)
     {
@@ -113,6 +118,11 @@ public class EditSongController implements Initializable
         stage.close();
     }
 
+    /**
+     * Takes the information in the different textfields and the combobox
+     * and updates the selected song in the list. After this the view is closed
+     * @param event when the save button is pressed
+     */
     @FXML
     private void handleSaveBtn(ActionEvent event)
     {
@@ -139,6 +149,11 @@ public class EditSongController implements Initializable
         }
     }
 
+    /**
+     * Initalizes the selected song and the index of it in the list
+     * @param song the selected song gettting updated
+     * @param index the index of the song in the song list
+     */
     public void initializeSong(Song song, int index)
     {
         txtTitleInput.setText(song.getTitle());
@@ -149,6 +164,10 @@ public class EditSongController implements Initializable
         this.index = index;
     }
 
+    /**
+     * Opens a pop up window that displays an error to the user
+     * @param ex the exception getting shown to the user
+     */
     private void displayError(Exception ex)
     {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -159,6 +178,11 @@ public class EditSongController implements Initializable
         alert.showAndWait();
     }
 
+    /**
+     * Initializes this class' songmodel object
+     * @param songmodel the songmodel this class' songmodel is getting
+     * initialized with
+     */
     public void initializeModel(SongModel songmodel)
     {
         this.sm = songmodel;

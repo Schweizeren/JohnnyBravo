@@ -5,7 +5,6 @@
  */
 package mytunes.GUI.Controller;
 
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -52,12 +51,7 @@ import mytunes.be.Song;
  *
  * @author bonde
  */
-
-
-
-public class MyTunesViewController implements Initializable
-{
-
+public class MyTunesViewController implements Initializable {
 
     private PlaylistSongModel psm;
     private PlaylistModel pm;
@@ -92,28 +86,26 @@ public class MyTunesViewController implements Initializable
     @FXML
     private TableView<Playlist> tablePlaylist;
     @FXML
-        private TableColumn<Playlist, String> cellPlaylistTitle;
+    private TableColumn<Playlist, String> cellPlaylistTitle;
 
-    public MyTunesViewController()
-    {
-        try
-        {
+    /**
+     * The constructor of the MyTunesViewController
+     */
+    public MyTunesViewController() {
+        try {
             psm = new PlaylistSongModel();
             pm = new PlaylistModel();
             sm = new SongModel();
-        } catch (MTBllException ex)
-        {
+        } catch (MTBllException ex) {
             displayError(ex);
         }
     }
-    
 
     /**
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb)
-    {
+    public void initialize(URL url, ResourceBundle rb) {
         cellTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
         cellArtist.setCellValueFactory(new PropertyValueFactory<>("artist"));
         cellGenre.setCellValueFactory(new PropertyValueFactory<>("genre"));
@@ -124,185 +116,249 @@ public class MyTunesViewController implements Initializable
         tablePlaylist.setItems(pm.getAllPlaylist());
     }
 
+    /**
+     * When the button labelled "new..." over at the table view with playlist is
+     * pressed this will with then run this method. This opens up a new view
+     * where the user then can create a new playlist. This method also calls the
+     * method initializeModel from inside the CreatePlaylistController. This
+     * will make it so the PlaylistModel this class calls will also be called in
+     * the CreatePlaylistController
+     *
+     * @param event The event that the button has
+     */
     @FXML
-    private void createPlaylist(ActionEvent event) throws IOException
-    {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/CreatePlaylist.fxml"));
-        Parent root = (Parent) loader.load();
-
-        CreatePlaylistController cpcontroller = loader.getController();
-        cpcontroller.initializeModel(pm);
-        Stage stage = new Stage();
-
-        Image icon = new Image(getClass().getResourceAsStream("/mytunes/GUI/newicon.png"));
-        stage.getIcons().add(icon);
-        stage.setTitle("MyTunes");
-        
-        stage.setScene(new Scene(root));
-        stage.show();
-    }
-    
-
-    @FXML
-    private void editPlaylist(ActionEvent event) throws IOException
-    {
-        Playlist playlist = tablePlaylist.getSelectionModel().getSelectedItem();
-        int index = tablePlaylist.getSelectionModel().getSelectedIndex();
-        if (playlist == null)
-        {
-            displayNoPlaylistWindow();
-        } else
-        {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/EditPlaylist.fxml"));
+    private void createPlaylist(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/CreatePlaylist.fxml"));
             Parent root = (Parent) loader.load();
 
-            EditPlaylistController epcontroller = loader.getController();
-            epcontroller.initializeModel(pm);
-            epcontroller.initializePlaylist(playlist, index);
+            CreatePlaylistController cpcontroller = loader.getController();
+            cpcontroller.initializeModel(pm);
             Stage stage = new Stage();
-            
+
             Image icon = new Image(getClass().getResourceAsStream("/mytunes/GUI/newicon.png"));
             stage.getIcons().add(icon);
             stage.setTitle("MyTunes");
-            
+
             stage.setScene(new Scene(root));
             stage.show();
+        } catch (IOException ex) {
+            displayError(ex);
         }
     }
 
+    /**
+     * When the button labelled "edit..." is pressed over at the table view
+     * containing playlists then this method will run. This will open up a new
+     * view where the user can then edit a playlist. This method also checks if
+     * a playlist has been clicked before it opens up the new view. This method
+     * also calls the method initializeModel from the EditPlaylistController
+     * This makes it so the playlistmodel in this controller also gets called in
+     * the EditPlaylistController
+     *
+     * @param event the event when the button is pressed
+     */
     @FXML
-    private void deletePlaylist(ActionEvent event)
-    {
+    private void editPlaylist(ActionEvent event) {
         Playlist playlist = tablePlaylist.getSelectionModel().getSelectedItem();
-        if (playlist == null)
-        {
+        int index = tablePlaylist.getSelectionModel().getSelectedIndex();
+        if (playlist == null) {
             displayNoPlaylistWindow();
-        } else
-        {
+        } else {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/EditPlaylist.fxml"));
+                Parent root = (Parent) loader.load();
+
+                EditPlaylistController epcontroller = loader.getController();
+                epcontroller.initializeModel(pm);
+                epcontroller.initializePlaylist(playlist, index);
+                Stage stage = new Stage();
+
+                Image icon = new Image(getClass().getResourceAsStream("/mytunes/GUI/newicon.png"));
+                stage.getIcons().add(icon);
+                stage.setTitle("MyTunes");
+
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (IOException ex) {
+                displayError(ex);
+            }
+        }
+    }
+
+    /**
+     * When the button labelled "delete" over at the tableview containing
+     * playlist then this method wil run. This method opens up a pop up window
+     * asking the user if they are sure they want to delete a playlist. If the
+     * press "yes" then this will run the deletePlaylist method from the
+     * PlaylistModel class and the deleteFromPlaylist method from the
+     * PlaylistSongModel class. this will delete the playlist and its
+     * information from the Playlist and PlaylistSong table
+     *
+     * @param event the event when the button is pressed
+     */
+    @FXML
+    private void deletePlaylist(ActionEvent event) {
+        Playlist playlist = tablePlaylist.getSelectionModel().getSelectedItem();
+        if (playlist == null) {
+            displayNoPlaylistWindow();
+        } else {
             Alert alert = new Alert(AlertType.CONFIRMATION);
             alert.setTitle("Confirmation dialog");
             alert.setContentText("Are you sure you want to delete: " + playlist);
-            
+
             DialogPane dialogPane = alert.getDialogPane();
             dialogPane.getStylesheets().add(getClass().getResource("/mytunes/GUI/Dialogs.css").toExternalForm());
             dialogPane.getStyleClass().add("dialog-pane");
-            
+
             Image icon = new Image(this.getClass().getResourceAsStream("/mytunes/GUI/newicon.png"));
             Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
             stage.getIcons().add(icon);
-            
+
             ButtonType buttonTypeYes = new ButtonType("Yes");
             ButtonType buttonTypeNo = new ButtonType("No", ButtonData.CANCEL_CLOSE);
-            
+
             alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
 
             Optional<ButtonType> result = alert.showAndWait();
-            if (result.get() == buttonTypeYes)
-            {
-                try
-                {
+            if (result.get() == buttonTypeYes) {
+                try {
                     pm.deletePlaylist(playlist);
                     psm.deleteFromPlaylist(playlist);
                     tablePlaylist.getSelectionModel().clearSelection();
-                } catch (MTBllException ex)
-                {
+                } catch (MTBllException ex) {
                     displayError(ex);
                 }
             }
         }
     }
 
+    /**
+     * When the button containing the up arrow over at the tabelview containing
+     * songs from a playlis then this method will run. This method will try to
+     * call the moveSong method from the PlaylistSongModel and then move the
+     * song one up from its current position
+     *
+     * @param event the event when the button is pressed
+     */
     @FXML
-    private void moveUp(ActionEvent event)
-    {
-        try
-        {
-            int locationGettingMoved = tableSongOnPlaylist.getSelectionModel().getSelectedIndex() + 1;
-            int locationGettingAffected = locationGettingMoved - 1;
+    private void moveUp(ActionEvent event) {
+        try {
+            currentSongSelected = tableSongOnPlaylist.getSelectionModel().getSelectedIndex();
+            Song songGettingMoved = tableSongOnPlaylist.getItems().get(currentSongSelected);
+            Song songAffected = tableSongOnPlaylist.getItems().get(currentSongSelected - 1);
+            int songGettingMovedLocation = tableSongOnPlaylist.getSelectionModel().getSelectedIndex();
+            int songAffectedLocation = songGettingMovedLocation - 1;
             int playlistId = tablePlaylist.getSelectionModel().getSelectedItem().getId();
-            psm.moveSong(locationGettingMoved, locationGettingAffected, playlistId);
-        } catch (MTBllException ex)
-        {
+            psm.moveSong(songGettingMoved, songAffected, songGettingMovedLocation, songAffectedLocation, playlistId);
+        } catch (MTBllException | IndexOutOfBoundsException | NullPointerException ex) {
             displayError(ex);
         }
 
     }
 
+    /**
+     * This method does the same as the moveUp method only difference is that
+     * this method will try to move the song one down from its current position
+     *
+     * @param event the event when the button is pressed
+     */
     @FXML
-    private void moveDown(ActionEvent event)
-    {
-        try
-        {
-            int locationGettingMoved = tableSongOnPlaylist.getSelectionModel().getSelectedIndex() + 1;
-            int locationGettingAffected = locationGettingMoved + 1;
+    private void moveDown(ActionEvent event) {
+        try {
+            currentSongSelected = tableSongOnPlaylist.getSelectionModel().getSelectedIndex();
+            Song songGettingMoved = tableSongOnPlaylist.getItems().get(currentSongSelected);
+            Song songAffected = tableSongOnPlaylist.getItems().get(currentSongSelected + 1);
+            int songGettingMovedLocation = tableSongOnPlaylist.getSelectionModel().getSelectedIndex();
+            int songAffectedLocation = songGettingMovedLocation + 1;
             int playlistId = tablePlaylist.getSelectionModel().getSelectedItem().getId();
-            psm.moveSong(locationGettingMoved, locationGettingAffected, playlistId);
-        } catch (MTBllException ex)
-        {
+            psm.moveSong(songGettingMoved, songAffected, songGettingMovedLocation, songAffectedLocation, playlistId);
+        } catch (MTBllException | IndexOutOfBoundsException | NullPointerException ex) {
             displayError(ex);
         }
     }
 
+    /**
+     * When the button "delete" over at the tableview containing songs from
+     * playlists is pressed this method will run. When a playlist and a song
+     * from the playlist is selected this method will run the method
+     * removeSongFromPlaylist from the PlaylistSongModel class. This will then
+     * delete the song from the playlist
+     *
+     * @param event
+     */
     @FXML
-    private void deleteSongOnPlaylist(ActionEvent event)
-    {
+    private void deleteSongOnPlaylist(ActionEvent event) {
         Playlist playlist = tablePlaylist.getSelectionModel().getSelectedItem();
         Song song = tableSongOnPlaylist.getSelectionModel().getSelectedItem();
-        if (playlist == null)
-        {
+        if (playlist == null) {
             displayNoPlaylistWindow();
-        } else if (song == null)
-        {
+        } else if (song == null) {
             displayNoSongWindow();
-        } else
-        {
-            try
-            {
+        } else {
+            try {
                 psm.removeSongFromPlaylist(playlist, song);
-            } catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 displayError(ex);
             }
         }
 
     }
 
+    /**
+     * When the button labelled "new..." over at the tableview that contains all
+     * songs then this method will run. This method opens up a new view where
+     * the user can add a new song to the tableview. Before the view is open the
+     * method initializeModel in the CreateSongController will run. This method
+     * makes it so the instance of the SongModel in this class will also be
+     * called in the CreateSongController
+     *
+     * @param event the event when button is pressed
+     * @throws SQLException
+     */
     @FXML
-    private void newSong(ActionEvent event) throws SQLException
-    {
-        try
-        {
+    private void newSong(ActionEvent event) {
+        try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/CreateSong.fxml"));
             Parent root = (Parent) loader.load();
 
             CreateSongController cscontroller = loader.getController();
             cscontroller.initializeModel(sm);
             Stage stage = new Stage();
-            
+
             Image icon = new Image(getClass().getResourceAsStream("/mytunes/GUI/newicon.png"));
             stage.getIcons().add(icon);
             stage.setTitle("MyTunes");
             stage.setScene(new Scene(root));
             stage.show();
-        } catch (IOException ex)
-        {
+        } catch (IOException ex) {
             displayError(ex);
         }
     }
 
+    /**
+     * When the button labelled "edit..." is pressed over at the tableview that
+     * contains all songs is pressed then this method will run. When a song is
+     * pressed on the tableview then a new view will appear where the user then
+     * can edit an alreaady existing song. Beofre the view appears the two
+     * methods initializeModel and initializeSong will be called from the
+     * EditSongController class. The initializeModel method makes it so the
+     * SongModel used in this class will also be called in the
+     * EditSongController. The initializeSong method takes the selected song and
+     * its index in the table view and sends its information to the
+     * EditSongController.
+     *
+     * @param event the event when the button is pressed
+     */
     @FXML
-    private void editSong(ActionEvent event)
-    {
+    private void editSong(ActionEvent event) {
         Song song = tableSongList.getSelectionModel().getSelectedItem();
         int index = tableSongList.getSelectionModel().getSelectedIndex();
-        if (song == null)
-        {
+        if (song == null) {
             displayNoEditWindow();
-        } else
-        {
+        } else {
 
-            try
-            {
+            try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/GUI/EditSong.fxml"));
                 Parent root = (Parent) loader.load();
 
@@ -310,37 +366,44 @@ public class MyTunesViewController implements Initializable
                 escontroller.initializeModel(sm);
                 escontroller.initializeSong(song, index);
                 Stage stage = new Stage();
-                
+
                 Image icon = new Image(getClass().getResourceAsStream("/mytunes/GUI/newicon.png"));
                 stage.getIcons().add(icon);
                 stage.setTitle("MyTunes");
-        
+
                 stage.setScene(new Scene(root));
                 stage.show();
-            } catch (IOException ex)
-            {
+            } catch (IOException ex) {
                 displayError(ex);
             }
         }
     }
 
+    /**
+     * When the button labelled "delete" over at the tableview containing all
+     * songs is pressed then this method will run. This makes a popup window
+     * appear asking the user if they want to delete the selected song. If the
+     * user presses yes then the song will be deleted from the tabelview and the
+     * database. This is done by this method making calls to the method
+     * deleteSong from the SongModel and the method deleteSongFromTable from the
+     * PlaylistSongModel
+     *
+     * @param event the event when the button is pressed
+     */
     @FXML
-    private void deleteSong(ActionEvent event)
-    {
+    private void deleteSong(ActionEvent event) {
         Song song = tableSongList.getSelectionModel().getSelectedItem();
-        if (song == null)
-        {
+        if (song == null) {
             displayNoSongWindow();
-        } else
-        {
+        } else {
             Alert alert = new Alert(AlertType.CONFIRMATION);
             alert.setTitle("Confirmation dialog");
             alert.setContentText("Are you sure you want to delete: " + song.getTitle());
-            
+
             DialogPane dialogPane = alert.getDialogPane();
             dialogPane.getStylesheets().add(getClass().getResource("/mytunes/GUI/Dialogs.css").toExternalForm());
             dialogPane.getStyleClass().add("dialog-pane");
-            
+
             Image icon = new Image(this.getClass().getResourceAsStream("/mytunes/GUI/newicon.png"));
             Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
             stage.getIcons().add(icon);
@@ -351,62 +414,52 @@ public class MyTunesViewController implements Initializable
             alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
 
             Optional<ButtonType> result = alert.showAndWait();
-            if (result.get() == buttonTypeYes)
-            {
-                try
-                {
+            if (result.get() == buttonTypeYes) {
+                try {
                     sm.deleteSong(song);
                     psm.deleteSongFromTable(song);
-                } catch (MTBllException ex)
-                {
+                } catch (MTBllException ex) {
                     displayError(ex);
                 }
             }
         }
     }
 
+    /**
+     * The button labbelled "close" is pressed this close the program
+     *
+     * @param event the event when the button is pressed
+     */
     @FXML
-    private void endApplication(ActionEvent event)
-    {
+    private void endApplication(ActionEvent event) {
         System.exit(0);
     }
 
-    private void searchSong(ActionEvent event)
-    {
-        try
-        {
-            tableSongList.setItems(sm.searchSongs(sm.getSongs(), writeSearch.getText().toLowerCase()));
-        } catch (IOException | MTBllException ex)
-        {
-            displayError(ex);
-        }
-    }
-
+    /**
+     * This method checks if the mediaplayer is currently playing a song. If it
+     * does it will skip to the song before the one currently playing. If the
+     * song is at index 0 in the list it will skip to the song at the last index
+     *
+     * @param event the event when the button right next to the stop button is
+     * pressed
+     */
     @FXML
-    private void previousSong(ActionEvent event)
-    {
-        if (mediaPlayer != null)
-        {
+    private void previousSong(ActionEvent event) {
+        if (mediaPlayer != null) {
             mediaPlayer.stop();
             paused = false;
             playing = true;
-            if (tableSongList.getSelectionModel().getSelectedItem() != null)
-            {
-                if (currentSongSelected == 0)
-                {
+            if (tableSongList.getSelectionModel().getSelectedItem() != null) {
+                if (currentSongSelected == 0) {
                     currentSongSelected = tableSongList.getItems().size() - 1;
-                } else
-                {
+                } else {
                     currentSongSelected--;
                 }
                 play();
-            } else if (tableSongOnPlaylist.getSelectionModel().getSelectedItem() != null)
-            {
-                if (currentSongSelected == 0)
-                {
+            } else if (tableSongOnPlaylist.getSelectionModel().getSelectedItem() != null) {
+                if (currentSongSelected == 0) {
                     currentSongSelected = tableSongOnPlaylist.getItems().size() - 1;
-                } else
-                {
+                } else {
                     currentSongSelected--;
                 }
                 play();
@@ -414,30 +467,31 @@ public class MyTunesViewController implements Initializable
         }
     }
 
+    /**
+     * Checks if the mediaplayer is playing a song. If it does this method will
+     * skip to the song next to the one currently playing and play that song
+     * instead. If the song playing is at the last index in the list then it
+     * will skip to the song at index 0 aka the first song in the list
+     *
+     * @param event the event when the button next to the pause bause button is
+     * pressed
+     */
     @FXML
-    private void nextSong(ActionEvent event)
-    {
-        if (mediaPlayer != null)
-        {
+    private void nextSong(ActionEvent event) {
+        if (mediaPlayer != null) {
             mediaPlayer.stop();
             paused = false;
             playing = true;
-            if (tableSongList.getSelectionModel().getSelectedItem() != null)
-            {
-                if (currentSongSelected == tableSongList.getItems().size() - 1)
-                {
+            if (tableSongList.getSelectionModel().getSelectedItem() != null) {
+                if (currentSongSelected == tableSongList.getItems().size() - 1) {
                     currentSongSelected = 0;
-                } else
-                {
+                } else {
                     currentSongSelected++;
                 }
-            } else if (tableSongOnPlaylist.getSelectionModel().getSelectedItem() != null)
-            {
-                if (currentSongSelected == tableSongOnPlaylist.getItems().size() - 1)
-                {
+            } else if (tableSongOnPlaylist.getSelectionModel().getSelectedItem() != null) {
+                if (currentSongSelected == tableSongOnPlaylist.getItems().size() - 1) {
                     currentSongSelected = 0;
-                } else
-                {
+                } else {
                     currentSongSelected++;
                 }
             }
@@ -446,55 +500,57 @@ public class MyTunesViewController implements Initializable
         }
     }
 
+    /**
+     * This method checks the whether is mediaplayer is null, is currently
+     * playing or is paused. If the mediaplayer is playing something and the
+     * play button is pressed then it will stop the song and play the currently
+     * selected song. If the mediaplayer is paused and the play button is
+     * pressed then it will unpause and play the song from where it was. If the
+     * mediaplayer is null and a song is selected it will play that song If the
+     * mediaplayer is null and no song i selected a popup window will appear
+     * asking the use to select a song first When this method is called it will
+     * also call the controlSound method from this controller
+     *
+     * @param event th event when the play button is pressed
+     */
     @FXML
-    private void playMusic(ActionEvent event)
-    {
+    private void playMusic(ActionEvent event) {
         if (mediaPlayer == null && tableSongList.getSelectionModel().getSelectedItem() == null
-                && tableSongOnPlaylist.getSelectionModel().getSelectedItem() == null)
-        {
+                && tableSongOnPlaylist.getSelectionModel().getSelectedItem() == null) {
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("Information dialog");
             alert.setHeaderText("You have not chosen a song to play");
             alert.setContentText("Please select a song");
-            
+
             DialogPane dialogPane = alert.getDialogPane();
             dialogPane.getStylesheets().add(getClass().getResource("/mytunes/GUI/Dialogs.css").toExternalForm());
             dialogPane.getStyleClass().add("dialog-pane");
-            
+
             Image icon = new Image(this.getClass().getResourceAsStream("/mytunes/GUI/newicon.png"));
             Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
             stage.getIcons().add(icon);
 
             alert.showAndWait();
-        } else
-        {
-            if (tableSongList.getSelectionModel().getSelectedItem() != null)
-            {
-                if (playing)
-                {
+        } else {
+            if (tableSongList.getSelectionModel().getSelectedItem() != null) {
+                if (playing) {
                     mediaPlayer.stop();
                     currentSongSelected = tableSongList.getSelectionModel().getSelectedIndex();
                     play();
-                } else if (paused)
-                {
+                } else if (paused) {
                     mediaPlayer.play();
-                } else
-                {
+                } else {
                     currentSongSelected = tableSongList.getSelectionModel().getSelectedIndex();
                     play();
                 }
-            } else
-            {
-                if (playing)
-                {
+            } else {
+                if (playing) {
                     mediaPlayer.stop();
                     currentSongSelected = tableSongOnPlaylist.getSelectionModel().getSelectedIndex();
                     play();
-                } else if (paused)
-                {
+                } else if (paused) {
                     mediaPlayer.play();
-                } else
-                {
+                } else {
                     currentSongSelected = tableSongOnPlaylist.getSelectionModel().getSelectedIndex();
                     play();
                 }
@@ -506,22 +562,31 @@ public class MyTunesViewController implements Initializable
         }
     }
 
+    /**
+     * When this method is called it will pause the currently playing song. If a
+     * song isnt playing the method will do nothing
+     *
+     * @param event the event when the pause button is pressed
+     */
     @FXML
-    private void pauseMusic(ActionEvent event)
-    {
-        if (mediaPlayer != null)
-        {
+    private void pauseMusic(ActionEvent event) {
+        if (mediaPlayer != null) {
             mediaPlayer.pause();
             playing = false;
             paused = true;
         }
     }
 
+    /**
+     * When the stop button is pressed this methol will be called. Thie method
+     * stops the currently selected song and also clears the selection from both
+     * table views containing songs
+     *
+     * @param event
+     */
     @FXML
-    private void stopMusic(ActionEvent event)
-    {
-        if (mediaPlayer != null)
-        {
+    private void stopMusic(ActionEvent event) {
+        if (mediaPlayer != null) {
             mediaPlayer.stop();
             tableSongList.getSelectionModel().clearSelection();
             tableSongOnPlaylist.getSelectionModel().clearSelection();
@@ -532,59 +597,45 @@ public class MyTunesViewController implements Initializable
         }
     }
 
+    /**
+     * This method calls the method searchSongs from the songModel class
+     * Everytime you press a key in the search textfield it will get the text
+     * from that field. The method searchSongs will then use that text as a
+     * parameter and also the list containing all songs. This will then set the
+     * items to the tableview to show songs that only contains the text from the
+     * textfield in their title or artist.
+     *
+     * @param event the event everytime a key on the keyboard is pressed on the
+     * textfield. So everytime a key is pressed on that field this method is
+     * called
+     */
     @FXML
-    private void writeSearch(KeyEvent event)
-    {
-        try
-        {
+    private void writeSearch(KeyEvent event) {
+        try {
             tableSongList.setItems(sm.searchSongs(sm.getSongs(), writeSearch.getText().toLowerCase()));
-        } catch (IOException | MTBllException ex)
-        {
+        } catch (IOException | MTBllException ex) {
             displayError(ex);
         }
 
     }
 
+    /**
+     * When the slider is dragged it gets its value on where its position is and
+     * uses that to set the song currently playing to a specific time
+     *
+     * @param event
+     */
     @FXML
-    private void sliderDrag(MouseEvent event)
-    {
+    private void sliderDrag(MouseEvent event) {
         mediaPlayer.seek(Duration.seconds(sliderDuration.getValue()));
     }
 
-    private void songPressed(MouseEvent event)
-    {
-        paused = false;
-        tableSongOnPlaylist.getSelectionModel().clearSelection();
-    }
-
-    private void addToPlaylist(ActionEvent event)
-    {
-        try
-        {
-            Playlist playlist = tablePlaylist.getSelectionModel().getSelectedItem();
-            Song song = tableSongList.getSelectionModel().getSelectedItem();
-            psm.addToPlaylist(playlist, song);
-        } catch (MTBllException ex)
-        {
-            displayError(ex);
-        }
-    }
-
-    private void deleteFromPlaylistSongsEverything(ActionEvent event)
-    {
-    }
-
-        private void removeSongFromPlaylist(ActionEvent event)
-    {
-    }
-
-    private void endApplication()
-    {
-        System.exit(0);
-    }
-
-    private void displayError(Exception ex)
-    {
+    /**
+     * Opens a popup window displaying an exception
+     *
+     * @param ex the exception being displayed
+     */
+    private void displayError(Exception ex) {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Error dialog");
         alert.setHeaderText(null);
@@ -592,36 +643,40 @@ public class MyTunesViewController implements Initializable
 
         alert.showAndWait();
     }
-    
 
-    private void displayNoSongWindow()
-    {
+    /**
+     * A pop-up window that tells the user they havent chosen a song to delete
+     */
+    private void displayNoSongWindow() {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Information dialog");
         alert.setHeaderText("You have not chosen a song to delete");
         alert.setContentText("Please select a song");
-        
+
         DialogPane dialogPane = alert.getDialogPane();
         dialogPane.getStylesheets().add(getClass().getResource("/mytunes/GUI/Dialogs.css").toExternalForm());
         dialogPane.getStyleClass().add("dialog-pane");
-        
+
         Image icon = new Image(this.getClass().getResourceAsStream("/mytunes/GUI/newicon.png"));
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
         stage.getIcons().add(icon);
 
         alert.showAndWait();
     }
-    
+
+    /**
+     * A pop-up window that tells the user they havent chosen a song to edit
+     */
     private void displayNoEditWindow() {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Information dialog");
         alert.setHeaderText("You have not chosen a song to edit");
         alert.setContentText("Please select a song");
-        
+
         DialogPane dialogPane = alert.getDialogPane();
         dialogPane.getStylesheets().add(getClass().getResource("/mytunes/GUI/Dialogs.css").toExternalForm());
         dialogPane.getStyleClass().add("dialog-pane");
-        
+
         Image icon = new Image(this.getClass().getResourceAsStream("/mytunes/GUI/newicon.png"));
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
         stage.getIcons().add(icon);
@@ -629,119 +684,109 @@ public class MyTunesViewController implements Initializable
         alert.showAndWait();
     }
 
-    private void displayNoPlaylistWindow()
-    {
+    /**
+     * A pop window that shows the user they havent selected a playlist
+     */
+    private void displayNoPlaylistWindow() {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Information dialog");
         alert.setHeaderText("You have not selected a playlist");
         alert.setContentText("Please select a playlist");
-        
+
         DialogPane dialogPane = alert.getDialogPane();
         dialogPane.getStylesheets().add(getClass().getResource("/mytunes/GUI/Dialogs.css").toExternalForm());
         dialogPane.getStyleClass().add("dialog-pane");
-        
+
         Image icon = new Image(this.getClass().getResourceAsStream("/mytunes/GUI/newicon.png"));
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
         stage.getIcons().add(icon);
-            
 
         alert.showAndWait();
     }
 
-
-
-    private void mouseClickedSearch(MouseEvent event)
-    {
-        try
-        {
-
-            tableSongList.setItems(sm.searchSongs(sm.getSongs(), writeSearch.getText().toLowerCase()));
-        } catch (IOException | MTBllException ex)
-        {
-            displayError(ex);
-        }
-    }
-
+    /**
+     * Adds a selected song to a selected playlist by calling the method
+     * addToPlaylist from the PlaylistSongModel. If a song or a playlist hasnt
+     * been selected a popup window will appear
+     *
+     * @param event The arrow button between the two tabelviews containing songs
+     */
     @FXML
-    private void mouseClickedArrow(MouseEvent event)
-    {
+    private void mouseClickedArrow(MouseEvent event) {
         Playlist playlist = tablePlaylist.getSelectionModel().getSelectedItem();
         Song song = tableSongList.getSelectionModel().getSelectedItem();
-        if (playlist == null)
-        {
+        if (playlist == null) {
             displayNoPlaylistWindow();
-        } else if (song == null)
-        {
+        } else if (song == null) {
             displayNoSongWindow();
-        } else
-        {
-            try
-            {
+        } else {
+            try {
                 psm.addToPlaylist(playlist, song);
-            } catch (MTBllException ex)
-            {
+            } catch (MTBllException ex) {
                 displayError(ex);
             }
         }
     }
 
-    private void play()
-    {
+    /**
+     * Gets the filepath by the currently selected song in a tableview. The
+     * songs filepath is gotten by using the integer currentSongSelected. This
+     * instance variable is set to the index of the song in the list. This is
+     * done in the playMusic method. This integer is then used here to get the
+     * filepath of the song on that index in the list. After that the filepath
+     * of the song is then converted so the mediaplayer accepts the filepath in
+     * order to play the song. The mediaplayer then plays the song.
+     *
+     * The slider that shows the time of the song and where the song is
+     * currently at is also set in this method
+     *
+     * The method also checks if a song has enden and then uses a runnable to
+     * then adds one to the currentSongSelected variable or sets it at 0 if the
+     * last song in the index has just finished playing. After this it runs this
+     * method again to keep playing the next song until its done
+     */
+    private void play() {
         String filePath;
-        if (tableSongList.getSelectionModel().getSelectedItem() != null)
-        {
+        if (tableSongList.getSelectionModel().getSelectedItem() != null) {
             filePath = tableSongList.getItems().get(currentSongSelected).getFilepath();
             tableSongList.getSelectionModel().clearAndSelect(currentSongSelected);
             lblMusicPlaying.setText(tableSongList.getItems().get(currentSongSelected).getTitle() + " is now playing");
-        } else
-        {
+        } else {
             filePath = tableSongOnPlaylist.getItems().get(currentSongSelected).getFilepath();
             tableSongOnPlaylist.getSelectionModel().clearAndSelect(currentSongSelected);
             lblMusicPlaying.setText(tableSongOnPlaylist.getItems().get(currentSongSelected).getTitle() + " is now playing");
         }
         String trueFilePath = "file:/" + filePath;
         String trueTrueFilePath = trueFilePath.replace(" ", "%20");
-        try
-        {
+        try {
             Media media = new Media(trueTrueFilePath);
             mediaPlayer = new MediaPlayer(media);
             mediaPlayer.play();
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
             displayError(ex);
             lblMusicPlaying.setText("Nothing is playing");
         }
-        mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>()
-        {
+        mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
             @Override
-            public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue)
-            {
+            public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) {
                 sliderDuration.setValue(newValue.toSeconds());
                 sliderDuration.maxProperty().bind(Bindings.createDoubleBinding(() -> mediaPlayer.getTotalDuration().toSeconds(), mediaPlayer.totalDurationProperty()));
             }
         });
-        mediaPlayer.setOnEndOfMedia(new Runnable()
-        {
+        mediaPlayer.setOnEndOfMedia(new Runnable() {
             @Override
-            public void run()
-            {
-                if (tableSongList.getSelectionModel().getSelectedItem() != null)
-                {
-                    if (currentSongSelected == tableSongList.getItems().size() - 1)
-                    {
+            public void run() {
+                if (tableSongList.getSelectionModel().getSelectedItem() != null) {
+                    if (currentSongSelected == tableSongList.getItems().size() - 1) {
                         currentSongSelected = 0;
-                    } else
-                    {
+                    } else {
                         currentSongSelected++;
                     }
                     play();
-                } else
-                {
-                    if (currentSongSelected == tableSongOnPlaylist.getItems().size() - 1)
-                    {
+                } else {
+                    if (currentSongSelected == tableSongOnPlaylist.getItems().size() - 1) {
                         currentSongSelected = 0;
-                    } else
-                    {
+                    } else {
                         currentSongSelected++;
                     }
                     play();
@@ -752,74 +797,88 @@ public class MyTunesViewController implements Initializable
         playing = true;
     }
 
-    private void controlSound()
-    {
+    /**
+     * Sets the volume of the mediaplayer to the value of the slider
+     * sliderVolume. This method also listens to changes in the slider so it
+     * changes the volume of the mediaplayer correspondingly
+     */
+    private void controlSound() {
         sliderVolume.setValue(mediaPlayer.getVolume() * 100);
-        sliderVolume.valueProperty().addListener(new InvalidationListener()
-        {
+        sliderVolume.valueProperty().addListener(new InvalidationListener() {
             @Override
-            public void invalidated(Observable observable)
-            {
+            public void invalidated(Observable observable) {
                 mediaPlayer.setVolume(sliderVolume.getValue() / 100);
             }
         });
     }
 
-    private void getSongsInPlayList(MouseEvent event)
-    {
-        try
-        {
-            Playlist playlist = tablePlaylist.getSelectionModel().getSelectedItem();
-            int id = playlist.getId();
-            tableSongOnPlaylist.getItems().removeAll();
-            tableSongOnPlaylist.setItems(psm.getPlaylistSongs(id));
-        } catch (MTBllException ex)
-        {
-            displayError(ex);
-        }
-    }
-
+    /**
+     * When a song is clicked on in the tableSongList tableview then it will
+     * clear the selection over in the tableSongOnPlaylist tableview so two
+     * songs cant be selected at once
+     *
+     * @param event When the tablelist is clicked on
+     */
     @FXML
-    private void clickedOnSongs(MouseEvent event)
-    {
+    private void clickedOnSongs(MouseEvent event) {
         tableSongOnPlaylist.getSelectionModel().clearSelection();
         paused = false;
     }
 
+    /**
+     * Does the same as the clickedOnSongs method but clears the selection in
+     * the tabelSongList tableview if the opposite tableview has been clicked on
+     *
+     * @param event When the tablelist is clicked on
+     */
     @FXML
-    private void clickedOnSongPlaylist(MouseEvent event)
-    {
+    private void clickedOnSongPlaylist(MouseEvent event) {
         tableSongList.getSelectionModel().clearSelection();
         paused = false;
     }
 
+    /**
+     * Takes a selected playlists id and uses it to get all available songs in
+     * that playlist. It does so by calling the method getPlaylistSongs in the
+     * PlaylistSongModel class. Everytime a new playlist is clicked on it
+     * removes all songs from the tableview before adding new ones from the new
+     * selected playlist
+     *
+     * @param event when a playlist is clicked on in the playlist tableview
+     */
     @FXML
-    private void tablePlaylistClicked(MouseEvent event)
-    {
-        try
-        {
-            if (tablePlaylist.getSelectionModel().getSelectedItem() != null)
-            {
+    private void tablePlaylistClicked(MouseEvent event) {
+        try {
+            if (tablePlaylist.getSelectionModel().getSelectedItem() != null) {
                 Playlist playlist = tablePlaylist.getSelectionModel().getSelectedItem();
                 int id = playlist.getId();
                 tableSongOnPlaylist.setItems(psm.getPlaylistSongs(id));
             }
-        } catch (MTBllException ex)
-        {
+        } catch (MTBllException ex) {
             displayError(ex);
         }
     }
 
+    /**
+     * If a song is clicked on twice it will get played
+     * @param event the song getting clicked on
+     */
     @FXML
-    private void pressedOnSongs(MouseEvent event)
-    {
-        Song song = tableSongList.getSelectionModel().getSelectedItem();
-        if(event.getClickCount()==2 && song != null)
-        {
-            playing = true;
-            currentSongSelected = tableSongList.getSelectionModel().getSelectedIndex();
-            play();
-        }
-    }
+    private void pressedOnSongs(MouseEvent event) {
+        if (tableSongList.getSelectionModel().getSelectedItem() != null) {
+            if (event.getClickCount() == 2) {
+                playing = true;
+                currentSongSelected = tableSongList.getSelectionModel().getSelectedIndex();
+                play();
+            }
+        } else if (tableSongOnPlaylist.getSelectionModel().getSelectedItem() != null) {
+            if (event.getClickCount() == 2) {
+                playing = true;
+                currentSongSelected = tableSongOnPlaylist.getSelectionModel().getSelectedIndex();
+                play();
+            }
 
+        }
+
+    }
 }

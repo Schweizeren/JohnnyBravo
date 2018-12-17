@@ -51,6 +51,11 @@ public class EditPlaylistController implements Initializable
         }
     }    
 
+    /**
+     * Takes the information in the textfield and edits the selected playlist
+     * after this the view is closed
+     * @param event when the save button is pressed
+     */
     @FXML
     private void handleSaveBtn(ActionEvent event)
     {
@@ -67,6 +72,10 @@ public class EditPlaylistController implements Initializable
         }
     }
 
+    /**
+     * Closes the view of this controller
+     * @param event when the cancel button is pressed
+     */
     @FXML
     private void handleCancelBtn(ActionEvent event)
     {
@@ -74,15 +83,29 @@ public class EditPlaylistController implements Initializable
         stage.close();
     }
     
+    /**
+     * Initializes this class' model object
+     * @param playlistmodel the ojbect this class' model is initialized with
+     */
     public void initializeModel(PlaylistModel playlistmodel) {
         this.pm = playlistmodel;
     }
     
+    /**
+     * Initializes the playlist getting updated and also the saves the index
+     * of where the playlist were in the list
+     * @param plist the playlist getting updated
+     * @param index the index of the playlist in the list
+     */
     public void initializePlaylist(Playlist plist, int index) {
         oldPlaylist = new Playlist(plist.getId(), plist.getName());
         this.index = index;
     }
     
+    /**
+     * Opens a pop up window that displays an error to the user
+     * @param ex the exception getting shown to the user
+     */
     private void displayError(Exception ex) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Error dialog");
