@@ -12,7 +12,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import mytunes.DAL.exception.MTDalException;
 import mytunes.be.Playlist;
@@ -195,7 +194,7 @@ public class PlaylistSongDAO {
      */
     public void moveSong(Song songGettingMoved, Song songAffected, int playlistId) throws MTDalException {
         try (Connection con = CB.getConnection()) {
-            String query = "UPDATE PlaylistSong set locationInListID = ? WHERE PlaylistID = ? AND SongID = ? AND locationInListID = ?;"; 
+            String query = "UPDATE PlaylistSong set locationInListID = ? WHERE PlaylistID = ? AND SongID = ? AND locationInListID = ?;";
             PreparedStatement pst = con.prepareStatement(query);
             pst.setInt(1, songAffected.getLocationInList());
             pst.setInt(2, playlistId);

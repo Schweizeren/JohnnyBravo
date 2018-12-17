@@ -10,7 +10,7 @@
 
 <AnchorPane id="AnchorPane" fx:id="rootPane" prefHeight="322.0" prefWidth="393.0" styleClass="background" stylesheets="@MyTunes.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.GUI.Controller.CreateSongController">
    <children>
-      <TextField fx:id="txtTitleInput" layoutX="90.0" layoutY="66.0" onKeyPressed="#titleEnterPressed" />
+      <TextField fx:id="txtTitleInput" layoutX="90.0" layoutY="66.0" />
       <Label layoutX="176.0" layoutY="14.0" styleClass="label-bright" text="New song">
          <font>
             <Font size="14.0" />
@@ -22,14 +22,14 @@
       <Label layoutX="38.0" layoutY="183.0" prefHeight="21.0" prefWidth="52.0" text="Duration:" />
 
       <Separator layoutY="34.0" prefHeight="17.0" prefWidth="393.0" />
-      <TextField fx:id="txtArtistInput" layoutX="90.0" layoutY="105.0" onKeyPressed="#artistEnterPressed" />
-      <ComboBox fx:id="comboCategoryBox" layoutX="91.0" layoutY="141.0" onAction="#handleComboCategory" onKeyPressed="#comboBoxEnterPressed" prefHeight="25.0" prefWidth="118.0" styleClass="button-sliders" />
+      <TextField fx:id="txtArtistInput" layoutX="90.0" layoutY="105.0" />
+      <ComboBox fx:id="comboCategoryBox" layoutX="91.0" layoutY="141.0" onAction="#handleComboCategory" prefHeight="25.0" prefWidth="118.0" styleClass="button-sliders" />
       <Label layoutX="64.0" layoutY="220.0" text="File:" />
       <TextField fx:id="txtDuration" layoutX="90.0" layoutY="181.0" />
       <Button layoutX="249.0" layoutY="216.0" mnemonicParsing="false" onAction="#handleChooseBtn" text="Choose" />
       <TextField fx:id="txtFile" layoutX="90.0" layoutY="216.0" />
       <Button layoutX="285.0" layoutY="270.0" mnemonicParsing="false" onAction="#handleSaveBtn" text="Save" />
       <Button layoutX="209.0" layoutY="270.0" mnemonicParsing="false" onAction="#handleCancelBtn" text="Cancel" />
-      <TextField fx:id="txtOtherCategory" layoutX="220.0" layoutY="143.0" onKeyPressed="#otherCategoryEnterPressed" prefHeight="25.0" prefWidth="118.0" />
+      <TextField fx:id="txtOtherCategory" layoutX="220.0" layoutY="143.0" prefHeight="25.0" prefWidth="118.0" />
    </children>
 </AnchorPane>
