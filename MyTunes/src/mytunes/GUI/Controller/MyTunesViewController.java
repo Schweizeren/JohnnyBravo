@@ -205,7 +205,7 @@ public class MyTunesViewController implements Initializable {
         } else {
             Alert alert = new Alert(AlertType.CONFIRMATION);
             alert.setTitle("Confirmation dialog");
-            alert.setContentText("Are you sure you want to delete: " + playlist);
+            alert.setContentText("Are you sure you want to delete: " + playlist.getName());
 
             DialogPane dialogPane = alert.getDialogPane();
             dialogPane.getStylesheets().add(getClass().getResource("/mytunes/GUI/Dialogs.css").toExternalForm());
@@ -857,28 +857,5 @@ public class MyTunesViewController implements Initializable {
         } catch (MTBllException ex) {
             displayError(ex);
         }
-    }
-
-    /**
-     * If a song is clicked on twice it will get played
-     * @param event the song getting clicked on
-     */
-    @FXML
-    private void pressedOnSongs(MouseEvent event) {
-        if (tableSongList.getSelectionModel().getSelectedItem() != null) {
-            if (event.getClickCount() == 2) {
-                playing = true;
-                currentSongSelected = tableSongList.getSelectionModel().getSelectedIndex();
-                play();
-            }
-        } else if (tableSongOnPlaylist.getSelectionModel().getSelectedItem() != null) {
-            if (event.getClickCount() == 2) {
-                playing = true;
-                currentSongSelected = tableSongOnPlaylist.getSelectionModel().getSelectedIndex();
-                play();
-            }
-
-        }
-
     }
 }

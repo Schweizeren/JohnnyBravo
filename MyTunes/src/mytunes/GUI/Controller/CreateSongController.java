@@ -5,8 +5,6 @@
  */
 package mytunes.GUI.Controller;
 
-import javafx.scene.input.KeyCode;
-import java.io.IOException;
 import java.net.URL;
 import java.util.EventObject;
 import java.util.ResourceBundle;
@@ -199,4 +197,6 @@ public class CreateSongController implements Initializable
     {
         this.sm = songmodel;
     }
+
+
 }
