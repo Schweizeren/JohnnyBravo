@@ -5,6 +5,8 @@
  */
 package mytunes.GUI.Controller;
 
+import javafx.scene.input.KeyCode;
+import java.io.IOException;
 import java.net.URL;
 import java.util.EventObject;
 import java.util.ResourceBundle;
@@ -196,25 +198,5 @@ public class CreateSongController implements Initializable
     public void initializeModel(SongModel songmodel)
     {
         this.sm = songmodel;
-    }
-
-    @FXML
-    private void titleEnterPressed(KeyEvent event)
-    {
-    }
-
-    @FXML
-    private void artistEnterPressed(KeyEvent event)
-    {
-    }
-
-    @FXML
-    private void comboBoxEnterPressed(KeyEvent event)
-    {
-    }
-
-    @FXML
-    private void otherCategoryEnterPressed(KeyEvent event)
-    {
     }
 }
