@@ -13,30 +13,31 @@ import org.farng.mp3.TagException;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author bonde
  */
-public class TesterClass
-{
-    public static void main(String[] args) throws MTDalException
-    {
-        String filepath = "D:/Dokumenter/GitHub/myTunes/MyTunes/data/music/bitch lasagna.mp3";
-        SongMetaData smd = new SongMetaData();
-        System.out.println(smd.getAuthor(filepath));
-        System.out.println(smd.getGenre(filepath));
-        System.out.println(smd.getSongTitle(filepath));
-        System.out.println(smd.getDurationInSec(filepath));
-        
+public class TesterClass {
+
+    public static void main(String[] args) throws MTDalException {
+
     }
-    
-    public static void playMusic()
-    {
+
+    public static void playMusic() {
         final JFXPanel fxPanel = new JFXPanel();
         String filepath = "data/music/bitch lasagna.mp3";
         Media hit = new Media(new File(filepath).toURI().toString());
         MediaPlayer mediaPlayer = new MediaPlayer(hit);
         mediaPlayer.play();
+    }
+
+    private static String hjælpJannick(String... words) {
+        String rowOfWords = "";
+        for (int i = 0; i < words.length; i++) {
+            rowOfWords = rowOfWords + words[i];
+        }
+        String combinedWords = rowOfWords.replaceAll(" ", "");
+        return combinedWords;
+
     }
 }
